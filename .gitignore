@@ -15,5 +15,8 @@
 
 # 系统文件
 .DS_Store
-Thumbs.db04/·��Ƕ��04.mp4
+Thumbs.db04/·��Ƕ��04.mp4
 *.mp4
+
+# Office 临时锁文件
+~$*
