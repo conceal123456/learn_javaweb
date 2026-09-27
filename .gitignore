@@ -1,0 +1,19 @@
+# Vue / Node
+**/node_modules/
+**/dist/
+
+# IDE
+.idea/
+.vscode/
+
+# Java
+*.class
+**/target/
+
+# 安装程序
+*.exe
+
+# 系统文件
+.DS_Store
+Thumbs.db04/·��Ƕ��04.mp4
+*.mp4
