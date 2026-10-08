@@ -1,6 +1,6 @@
 # JavaWeb 课程前端实训（Vue3）学习与勘误
 
-本仓库记录《JavaWeb》课程 5 个前端实训的学习成果：按老师讲义逐讲用 `npm create vue` 建了可运行的独立工程，配运行截图；并对 5 份讲义做了"代码层 + 文字层 + 多代理交叉验证"三轮审核，产出勘误报告。
+本仓库记录《JavaWeb》课程 6 个前端实训的学习成果：按老师讲义逐讲用 `npm create vue` 建了可运行的独立工程，配运行截图；前 5 份讲义做了"代码层 + 文字层 + 多代理交叉验证"三轮审核，产出勘误报告；实训6 另配一个离线可开的知识点讲解页 `05/知识点讲解_实训6.html`。
 
 ## 目录与工程
 
@@ -10,6 +10,7 @@
 | 实训2 | `02/vue-syntax` | Vue 基本语法演示 | `cd 02/vue-syntax && npm install && npm run dev` |
 | 实训3+4 | `03/element-plus` | Element Plus 框架与组件 | `cd 03/element-plus && npm install && npm run dev`，`/home` 图标对比、`/comp` 组件页、`/comp-orig` 原版问题页 |
 | 实训5 | `04/vue-router` | 路由跳转/嵌套/守卫/传参 | `cd 04/vue-router && npm install && npm run dev` |
+| 实训6 | `05/admin-layout` | 后台管理页面（flex 布局 + el-menu + 嵌套路由 + 表格分页） | `cd 05/admin-layout && npm install && npm run dev`，看 `/manage/detail` |
 
 每个工程都 `npm run build` 编译通过，并用 Edge 无头截图留档（各章 `演示截图/`）。
 
@@ -18,9 +19,14 @@
 详细版见各章 `讲义勘误_实训N.md`。
 
 ### 严重（会导致功能不对）
-- 实训5：路由守卫 `document.title = to.meta.title` 对没有 `meta` 的 `/home`、`/test` 会把标签标题设成字符串 "undefined"。已在真实工程运行复现。改法：`to.meta.title || '默认标题'`。
+- 实训6：Manage.vue 整份代码里没有 `<router-view />`，嵌套路由只配了一半。实测 `/manage` 与 `/manage/detail` 两张截图完全相同，Detail.vue 从未渲染。改法：右侧内容区放 `<router-view />`。
+- 实训6：子菜单"管理员信息""普通用户信息"两项 `<el-menu-item>` 没有 `index`。实测点击后地址栏不变、页面无反应，控制台两条 `Missing required prop: "index"`。
+- 实训5：路由守卫 `document.title = to.meta.title` 对没有 `meta` 的 `/home`、`/test` 会把标签标题设成字符串 "undefined"。已在真实工程运行复现。改法：`to.meta.title || '默认标题'`。实训6 讲义又照抄了同一行。
 
 ### 一般（写法错误或不生效）
+- 实训6：管理首页、个人信息、退出登录三项菜单 `index` 都写 `/manage`，实测停在 `/manage` 时三条同时高亮（一个 index 对应一个路径才会单项高亮）。
+- 实训6：讲义正文代码头部写"网站 logo""后台用户"，与讲义自己第 2 页目标界面图（"中药材后台管理系统" + 头像 + "系统管理员"）不一致。
+- 实训6：`total: 50` 而 `tableData` 只有 9 条、未按 `pageNum` 切片。实测点第 2 页页码变了但 9 行数据不变（讲义只要求分页 UI，故不算写错）。
 - 实训3：`color="#6666"` 是 4 位十六进制，被当半透明灰，图标发淡。应为 `#666666`。
 - 实训4：轮播 `interval="3000"` 传字符串，Number 属性应写 `:interval="3000"`（与讲义自己"数字要加冒号"的规则自相矛盾）。
 - 实训4：分页 `:data="tableData"` 未按页切片，翻页与改每页条数都无效。
@@ -39,8 +45,10 @@
 - 实训3：`app.use(ElementPlus)` 须在 `createApp` 之后；图标注册注释"组件实例"措辞不准（是组件定义）。
 - 实训4：`:total=tableData.length` 缺引号（能解析，风格问题）；示例用外部图床日后易 404；列宽 `100px` 与 `180` 写法不一致；Checkbox 组用法与版本强相关；datetime 注释从"日期"复制没改；`class="mt-2"` 未装 Tailwind 无效。
 - 实训5：传参示例 `id:2` 与说明文字 `id=123` 对不上；"另一种传参方式"表述不完整（未提 params）；"页面代码一次性加载完"与懒加载略有出入；meta 定义措辞不准。
+- 实训6：守卫用第三个参数 `next()`，本机 vue-router 5.3.1 已将其废弃（每次导航控制台报 `VUE_ROUTER_R0025`），新代码建议改写为 `return`；`detail` 子路由是 children 里唯一没配 meta 的一条，后果是标签标题不分页（不是 undefined）。
 
 ## 审核过程中主动撤销/排除的判断（诚实记录）
+- 实训6：一度按"detail 没配 meta 会导致标签显示 undefined"记为错误。真实运行测得 `/manage/detail` 标题是"后台管理"——vue-router 会合并父子级 meta，子级没写就继承父级。该条下调为"标题不分页"，undefined 只在整条链都没有 meta 的顶级路由上出现。
 - el-icon 的 `style="top:4px"`：一度被列为"无效样式"，经查 `element-plus/theme-chalk/el-icon.css`，`.el-icon` 是 `position:relative`，`top` 生效，该条已撤销。
 - `vue-router: ^5.0.1`：有代理判为"应为 4.x"，经核 npm 当前 vue-router 最新即 5.3.1，讲义版本正确，未列为错误。
 
