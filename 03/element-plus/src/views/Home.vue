@@ -2,10 +2,19 @@
   <div style="padding: 20px;">
     <h2>实训3 Element Plus 配置验证 + 图标颜色对比</h2>
 
-    <!-- 安装是否成功：一个 Element Plus 按钮 -->
-    <p>安装验证：下面这个按钮能正常显示，说明 Element Plus 配置成功</p>
-    <el-button type="primary">Element Plus 按钮</el-button>
-    <el-button type="success">主要按钮</el-button>
+    <!-- 安装是否成功：多种 type 的按钮，能正常显示说明 Element Plus 配置成功 -->
+    <p>安装验证：下面这些按钮能正常显示，说明 Element Plus 配置成功</p>
+    <el-button>默认按钮</el-button>
+    <el-button type="primary">主要按钮</el-button>
+    <el-button type="success">成功按钮</el-button>
+    <el-button type="warning">警告按钮</el-button>
+    <el-button type="danger">危险按钮</el-button>
+    <el-button type="info">信息按钮</el-button>
+    <p style="margin-top: 10px">朴素/plain 与圆角/round 变体：</p>
+    <el-button type="primary" plain>plain 朴素</el-button>
+    <el-button type="success" round>round 圆角</el-button>
+    <el-button type="danger" disabled>disabled 禁用</el-button>
+    <el-button type="primary" link>link 链接</el-button>
     <hr />
 
     <h3>图标颜色：老师原版 #6666 vs 修正 #666666</h3>
