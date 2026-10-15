@@ -23,7 +23,9 @@
 
 **在 IDEA 里怎么跑**（详见 `07/实验过程_实训7.md` 的"附-1"）：IDEA 打开 `D:\course\Javaweb\07\xm-pro` → 等 Maven 加载完 → 点 `SpringbootApplication` 左侧绿三角（或右键 Run）→ 控制台出现 `Started SpringbootApplication` 后访问 <http://localhost:8080/hello>。三种启动方式与启动成功判据都对照讲义图 27、图 30 写全了。
 
-完整实验过程、讲义逐条对照、以及踩到的坑（包路径错位、@ResponseBody 中文 ISO-8859-1、MySQL 8 缺 `allowPublicKeyRetrieval` 报错、8080 端口被孤儿进程占用）都在 **`07/实验过程_实训7.md`**。
+完整实验过程、讲义逐条对照、以及踩到的坑（包路径错位、@ResponseBody 中文 ISO-8859-1、MySQL 8 缺 `allowPublicKeyRetrieval` 报错、8080 端口被孤儿进程占用、**两份 settings.xml 打架导致 Maven 依赖加载不出来**）都在 **`07/实验过程_实训7.md`**。
+
+> Maven 本机只留一份 **3.8.1**（与讲义同版本），本地仓库 `D:\software\apache-maven-3.8.1\repo`。踩过的一个隐蔽坑：**`~\.m2\settings.xml`（用户级）优先于 `<MavenHome>\conf\settings.xml`**，只改后者不生效；另外 3.8.1 起默认拦截 http 仓库，阿里云镜像必须写 https。旧的 3.9.16/3.9.9 及各自缓存已清掉（约 193 MB）——清理前用空仓库做过完整重下载验证，确认不依赖任何旧缓存。
 
 一键端到端验证（自动检查环境 → `mvn clean package` → 起服务 → 打 5 个接口并按字节校验中文是否 UTF-8 → 杀进程树收尾）：
 
