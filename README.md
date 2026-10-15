@@ -1,6 +1,6 @@
-# JavaWeb 课程前端实训（Vue3）学习与勘误
+# JavaWeb 课程实训（Vue3 前端 + SpringBoot3 后端）学习与勘误
 
-本仓库记录《JavaWeb》课程 6 个前端实训的学习成果：按老师讲义逐讲用 `npm create vue` 建了可运行的独立工程，配运行截图；前 5 份讲义做了"代码层 + 文字层 + 多代理交叉验证"三轮审核，产出勘误报告；实训6 另配一个离线可开的知识点讲解页 `05/知识点讲解_实训6.html`。
+本仓库记录《JavaWeb》课程实训的学习成果：实训 1–6 是按老师讲义逐讲用 `npm create vue` 建的独立 Vue3 前端工程，配运行截图；实训 7 起进入后端，用 IDEA 建的 SpringBoot3 工程。实训 1–5 的讲义做了"代码层 + 文字层 + 多代理交叉验证"三轮审核，产出勘误报告；实训6 另配一个离线可开的知识点讲解页 `05/知识点讲解_实训6.html`。
 
 ## 目录与工程
 
@@ -11,8 +11,43 @@
 | 实训3+4 | `03/element-plus` | Element Plus 框架与组件 | `cd 03/element-plus && npm install && npm run dev`，`/home` 图标对比、`/comp` 组件页、`/comp-orig` 原版问题页 |
 | 实训5 | `04/vue-router` | 路由跳转/嵌套/守卫/传参 | `cd 04/vue-router && npm install && npm run dev` |
 | 实训6 | `05/admin-layout` | 后台管理页面（flex 布局 + el-menu + 嵌套路由 + 表格分页） | `cd 05/admin-layout && npm install && npm run dev`，看 `/manage/detail` |
+| 实训7 | `07/xm-pro/springboot`（后端）+ `07/xm-pro/vue`（前端） | 新建 SpringBoot3 工程、Maven/编码/数据源配置、Result 统一返回、全局异常处理 | 见 `07/实验过程_实训7.md`；一条命令全量验证见下 |
 
-每个工程都 `npm run build` 编译通过，并用 Edge 无头截图留档（各章 `演示截图/`）。
+> 实训7 的目录结构照讲义图1 摆：**`07/xm-pro` 是项目根**，`springboot`（后端）和 `vue`（前端）是它下面两个文件夹，`.idea` 也在这一层。**IDEA 请打开 `07\xm-pro` 这一层**，一个窗口就能同时看到后端和前端两个模块（讲义图2 的效果）；打开 `springboot` 子目录只能看到后端，和讲义图不一致。
+
+每个前端工程都 `npm run build` 编译通过，并用 Edge 无头截图留档（各章 `演示截图/`）。
+
+## 实训7：后端 SpringBoot3（含一键验证）
+
+后端工程在 `07/xm-pro/springboot`，配套前端在 `07/xm-pro/vue`。**环境已跑通实测**：Spring Boot 3.5.16 + JDK 21 + Maven 3.9.16 + MySQL 8.0.43。
+
+**在 IDEA 里怎么跑**（详见 `07/实验过程_实训7.md` 的"附-1"）：IDEA 打开 `D:\course\Javaweb\07\xm-pro` → 等 Maven 加载完 → 点 `SpringbootApplication` 左侧绿三角（或右键 Run）→ 控制台出现 `Started SpringbootApplication` 后访问 <http://localhost:8080/hello>。三种启动方式与启动成功判据都对照讲义图 27、图 30 写全了。
+
+完整实验过程、讲义逐条对照、以及踩到的坑（包路径错位、@ResponseBody 中文 ISO-8859-1、MySQL 8 缺 `allowPublicKeyRetrieval` 报错、8080 端口被孤儿进程占用）都在 **`07/实验过程_实训7.md`**。
+
+一键端到端验证（自动检查环境 → `mvn clean package` → 起服务 → 打 5 个接口并按字节校验中文是否 UTF-8 → 杀进程树收尾）：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\course\Javaweb\07\_verify_lab7.ps1" -ProjectPath "D:\course\Javaweb\07\xm-pro\springboot"
+```
+
+实测第四轮 **12 项全部通过**，接口返回与报告一致：`/hello`→200 带中文、`/number`→500 系统错误、`/map`→原生 JSON、`/result`→200 包装类、`/business`→400 业务异常。
+
+### 前端也已接上后端（实测调通）
+
+`vue` 原来是个孤立前端，现已接通：`vite.config.js` 加 `server.proxy` 把 `/api/xxx` 转发到 `localhost:8080`（**用代理避跨域，后端一行不用改**），`src/api/request.js` 是 axios 封装，`src/views/Backend.vue` 是联调页 `/backend`。
+
+两个一起开：
+
+```powershell
+# 终端1：后端（或 IDEA 里点 SpringbootApplication 绿三角）
+cd 07\xm-pro\springboot && mvn -DskipTests package && java -jar target\springboot-0.0.1-SNAPSHOT.jar
+# 终端2：前端
+cd 07\xm-pro\vue && npm run dev
+```
+
+浏览器开 <http://localhost:5173/backend>，5 个按钮逐个调通，中文不乱码——实拍见 [07_前后端联调_接口全部调通.png](07/xm-pro/vue/演示截图/07_前后端联调_接口全部调通.png)。顺带补掉了 `vue` 菜单指向、但路由表里原先缺失的 3 个路径（`/manage/ordinary`、`/manage/profile`、`/manage/logout`，点了原先右侧空白）。
+
 
 ## 六讲的递进关系
 

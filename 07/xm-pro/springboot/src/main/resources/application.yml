@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+# 数据库配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    # xm_pro 是本机建好的数据库名。
+    # 讲义上写的是 xm-pro，但数据库名里带横线在 SQL 里必须写成 `xm-pro`，容易踩坑，
+    # 所以统一用下划线，数据库名和这里保持一致即可。
+    url: jdbc:mysql://localhost:3306/xm_pro?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
+
+  # 后台返回的 JSON 使用东八区时间
+  jackson:
+    time-zone: GMT+8
