@@ -10,16 +10,6 @@
     >
       点击跳转到Test.vue传参
     </el-button>
-
-    <!-- 实训7：进入前后端联调页 -->
-    <el-button type="success" @click="$router.push('/backend')">
-      进入前后端联调（调用 SpringBoot 接口）
-    </el-button>
-
-    <!-- 实训6：进入后台管理布局 -->
-    <el-button @click="$router.push('/manage')">
-      进入后台管理页面
-    </el-button>
   </div>
 </template>
 

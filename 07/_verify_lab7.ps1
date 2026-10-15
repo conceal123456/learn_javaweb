@@ -13,7 +13,7 @@ param(
     [Parameter(Mandatory = $true)][string]$ProjectPath,
     [int]$Port = 8080,
     [int]$WaitSeconds = 90,
-    [string]$MavenHome = "D:\software\maven\apache-maven-3.9.16",
+    [string]$MavenHome = "D:\software\apache-maven-3.8.1",
     [switch]$SkipBuild
 )
 

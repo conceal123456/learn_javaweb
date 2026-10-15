@@ -19,7 +19,7 @@
 
 ## 实训7：后端 SpringBoot3（含一键验证）
 
-后端工程在 `07/xm-pro/springboot`，配套前端在 `07/xm-pro/vue`。**环境已跑通实测**：Spring Boot 3.5.16 + JDK 21 + Maven 3.9.16 + MySQL 8.0.43。
+后端工程在 `07/xm-pro/springboot`，配套前端在 `07/xm-pro/vue`（实训6 的后台管理页面，本讲不动它）。**环境已跑通实测**：Spring Boot 3.5.16 + JDK 21 + **Maven 3.8.1（与讲义同版本）** + MySQL 8.0.43。
 
 **在 IDEA 里怎么跑**（详见 `07/实验过程_实训7.md` 的"附-1"）：IDEA 打开 `D:\course\Javaweb\07\xm-pro` → 等 Maven 加载完 → 点 `SpringbootApplication` 左侧绿三角（或右键 Run）→ 控制台出现 `Started SpringbootApplication` 后访问 <http://localhost:8080/hello>。三种启动方式与启动成功判据都对照讲义图 27、图 30 写全了。
 
@@ -32,21 +32,6 @@ powershell -ExecutionPolicy Bypass -File "D:\course\Javaweb\07\_verify_lab7.ps1"
 ```
 
 实测第四轮 **12 项全部通过**，接口返回与报告一致：`/hello`→200 带中文、`/number`→500 系统错误、`/map`→原生 JSON、`/result`→200 包装类、`/business`→400 业务异常。
-
-### 前端也已接上后端（实测调通）
-
-`vue` 原来是个孤立前端，现已接通：`vite.config.js` 加 `server.proxy` 把 `/api/xxx` 转发到 `localhost:8080`（**用代理避跨域，后端一行不用改**），`src/api/request.js` 是 axios 封装，`src/views/Backend.vue` 是联调页 `/backend`。
-
-两个一起开：
-
-```powershell
-# 终端1：后端（或 IDEA 里点 SpringbootApplication 绿三角）
-cd 07\xm-pro\springboot && mvn -DskipTests package && java -jar target\springboot-0.0.1-SNAPSHOT.jar
-# 终端2：前端
-cd 07\xm-pro\vue && npm run dev
-```
-
-浏览器开 <http://localhost:5173/backend>，5 个按钮逐个调通，中文不乱码——实拍见 [07_前后端联调_接口全部调通.png](07/xm-pro/vue/演示截图/07_前后端联调_接口全部调通.png)。顺带补掉了 `vue` 菜单指向、但路由表里原先缺失的 3 个路径（`/manage/ordinary`、`/manage/profile`、`/manage/logout`，点了原先右侧空白）。
 
 
 ## 六讲的递进关系
