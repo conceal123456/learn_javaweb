@@ -15,8 +15,19 @@
 
 # 系统文件
 .DS_Store
-Thumbs.db04/·��Ƕ��04.mp4
+Thumbs.db
+
+# 视频
 *.mp4
+
+# 讲义解析与写作过程文件（由 docx/pdf 抽取，不作为成果提交）
+.extract/
+
+# 写作过程中的临时验证脚本/目录（不是成果）
+.tmp-verify*.mjs
+**/_kpc/
+**/_kp_verify.html
+基础补课/_验收截图/
 
 # Office 临时锁文件
 ~$*
