@@ -1,0 +1,484 @@
+/* ==========================================================================
+   JavaWeb 知识点讲解 · 站点脚本
+   全部离线：无 CDN、无外部依赖
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  /* ======================= 1. 离线语法高亮 ======================= */
+
+  var KW = {
+    js: ('const let var function return if else for while do break continue new class extends ' +
+         'import export from default async await try catch finally throw typeof instanceof in of ' +
+         'null undefined true false this super delete void yield static get set').split(' '),
+    java: ('public private protected class interface extends implements new return if else for while do ' +
+           'break continue static final void int long double float boolean char byte short String ' +
+           'throw throws try catch finally import package this super null true false abstract ' +
+           'synchronized volatile transient instanceof enum record var').split(' '),
+    bash: ('cd ls npm npx node git mvn java curl echo export set powershell chcp start taskkill netstat ' +
+           'findstr mvnw soffice').split(' '),
+    sql: ('select from where insert into values update set delete create table database drop alter ' +
+          'primary key not null default varchar int datetime').split(' '),
+    css: ('display flex grid position absolute relative fixed sticky margin padding border background ' +
+          'color width height font size weight align items justify content gap top left right bottom ' +
+          'overflow transform transition').split(' ')
+  };
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // 逐字符扫描，优先匹配 注释 > 字符串 > 数字 > 标识符
+  function scan(code, opt) {
+    var out = '';
+    var i = 0, n = code.length;
+    var lc = opt.lineComment, bc = opt.blockComment, kw = opt.keywords || [];
+    var kwSet = Object.create(null);
+    for (var q = 0; q < kw.length; q++) kwSet[kw[q]] = 1;
+
+    while (i < n) {
+      var c = code[i], c2 = code.substr(i, 2);
+
+      // 行注释
+      if (lc && code.substr(i, lc.length) === lc) {
+        var e = code.indexOf('\n', i);
+        if (e < 0) e = n;
+        out += '<span class="tk-c">' + esc(code.slice(i, e)) + '</span>';
+        i = e;
+        continue;
+      }
+      // 块注释
+      if (bc && code.substr(i, bc[0].length) === bc[0]) {
+        var e2 = code.indexOf(bc[1], i + bc[0].length);
+        e2 = e2 < 0 ? n : e2 + bc[1].length;
+        out += '<span class="tk-c">' + esc(code.slice(i, e2)) + '</span>';
+        i = e2;
+        continue;
+      }
+      // 字符串
+      if (c === '"' || c === "'" || c === '`') {
+        var j = i + 1, closed = false;
+        while (j < n) {
+          if (code[j] === '\\') { j += 2; continue; }
+          if (code[j] === c) { closed = true; break; }
+          if (c !== '`' && code[j] === '\n') break;
+          j++;
+        }
+        var end = closed ? j + 1 : j;
+        out += '<span class="tk-s">' + esc(code.slice(i, end)) + '</span>';
+        i = end;
+        continue;
+      }
+      // 数字
+      if (/[0-9]/.test(c) && !/[A-Za-z_$]/.test(code[i - 1] || '')) {
+        var m = /^[0-9][0-9a-fA-FxX._]*/.exec(code.slice(i));
+        out += '<span class="tk-n">' + esc(m[0]) + '</span>';
+        i += m[0].length;
+        continue;
+      }
+      // 标识符 / 关键字
+      if (/[A-Za-z_$\u4e00-\u9fa5]/.test(c)) {
+        var m2 = /^[A-Za-z0-9_$\u4e00-\u9fa5]+/.exec(code.slice(i));
+        var w = m2[0];
+        var rest = code.slice(i + w.length);
+        if (kwSet[w]) out += '<span class="tk-k">' + esc(w) + '</span>';
+        else if (/^\s*\(/.test(rest)) out += '<span class="tk-f">' + esc(w) + '</span>';
+        else out += esc(w);
+        i += w.length;
+        continue;
+      }
+      out += esc(c);
+      i++;
+    }
+    return out;
+  }
+
+  // 标记语言（html / xml / vue template）
+  function scanMarkup(code) {
+    var out = '', i = 0, n = code.length;
+    while (i < n) {
+      if (code.substr(i, 4) === '<!--') {
+        var e = code.indexOf('-->', i);
+        e = e < 0 ? n : e + 3;
+        out += '<span class="tk-c">' + esc(code.slice(i, e)) + '</span>';
+        i = e; continue;
+      }
+      if (code.substr(i, 2) === '{{') {
+        var e2 = code.indexOf('}}', i);
+        if (e2 > 0) {
+          out += '<span class="tk-p">{{</span>' +
+                 '<span class="tk-n">' + esc(code.slice(i + 2, e2)) + '</span>' +
+                 '<span class="tk-p">}}</span>';
+          i = e2 + 2; continue;
+        }
+      }
+      if (code[i] === '<') {
+        var e3 = code.indexOf('>', i);
+        if (e3 > 0) {
+          var tag = code.slice(i, e3 + 1);
+          // 标签名
+          tag = tag.replace(/^(&lt;?|<\/?)([A-Za-z][\w:-]*)/, function (_, p, name) {
+            return '<span class="tk-p">' + esc(p) + '</span><span class="tk-t">' + esc(name) + '</span>';
+          });
+          // 属性名 = 属性值
+          tag = tag.replace(/([A-Za-z_:@#][\w:.-]*)(\s*=\s*)("[^"]*"|'[^']*')/g,
+            function (_, a, eq, v) {
+              return '<span class="tk-a">' + esc(a) + '</span>' + esc(eq) +
+                     '<span class="tk-s">' + esc(v) + '</span>';
+            });
+          // 属性名（无值）
+          tag = tag.replace(/(\s)([A-Za-z_:@#][\w:.-]*)(?=[\s/>]|$)/g,
+            function (_, sp, a) { return sp + '<span class="tk-a">' + esc(a) + '</span>'; });
+          out += tag;
+          i = e3 + 1; continue;
+        }
+      }
+      out += esc(code[i]);
+      i++;
+    }
+    return out;
+  }
+
+  function highlight(code, lang) {
+    lang = (lang || 'text').toLowerCase();
+    switch (lang) {
+      case 'vue': {
+        // 拆出 script / style 单独处理
+        var out = '', pos = 0;
+        var re = /<(script|style)([^>]*)>([\s\S]*?)<\/\1>/g, m;
+        while ((m = re.exec(code))) {
+          out += scanMarkup(code.slice(pos, m.index));
+          var open = '&lt;' + m[1] + m[2] + '&gt;';
+          var openHtml = '<span class="tk-p">&lt;</span><span class="tk-t">' + m[1] + '</span>' +
+                         '<span class="tk-a">' + esc(m[2]) + '</span><span class="tk-p">&gt;</span>';
+          var inner = m[1] === 'script'
+            ? scan(m[3], { lineComment: '//', blockComment: ['/*', '*/'], keywords: KW.js })
+            : scan(m[3], { lineComment: '//', blockComment: ['/*', '*/'], keywords: KW.css });
+          var closeHtml = '<span class="tk-p">&lt;/</span><span class="tk-t">' + m[1] + '</span><span class="tk-p">&gt;</span>';
+          out += openHtml + inner + closeHtml;
+          pos = m.index + m[0].length;
+        }
+        out += scanMarkup(code.slice(pos));
+        return out;
+      }
+      case 'html': case 'xml': return scanMarkup(code);
+      case 'js': case 'javascript': case 'json':
+        return scan(code, { lineComment: '//', blockComment: ['/*', '*/'], keywords: KW.js });
+      case 'java':
+        return scan(code, { lineComment: '//', blockComment: ['/*', '*/'], keywords: KW.java });
+      case 'css':
+        return scan(code, { lineComment: null, blockComment: ['/*', '*/'], keywords: KW.css });
+      case 'bash': case 'sh': case 'powershell': case 'ps1':
+        return scan(code, { lineComment: '#', blockComment: null, keywords: KW.bash });
+      case 'yml': case 'yaml':
+        return scan(code, { lineComment: '#', blockComment: null, keywords: [] });
+      case 'sql':
+        return scan(code, { lineComment: '--', blockComment: ['/*', '*/'], keywords: KW.sql });
+      case 'properties':
+        return scan(code, { lineComment: '#', blockComment: null, keywords: [] });
+      default:
+        return esc(code);
+    }
+  }
+
+  /* ======================= 2. 初始化高亮 + 复制 ======================= */
+  function initCode() {
+    document.querySelectorAll('.code').forEach(function (box) {
+      var codeEl = box.querySelector('code');
+      if (!codeEl) return;
+      var lang = box.getAttribute('data-lang') || 'text';
+      var raw = codeEl.textContent;
+      codeEl.innerHTML = highlight(raw, lang);
+
+      var btn = box.querySelector('.copy');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          copyText(raw, btn);
+        });
+      }
+    });
+  }
+
+  function copyText(text, btn) {
+    var done = function () {
+      var old = btn.textContent;
+      btn.textContent = '已复制';
+      btn.classList.add('ok');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('ok'); }, 1400);
+    };
+    var fallback = function () {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;top:-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) { alert('复制失败，请手动选择'); }
+      document.body.removeChild(ta);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else fallback();
+  }
+
+  /* ======================= 3. 主题 ======================= */
+  function initTheme() {
+    var KEY = 'kp-theme';
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    if (!saved) saved = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+
+    var btn = document.getElementById('theme-btn');
+    if (!btn) return;
+    var paint = function () {
+      btn.textContent = document.documentElement.getAttribute('data-theme') === 'light' ? '☾' : '☀';
+      btn.title = document.documentElement.getAttribute('data-theme') === 'light' ? '切到深色' : '切到浅色';
+    };
+    paint();
+    btn.addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem(KEY, next); } catch (e) {}
+      paint();
+    });
+  }
+
+  /* ======================= 4. 进度 ======================= */
+  var PKEY = 'kp-progress-v1';
+  function loadProgress() {
+    try { return JSON.parse(localStorage.getItem(PKEY) || '{}') || {}; } catch (e) { return {}; }
+  }
+  function saveProgress(p) {
+    try { localStorage.setItem(PKEY, JSON.stringify(p)); } catch (e) {}
+  }
+
+  function initProgress(scopePointIds, total) {
+    var prog = loadProgress();
+    var boxes = document.querySelectorAll('.kp-done input');
+
+    var refresh = function () {
+      var doneInPage = 0;
+      document.querySelectorAll('.kp').forEach(function (card) {
+        var id = card.getAttribute('data-id');
+        var cb = card.querySelector('.kp-done input');
+        var on = !!(cb && cb.checked);
+        card.classList.toggle('done', on);
+        if (on) doneInPage++;
+        var toc = document.querySelector('.toc a[href="#' + cssEsc(id) + '"]');
+        if (toc) {
+          var mark = toc.querySelector('.done');
+          if (on && !mark) toc.insertAdjacentHTML('beforeend', '<span class="done">✓</span>');
+          if (!on && mark) mark.remove();
+        }
+      });
+      // 全局进度
+      var allIds = window.KP_ALL_IDS || scopePointIds;
+      var totalAll = allIds.length;
+      var doneAll = 0;
+      for (var k = 0; k < totalAll; k++) if (prog[allIds[k]]) doneAll++;
+      var pct = totalAll ? doneAll / totalAll : 0;
+      var txt = document.getElementById('prog-txt');
+      if (txt) txt.textContent = doneAll + '/' + totalAll;
+      var ring = document.querySelector('.ring .fg');
+      if (ring) {
+        var C = 2 * Math.PI * 12;
+        ring.setAttribute('stroke-dasharray', C.toFixed(2));
+        ring.setAttribute('stroke-dashoffset', (C * (1 - pct)).toFixed(2));
+      }
+    };
+
+    boxes.forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        var card = cb.closest('.kp');
+        var id = card.getAttribute('data-id');
+        if (cb.checked) prog[id] = 1; else delete prog[id];
+        saveProgress(prog);
+        refresh();
+      });
+    });
+    refresh();
+  }
+
+  function cssEsc(s) { return String(s).replace(/"/g, '\\"'); }
+
+  /* ======================= 5. 目录联动（scrollspy） ======================= */
+  function initSpy() {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+    if (!links.length || !('IntersectionObserver' in window)) return;
+    var map = {};
+    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+
+    var visible = {};
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { visible[en.target.id] = en.isIntersecting; });
+      var cur = null;
+      document.querySelectorAll('.kp').forEach(function (c) { if (!cur && visible[c.id]) cur = c.id; });
+      if (cur) {
+        links.forEach(function (a) { a.classList.remove('on'); });
+        if (map[cur]) map[cur].classList.add('on');
+      }
+    }, { rootMargin: '-88px 0px -60% 0px', threshold: 0 });
+    document.querySelectorAll('.kp').forEach(function (c) { io.observe(c); });
+  }
+
+  /* ======================= 6. 滚动渐入 ======================= */
+  function initReveal() {
+    var els = document.querySelectorAll('.rv');
+    if (!els.length) return;
+    if (!('IntersectionObserver' in window) ||
+        (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      els.forEach(function (e) { e.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: .08 });
+    els.forEach(function (e) { io.observe(e); });
+  }
+
+  /* ======================= 7. 移动端抽屉 + 回顶 ======================= */
+  function initChrome() {
+    var side = document.getElementById('side');
+    var mb = document.getElementById('menu-btn');
+    var scrim = document.getElementById('scrim');
+    var toggle = function (on) {
+      if (!side) return;
+      side.classList.toggle('open', on);
+      if (scrim) scrim.classList.toggle('on', on);
+    };
+    if (mb) mb.addEventListener('click', function () { toggle(!side.classList.contains('open')); });
+    if (scrim) scrim.addEventListener('click', function () { toggle(false); });
+    document.querySelectorAll('.toc a, .nav-lab a').forEach(function (a) {
+      a.addEventListener('click', function () { if (window.innerWidth <= 1080) toggle(false); });
+    });
+
+    var tb = document.getElementById('top-btn');
+    if (tb) {
+      tb.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      window.addEventListener('scroll', function () {
+        tb.classList.toggle('on', window.scrollY > 700);
+      }, { passive: true });
+    }
+  }
+
+  /* ======================= 8. 搜索（索引按需加载） ======================= */
+  function initSearch() {
+    var input = document.getElementById('search');
+    if (!input) return;
+    var box = document.getElementById('hits');
+    var home = document.getElementById('home-body');
+    var loaded = !!window.KP_INDEX;
+    var pending = false;
+
+    // 525KB 的全文索引：只有真的要搜了才加载，不拖慢页面
+    function ensureIndex(cb) {
+      if (loaded) return cb();
+      if (pending) return;
+      pending = true;
+      var s = document.createElement('script');
+      s.src = 'assets/search-index.js';
+      s.onload = function () { loaded = true; pending = false; cb(); };
+      s.onerror = function () {
+        pending = false;
+        box.innerHTML = '<div class="empty">搜索索引加载失败，请确认 <code>assets/search-index.js</code> 与本页在同一目录下。</div>';
+        box.classList.add('on');
+      };
+      document.head.appendChild(s);
+    }
+
+    var render = function (q) {
+      q = (q || '').trim().toLowerCase();
+      if (!q) {
+        box.classList.remove('on');
+        box.innerHTML = '';
+        if (home) home.style.display = '';
+        return;
+      }
+      ensureIndex(function () { paint(q); });
+    };
+
+    var paint = function (q) {
+      if (home) home.style.display = 'none';
+      if (!window.KP_INDEX) return;
+      var hits = window.KP_INDEX.filter(function (it) {
+        return (it.name + ' ' + it.lab + ' ' + it.text).toLowerCase().indexOf(q) >= 0;
+      });
+      var shown = hits.slice(0, 50);
+
+      if (!hits.length) {
+        box.innerHTML = '<div class="empty">没有匹配的知识点，换个词试试（比如 <b>v-model</b>、<b>跨域</b>、<b>Result</b>）</div>';
+        box.classList.add('on');
+        return;
+      }
+      box.innerHTML = '<div class="sec-title"><span class="bar"></span><h2>找到 ' + hits.length +
+        ' 个知识点' + (hits.length > shown.length ? '（显示前 ' + shown.length + ' 个）' : '') + '</h2></div>' +
+        shown.map(function (it) {
+          var i = it.text.toLowerCase().indexOf(q);
+          var text = i >= 0
+            ? (i > 40 ? '…' : '') + it.text.slice(Math.max(0, i - 40), i + 100) + '…'
+            : it.text.slice(0, 120) + '…';
+          return '<a class="hit" href="' + it.file + '#' + it.id + '">' +
+            '<div class="h-top"><span class="h-lab">实训' + it.lab + ' · ' + it.labName + '</span>' +
+            '<span class="h-num">' + it.num + '</span></div>' +
+            '<h4>' + hl(it.name, q) + '</h4>' +
+            '<p>' + hl(text, q) + '</p></a>';
+        }).join('');
+      box.classList.add('on');
+    };
+
+    var hl = function (s, q) {
+      var out = '', low = s.toLowerCase(), from = 0, i;
+      while ((i = low.indexOf(q, from)) >= 0) {
+        out += esc(s.slice(from, i)) + '<mark>' + esc(s.slice(i, i + q.length)) + '</mark>';
+        from = i + q.length;
+      }
+      return out + esc(s.slice(from));
+    };
+    var esc = function (s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    };
+
+    var t = null;
+    input.addEventListener('focus', function () { ensureIndex(function () {}); });
+    input.addEventListener('input', function () {
+      clearTimeout(t);
+      t = setTimeout(function () { render(input.value); }, 130);
+    });
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { input.value = ''; render(''); input.blur(); }
+      if (e.key === 'Enter') {
+        var first = box.querySelector('.hit');
+        if (first) location.href = first.getAttribute('href');
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); input.focus(); }
+    });
+  }
+
+  /* ======================= 9. 自测答案 一键展开/收起 ======================= */
+  function initQaTools() {
+    var all = function (open) {
+      document.querySelectorAll('details.qa').forEach(function (d) { d.open = open; });
+    };
+    var o = document.getElementById('qa-open');
+    var c = document.getElementById('qa-close');
+    if (o) o.addEventListener('click', function () { all(true); });
+    if (c) c.addEventListener('click', function () { all(false); });
+  }
+
+  /* ======================= 启动 ======================= */
+  document.addEventListener('DOMContentLoaded', function () {
+    initTheme();
+    initCode();
+    initReveal();
+    initChrome();
+    initSearch();
+    initSpy();
+    initQaTools();
+    var ids = (window.KP_PAGE_IDS || []);
+    initProgress(ids, ids.length);
+  });
+})();
