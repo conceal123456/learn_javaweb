@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>实训6 后台管理页面开发 · 知识点讲解</title>
+<style>
+  :root{
+    --paper:#f6f2e9;
+    --paper-2:#fffdf8;
+    --ink:#1e2227;
+    --ink-soft:#4a525c;
+    --indigo:#2b4a6f;
+    --indigo-soft:#e4ecf5;
+    --cinnabar:#b4472f;
+    --bamboo:#5d7d5a;
+    --line:#d9d2c2;
+    --code-bg:#1f2429;
+    --code-fg:#e6e2d8;
+    --shadow:0 1px 2px rgba(30,34,39,.05),0 8px 24px rgba(30,34,39,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(43,74,111,.05), transparent 42%),
+      radial-gradient(circle at 88% 4%, rgba(180,71,47,.05), transparent 38%);
+  }
+  h1,h2,h3,h4,.serif{
+    font-family:"Source Han Serif SC","Noto Serif SC","Songti SC",STZhongsong,SimSun,serif;
+    font-weight:700;letter-spacing:.01em;
+  }
+  h1{font-size:clamp(30px,5.2vw,52px);line-height:1.25;margin:.35em 0 .3em}
+  h2{font-size:clamp(22px,3vw,30px);margin:0 0 .6em}
+  h3{font-size:19px;margin:1.6em 0 .5em}
+  p{margin:.55em 0}
+  a{color:var(--indigo)}
+  code,kbd{font-family:"Cascadia Mono","JetBrains Mono",Consolas,"Courier New",monospace}
+  :not(pre)>code{background:var(--indigo-soft);color:var(--indigo);padding:.1em .38em;border-radius:3px;font-size:.9em}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fbf8f1,#f3eee2)}
+  .hero-inner{padding:64px 0 46px;position:relative;z-index:2}
+  .eyebrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:13px;letter-spacing:.22em;color:var(--ink-soft);text-transform:uppercase}
+  .eyebrow .dot{width:6px;height:6px;background:var(--cinnabar);border-radius:50%}
+  .lede{font-size:clamp(16px,1.9vw,19px);color:var(--ink-soft);max-width:62ch;margin-top:.7em}
+  .hero svg.deco{position:absolute;right:-30px;top:10px;width:min(430px,42vw);height:auto;opacity:.5;z-index:1}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:38px}
+  .stat{background:var(--paper-2);padding:16px 18px}
+  .stat b{display:block;font-size:30px;line-height:1.1;color:var(--indigo);font-family:"Source Han Serif SC","Noto Serif SC",SimSun,serif}
+  .stat span{font-size:13px;color:var(--ink-soft)}
+
+  /* ---------- toc ---------- */
+  .toc{position:sticky;top:0;z-index:20;background:rgba(246,242,233,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .toc ul{display:flex;gap:2px;list-style:none;margin:0;padding:9px 0;overflow-x:auto;flex-wrap:nowrap}
+  .toc a{display:block;white-space:nowrap;text-decoration:none;color:var(--ink-soft);font-size:13.5px;padding:5px 11px;border-radius:2px}
+  .toc a:hover{background:var(--indigo-soft);color:var(--indigo)}
+  .toc a.on{background:var(--indigo);color:#fff}
+
+  /* ---------- sections ---------- */
+  section{padding:54px 0 8px;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:0}
+  .kicker{font-size:12.5px;letter-spacing:.2em;color:var(--cinnabar);font-weight:600}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+  .grid2>*{min-width:0}
+  .card{background:var(--paper-2);border:1px solid var(--line);border-radius:4px;padding:20px 22px;box-shadow:var(--shadow)}
+  .card h3{margin-top:0}
+  .tag{display:inline-block;font-size:12px;padding:1px 9px;border-radius:11px;background:var(--indigo-soft);color:var(--indigo);margin-left:8px;vertical-align:2px}
+  .tag.warn{background:#f7e6e1;color:var(--cinnabar)}
+  .tag.ok{background:#e6efe4;color:var(--bamboo)}
+
+  /* ---------- figures ---------- */
+  figure{margin:18px 0;background:var(--paper-2);border:1px solid var(--line);padding:10px;border-radius:4px}
+  figure img{display:block;width:100%;height:auto;border:1px solid var(--line)}
+  figcaption{font-size:13px;color:var(--ink-soft);padding-top:9px;line-height:1.6}
+  .shotmap{position:relative}
+  .zone{position:absolute;border:1.5px dashed var(--cinnabar);background:rgba(180,71,47,.09);font-size:12px;color:var(--cinnabar);font-weight:600;padding:2px 6px;letter-spacing:.02em}
+  .zone b{display:block;font-size:11px;color:var(--ink-soft);font-weight:400}
+
+  /* ---------- tables ---------- */
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;background:var(--paper-2);table-layout:fixed}
+  caption{caption-side:top;text-align:left;font-size:13px;color:var(--ink-soft);padding-bottom:8px}
+  th,td{border:1px solid var(--line);padding:9px 12px;vertical-align:top;text-align:left;word-break:break-word;overflow-wrap:anywhere}
+  thead th{background:#eee8db;font-weight:700;font-size:13.5px;letter-spacing:.03em}
+  tbody tr:nth-child(even){background:#fbf9f4}
+  td code{font-size:.88em}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+
+  /* ---------- code ---------- */
+  .codewrap{position:relative;margin:14px 0}
+  .codebar{display:flex;justify-content:space-between;align-items:center;background:#2b3138;color:#b9c2cc;font-size:12px;padding:6px 12px;border-radius:4px 4px 0 0;letter-spacing:.04em}
+  .copy{background:transparent;border:1px solid #4c5661;color:#cfd6dd;font-size:11.5px;padding:2px 10px;border-radius:2px;cursor:pointer;font-family:inherit}
+  .copy:hover{background:#3a424a}
+  pre{margin:0;background:var(--code-bg);color:var(--code-fg);padding:16px 18px;overflow-x:auto;border-radius:0 0 4px 4px;font-size:13.5px;line-height:1.72}
+  .t{color:#8fbcdd}.a{color:#c9a06c}.s{color:#a8c98f}.c{color:#7b848e;font-style:italic}.k{color:#d98fa0}.n{color:#e6c07b}
+
+  /* ---------- misc ---------- */
+  ul.tight,ol.tight{margin:.5em 0;padding-left:1.35em}
+  ul.tight li,ol.tight li{margin:.3em 0}
+  .callout{border-left:3px solid var(--cinnabar);background:#fbf1ee;padding:12px 16px;margin:16px 0;font-size:14.5px;border-radius:0 4px 4px 0}
+  .callout.info{border-color:var(--indigo);background:var(--indigo-soft)}
+  .callout.good{border-color:var(--bamboo);background:#eef4ec}
+  details{border:1px solid var(--line);background:var(--paper-2);border-radius:4px;margin:10px 0;overflow:hidden}
+  summary{cursor:pointer;padding:13px 18px;font-weight:600;list-style:none;position:relative;padding-right:44px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"展开";position:absolute;right:16px;top:13px;font-size:11.5px;color:var(--cinnabar);border:1px solid var(--cinnabar);border-radius:2px;padding:0 6px;font-weight:400}
+  details[open] summary::after{content:"收起"}
+  details .body{padding:2px 18px 16px;border-top:1px dashed var(--line)}
+  footer{padding:34px 0 60px;color:var(--ink-soft);font-size:13.5px}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+  .steps li{position:relative;padding:0 0 16px 42px;margin:0}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:-1px;width:28px;height:28px;border-radius:50%;background:var(--indigo);color:#fff;font-size:13.5px;display:flex;align-items:center;justify-content:center;font-family:"Source Han Serif SC",SimSun,serif}
+  .steps li::after{content:"";position:absolute;left:13.5px;top:30px;bottom:2px;width:1px;background:var(--line)}
+  .steps li:last-child::after{display:none}
+  .tscroll{overflow-x:auto}
+  @media (max-width:640px){
+    .tscroll table{min-width:600px;margin:0}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+  }
+  @media (max-width:860px){
+    .grid2{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .hero svg.deco{opacity:.22;right:-70px}
+    section{padding:40px 0 6px}
+  }
+  @media (max-width:520px){
+    body{font-size:15px}
+    .wrap{padding:0 16px}
+    .stats{grid-template-columns:1fr 1fr}
+    pre{font-size:12.5px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="deco" viewBox="0 0 400 320" fill="none" aria-hidden="true">
+    <g stroke="#2b4a6f" stroke-width="1.1" opacity=".85">
+      <path d="M200 300 C200 220 200 150 200 60"/>
+      <path d="M200 250 C160 240 130 210 122 172 C164 176 192 206 200 240"/>
+      <path d="M200 250 C240 240 270 210 278 172 C236 176 208 206 200 240"/>
+      <path d="M200 186 C168 178 144 152 138 120 C172 124 194 148 200 178"/>
+      <path d="M200 186 C232 178 256 152 262 120 C228 124 206 148 200 178"/>
+      <path d="M200 124 C178 118 160 100 156 78 C180 82 196 98 200 118"/>
+      <path d="M200 124 C222 118 240 100 244 78 C220 82 204 98 200 118"/>
+      <circle cx="200" cy="52" r="9"/>
+    </g>
+    <g stroke="#b4472f" stroke-width="1" opacity=".7">
+      <path d="M120 300 C120 268 104 250 84 246"/>
+      <path d="M280 300 C280 268 296 250 316 246"/>
+    </g>
+  </svg>
+  <div class="wrap hero-inner">
+    <div class="eyebrow"><span>安徽中医药大学 · JavaWeb 课程</span><span class="dot"></span><span>实训 6</span><span class="dot"></span><span>Element-Plus + Vue-Router</span></div>
+    <h1>后台管理页面开发<br>知识点讲解与实测记录</h1>
+    <p class="lede">一页讲清“顶部头部 + 左侧导航 + 右侧内容”这套经典后台布局怎么搭，嵌套路由的点为什么点了没反应，以及我把讲义代码逐条跑起来之后量到的 7 个真实问题。工程在 <code>实训6_后台管理页面/工程/admin-layout</code>，双击即开，无需联网。</p>
+    <div class="stats">
+      <div class="stat"><b>4</b><span>布局区域：头部 / 导航 / 内容 / 分页</span></div>
+      <div class="stat"><b>7</b><span>讲义代码实测出的问题（含 1 处致命）</span></div>
+      <div class="stat"><b>9</b><span>中药材模拟数据条数</span></div>
+      <div class="stat"><b>100%</b><span>目标界面还原度（逐像素比对）</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" id="toc">
+  <div class="wrap">
+    <ul>
+      <li><a href="#s1">1 目标与成果</a></li>
+      <li><a href="#s2">2 布局骨架</a></li>
+      <li><a href="#s3">3 六个知识点</a></li>
+      <li><a href="#s4">4 实测问题清单</a></li>
+      <li><a href="#s5">5 报告“实验过程”怎么写</a></li>
+      <li><a href="#s6">6 自测题</a></li>
+      <li><a href="#s7">7 跑起来</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============================ 1 ============================ -->
+<section id="s1">
+  <div class="kicker">SECTION 01</div>
+  <h2>这讲要做什么，最后做成了什么样</h2>
+  <p>实训 6 是前面五讲的合流：实训 1 建工程、实训 2 学语法、实训 3 装 Element-Plus、实训 4 用组件、实训 5 配路由，这一讲把它们拼成一个能跑的后台页面。三件事：</p>
+  <ol class="tight">
+    <li><b>Manage.vue</b>：父页面，负责“壳”。顶部头部、左侧 <code>el-menu</code> 导航、右侧内容区三块。</li>
+    <li><b>Detail.vue</b>：子页面，负责“肉”。搜索框、功能按钮、<code>el-table</code> 数据表、<code>el-pagination</code> 分页。</li>
+    <li><b>router/index.js</b>：把 Detail 挂成 Manage 的 <b>children</b>，点左侧菜单时只有右侧换，头部和导航不动。</li>
+  </ol>
+
+  <h3>讲义目标界面 与 我的实现，并排看</h3>
+  <div class="grid2">
+    <figure>
+      <img src="勘误图/讲义_目标界面.jpg" alt="讲义给出的目标界面">
+      <figcaption>讲义第 2 页给出的目标界面。注意标题写的是“中药材后台管理系统”，右侧是头像加“系统管理员”。</figcaption>
+    </figure>
+    <figure>
+      <img src="演示截图/06_目标界面_detail.png" alt="我实现的 /manage/detail 页面">
+      <figcaption>我的实现，访问 <code>/manage/detail</code>，1280×720、1.25 缩放截图，与讲义图同一口径。头部、导航、搜索、按钮组、斑马纹表格、分页条逐项对上。</figcaption>
+    </figure>
+  </div>
+  <div class="callout info">
+    <b>一个必须先说清的差异。</b>讲义的<b>代码</b>里头部写的是“网站 logo”和“后台用户”两个纯文本，而讲义的<b>目标界面图</b>里是“中药材后台管理系统”和“头像 + 系统管理员”。两者不一致。我按图实现（图是验收标准），代码差异记在第 4 节。
+  </div>
+</section>
+
+<!-- ============================ 2 ============================ -->
+<section id="s2">
+  <div class="kicker">SECTION 02</div>
+  <h2>布局骨架：两个 flex 就把页面切完</h2>
+  <p>整个后台不需要任何布局框架，两层 flex 就够。外层是“上下”，内层是“左右”，右侧内部再来一层“上下”。讲义把它拆成 6 步开发思路，本质就是这 4 个矩形：</p>
+
+  <div class="grid2">
+    <div>
+      <h3>四块区域的 CSS 依据</h3>
+      <table>
+        <thead><tr><th>区域</th><th>关键样式</th><th>作用</th></tr></thead>
+        <tbody>
+          <tr><td>顶部头部</td><td><code>height:60px; display:flex; align-items:center</code></td><td>整行蓝底，垂直居中放 logo 与用户</td></tr>
+          <tr><td>左侧导航</td><td><code>width:200px; border-right:1px solid #ddd</code></td><td>固定宽，右边一条分隔线</td></tr>
+          <tr><td>右侧内容</td><td><code>flex:1; width:0; flex-direction:column</code></td><td>吃掉剩余宽度，内部再纵向排</td></tr>
+          <tr><td>高度自适应</td><td><code>min-height:calc(100vh - 60px)</code></td><td>视口高减去头部高，导航和内容同高</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <b>两个容易被忽略的细节。</b>一是头部中间那个 <code>&lt;div style="flex:1"&gt;&lt;/div&gt;</code>，它没有内容，专门用来把“系统管理员”顶到最右边；二是右侧内容区的 <code>width:0</code>，配合 <code>flex:1</code> 才能防止表格里长文本把这列撑爆。
+      </div>
+    </div>
+    <div>
+      <h3>讲义的布局框线图</h3>
+      <figure style="margin-top:6px">
+        <img src="勘误图/讲义_布局框线图.jpg" alt="讲义的布局框线图">
+        <figcaption>讲义第 2 页的框线图：网站 logo、后台用户、导航栏、搜索区域、数据展示区域、分页区域。这就是 Manage.vue 骨架阶段该长成的样子。</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <h3>骨架阶段先跑通，再填内容</h3>
+  <p>讲义第 4 步要求在 Manage.vue 里先把“搜索区域 / 数据展示区域 / 分页区域”三块空位划出来。我照做并截图，这一步的产物和讲义第 9 页的运行图完全一致：</p>
+  <div class="grid2">
+    <figure>
+      <img src="勘误图/讲义_骨架阶段运行图.jpg" alt="讲义骨架阶段运行截图">
+      <figcaption>讲义第 9 页：骨架阶段在 <code>localhost:5173/manage</code> 的运行图。</figcaption>
+    </figure>
+    <figure>
+      <img src="演示截图/06_讲义字面版_manage.png" alt="我按讲义字面代码跑出的骨架">
+      <figcaption>我用讲义字面代码跑出的同一阶段（<code>/manage</code>）。三块占位、导航栏、头部全部对上。</figcaption>
+    </figure>
+  </div>
+  <div class="callout">
+    <b>尺寸是我量过的，不是猜的。</b>把讲义目标界面图按像素扫描：头部占 75 像素、导航分隔线在 270 像素、菜单行距 68 至 71 像素。<code>el-menu</code> 项默认高 56 像素，71÷56 约等于 1.25，说明那张图是 1.25 缩放下截的。换算回 CSS 像素：头部 60、导航 200 至 216，与讲义代码里的 <code>60px</code> 和 <code>200px</code> 吻合。
+  </div>
+</section>
+
+<!-- ============================ 3 ============================ -->
+<section id="s3">
+  <div class="kicker">SECTION 03</div>
+  <h2>六个知识点，逐个讲透</h2>
+
+  <div class="card">
+    <h3><span class="serif">知识点 1</span><span class="tag">flex</span><br>三段式头部：左中右怎么排</h3>
+    <p>头部只有三块：logo 靠左、用户靠右、中间留白。用 <code>flex:1</code> 的空白 div 当“弹簧”，比 <code>justify-content:space-between</code> 更好扩展（以后中间要塞面包屑就直接替换那个 div）。</p>
+    <div class="codewrap">
+      <div class="codebar"><span>Manage.vue · 头部</span><button class="copy">复制</button></div>
+      <pre><code>&lt;!-- 顶部头部整行容器 --&gt;
+&lt;div style="height: 60px; background-color: #3c7fff; display: flex; align-items: center"&gt;
+  &lt;div style="width: 200px; display: flex; align-items: center; padding-left: 15px"&gt;
+    &lt;span style="font-size: 22px; color: white"&gt;中药材后台管理系统&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div style="flex: 1"&gt;&lt;/div&gt;  &lt;!-- 弹簧：把右侧顶到最右 --&gt;
+  &lt;div style="width: fit-content; display: flex; align-items: center; padding-right: 10px"&gt;
+    &lt;el-avatar :size="36"&gt;&lt;el-icon&gt;&lt;UserFilled /&gt;&lt;/el-icon&gt;&lt;/el-avatar&gt;
+    &lt;span style="font-size: 22px; color: white"&gt;系统管理员&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+    <p><code>width:200px</code> 和左侧导航的 200px 对齐，logo 正好压在导航栏上方，这是后台界面“看起来整齐”的关键。</p>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h3><span class="serif">知识点 2</span><span class="tag">el-menu</span><br>菜单开 router 属性，index 就是路径</h3>
+    <p><code>el-menu</code> 加上 <code>router</code> 之后，点菜单项等于 <code>router.push(index)</code>。所以 <code>index</code> 不再是“编号”，而是<b>路由地址</b>，它同时还是高亮判据。</p>
+    <div class="codewrap">
+      <div class="codebar"><span>Manage.vue · 左侧导航</span><button class="copy">复制</button></div>
+      <pre><code>&lt;el-menu router
+         :default-active="router.currentRoute.value.path"
+         :default-openeds="['1']"
+         style="border: 0"&gt;
+  &lt;el-menu-item index="/manage"&gt;&lt;el-icon&gt;&lt;House /&gt;&lt;/el-icon&gt;管理首页&lt;/el-menu-item&gt;
+  &lt;el-menu-item index="/manage/detail"&gt;&lt;el-icon&gt;&lt;DataAnalysis /&gt;&lt;/el-icon&gt;内容展示&lt;/el-menu-item&gt;
+  &lt;el-sub-menu index="1"&gt;
+    &lt;template #title&gt;&lt;el-icon&gt;&lt;User /&gt;&lt;/el-icon&gt;&lt;span&gt;用户管理&lt;/span&gt;&lt;/template&gt;
+    &lt;el-menu-item index="/manage/admin"&gt;管理员信息&lt;/el-menu-item&gt;
+    &lt;el-menu-item index="/manage/staff"&gt;普通用户信息&lt;/el-menu-item&gt;
+  &lt;/el-sub-menu&gt;
+&lt;/el-menu&gt;</code></pre>
+    </div>
+    <table>
+      <thead><tr><th>属性</th><th>干什么</th><th>不写会怎样</th></tr></thead>
+      <tbody>
+        <tr><td><code>router</code></td><td>点击时按 index 跳转</td><td>点了只改高亮，地址栏不动</td></tr>
+        <tr><td><code>:default-active</code></td><td>当前路径对应项高亮</td><td>刷新后菜单不知道自己在哪一页</td></tr>
+        <tr><td><code>:default-openeds</code></td><td>默认展开哪些子菜单，值是 sub-menu 的 index 数组</td><td>子菜单收起，要点一下才开</td></tr>
+        <tr><td><code>style="border:0"</code></td><td>去掉 el-menu 自带的右边框</td><td>和导航栏那条 <code>border-right</code> 叠成双线</td></tr>
+      </tbody>
+    </table>
+    <p>讲义这里 <code>:default-active</code> 直接用了 <code>router.currentRoute.value.path</code>，这是“用 <code>import</code> 进来的 router 对象”的写法；等价的还有 <code>useRoute().path</code>。前者要在 script 里 <code>import router from '@/router/index.js'</code>，这就是 Manage.vue 那行看着没用的 import 的真正用途。</p>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h3><span class="serif">知识点 3</span><span class="tag warn">本讲核心</span><br>嵌套路由：children 只配一半，另一半是 router-view</h3>
+    <p>这是实训 6 最容易翻车的地方，也是讲义的一个实质性缺漏。嵌套路由要同时满足两件事，缺一不可：</p>
+    <ol class="tight">
+      <li>路由表里把 Detail 写成 Manage 的 <b>children</b>；</li>
+      <li>Manage.vue 里放一个 <b><code>&lt;router-view /&gt;</code></b>，作为子页面的“插槽”。</li>
+    </ol>
+    <div class="codewrap">
+      <div class="codebar"><span>router/index.js · 嵌套路由</span><button class="copy">复制</button></div>
+      <pre><code>{
+  path: '/manage', name: 'manage', meta: { title: '后台管理' },
+  component: () =&gt; import('../views/Manage.vue'),
+  children: [
+    { path: '', name: 'manageHome', redirect: '/manage/detail' },
+    { path: 'detail', name: 'detail', meta: { title: '内容展示' }, component: () =&gt; import('../views/Detail.vue') },
+    { path: 'user',   name: 'user',   meta: { title: '用户列表' }, component: () =&gt; import('../views/User.vue') },
+  ]
+}</code></pre>
+    </div>
+    <p>子路由的 <code>path</code> 前面<b>不写斜杠</b>：<code>detail</code> 拼出来是 <code>/manage/detail</code>。写成 <code>/detail</code> 就变成顶级路径了。</p>
+    <div class="callout">
+      <b>实测证据。</b>我按讲义字面代码（Manage.vue 里只有三块占位、没有 <code>router-view</code>）跑了一遍，分别截了 <code>/manage</code> 和 <code>/manage/detail</code> 两张图，两张<b>一模一样</b>，右侧始终停在“数据展示区域”五个大字。Detail.vue 根本没被渲染。见第 4 节第 1 条。
+    </div>
+    <p>补上 <code>&lt;router-view /&gt;</code> 之后，同一个位置就换成了 Detail 的表格；点 <code>/manage/user</code> 又换成用户列表，头部和导航全程不动。这才叫“嵌套”。</p>
+    <div class="grid2">
+      <figure><img src="演示截图/06_嵌套路由_user.png" alt="子路由 user 渲染在右侧内容区">
+        <figcaption>访问 <code>/manage/user</code>：父页面壳不变，右侧内容区渲染子页面，标签标题被守卫改成“用户列表”。</figcaption></figure>
+      <figure><img src="演示截图/06_子菜单_staff.png" alt="子菜单项跳转并高亮">
+        <figcaption>点子菜单“普通用户信息”跳到 <code>/manage/staff</code>，菜单高亮正确落在子项上。</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h3><span class="serif">知识点 4</span><span class="tag">meta + 守卫</span><br>标签页标题自动切换</h3>
+    <p><code>meta</code> 是给路由挂的自定义数据，全局前置守卫在每次跳转前读它，改浏览器标签标题。守卫三个参数：<code>to</code> 要去哪、<code>from</code> 从哪来、<code>next()</code> 放行。</p>
+    <div class="codewrap">
+      <div class="codebar"><span>router/index.js · 全局前置守卫</span><button class="copy">复制</button></div>
+      <pre><code>router.beforeEach((to, from, next) =&gt; {
+  document.title = to.meta.title || '中药材后台管理系统'
+  next()
+})</code></pre>
+    </div>
+    <p>那个 <code>|| '默认标题'</code> 不是可有可无的。讲义原话是 <code>document.title = to.meta.title</code>，遇到没配 meta 的路由，<code>to.meta.title</code> 是 <code>undefined</code>，赋值给 <code>document.title</code> 会被转成字符串 <code>"undefined"</code>，标签页就明晃晃显示这个词。我实测抓到了，见第 4 节第 4 条。</p>
+    <div class="callout info">
+      <b>一条我原本想错了、被实测纠正的知识。</b>我原以为讲义 <code>detail</code> 那条没写 meta，标签页会显示 undefined。实测结果是显示<b>“后台管理”</b>。原因是 vue-router 会把父级和子级的 <code>meta</code> <b>合并</b>到 <code>to.meta</code>，子级没写就继承父级。所以“没配 meta”的真实后果是<b>标题不区分页面</b>，而不是 undefined。undefined 只发生在整条链上都没有 meta 的顶级路由（<code>/home</code>、<code>/test</code>）。
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h3><span class="serif">知识点 5</span><span class="tag">reactive</span><br>模拟数据与表格、分页组件</h3>
+    <p>表格吃的是一个数组，分页吃的是一堆数字，两者在讲义代码里<b>没有连起来</b>。先把组件属性认清：</p>
+    <div class="codewrap">
+      <div class="codebar"><span>Detail.vue · 表格与分页</span><button class="copy">复制</button></div>
+      <pre><code>&lt;el-table :data="data.tableData" stripe&gt;
+  &lt;el-table-column label="名称" prop="name" /&gt;
+  &lt;el-table-column label="地址" prop="address" /&gt;
+  &lt;el-table-column label="日期" prop="date" /&gt;
+&lt;/el-table&gt;
+
+&lt;el-pagination
+  v-model:current-page="data.pageNum"
+  v-model:page-size="data.pageSize"
+  :page-sizes="[5, 10, 15, 20]"
+  background
+  layout="total, sizes, prev, pager, next, jumper"
+  :total="data.total" /&gt;</code></pre>
+    </div>
+    <table>
+      <thead><tr><th>写法</th><th>含义</th></tr></thead>
+      <tbody>
+        <tr><td><code>:data</code> / <code>:total</code></td><td>带冒号是<b>绑定</b>，把 JS 变量给组件；不带冒号是<b>字面字符串</b></td></tr>
+        <tr><td><code>v-model:current-page</code></td><td>具名 v-model，页码双向绑定，点页码会自动写回 <code>data.pageNum</code></td></tr>
+        <tr><td><code>stripe</code> / <code>background</code></td><td>布尔属性，写了就是 true。这里 <code>background</code> 不带冒号是对的（实训 4 写成 <code>:background</code> 才出问题）</td></tr>
+        <tr><td><code>layout</code></td><td>分页条上有哪些块、什么顺序，逗号分隔</td></tr>
+      </tbody>
+    </table>
+    <p>数据用 <code>reactive</code> 包一个对象，模板里直接 <code>data.name</code>、<code>data.tableData</code> 取。9 条中药材数据（霍山石斛、亳白芍、宣木瓜、滁菊、茯苓、山茱萸、灵芝、半夏、断血流）产地全是安徽，这是课程的专业背景，报告里点一句会加分。</p>
+    <div class="callout">
+      <b>实测：分页是“摆设”。</b>我点掉第 2 页，页码高亮确实变成了 2，但表格还是那 9 行，第一行仍是霍山石斛。因为 <code>total: 50</code> 只是给分页组件算页数用的，<code>tableData</code> 只有 9 条，也没人按 <code>pageNum</code> 去切数组。这不算写错（讲义要求的就是“完成分页 UI 展示”），但必须知道边界在哪。
+    </div>
+    <p>要让分页真的动起来，就差一个计算属性切片，后端真分页则要在页码变化时重新请求：</p>
+    <div class="codewrap">
+      <div class="codebar"><span>进阶写法 · 前端切片（本讲不要求）</span><button class="copy">复制</button></div>
+      <pre><code>import { computed, watch } from 'vue'
+
+const pagedData = computed(() =&gt; {
+  const start = (data.pageNum - 1) * data.pageSize
+  return data.tableData.slice(start, start + data.pageSize)
+})
+// 数据只有 9 条时，total 也该跟着真实数据走
+watch(() =&gt; data.tableData.length, (n) =&gt; { data.total = n })</code></pre>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h3><span class="serif">知识点 6</span><span class="tag">图标</span><br>prefix-icon=“Search” 为什么能生效</h3>
+    <p>Detail.vue 里 <code>prefix-icon="Search"</code> 传的是一个<b>字符串</b>，不是组件。它能显示，靠的是实训 3 在 main.js 里做过一次全局注册：把所有图标遍历注册成全局组件，Element-Plus 内部再用 <code>resolveComponent('Search')</code> 按名字找。</p>
+    <div class="codewrap">
+      <div class="codebar"><span>main.js · 全局注册图标</span><button class="copy">复制</button></div>
+      <pre><code>import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}</code></pre>
+    </div>
+    <p>所以 Detail.vue 里那行 <code>import { Search } from '@element-plus/icons-vue'</code> 在当前写法下其实没被用到。两种正确搭配任选其一，别混：</p>
+    <ul class="tight">
+      <li>全局注册 + 字符串：<code>prefix-icon="Search"</code>（讲义走这条）</li>
+      <li>局部 import + 绑定：<code>:prefix-icon="Search"</code>（把 import 的东西传进去）</li>
+    </ul>
+    <p>Manage.vue 里 <code>&lt;el-icon&gt;&lt;House /&gt;&lt;/el-icon&gt;</code> 这种标签写法同理，也是靠全局注册才不用逐个 import。</p>
+  </div>
+</section>
+
+<!-- ============================ 4 ============================ -->
+<section id="s4">
+  <div class="kicker">SECTION 04</div>
+  <h2>讲义代码实测问题清单</h2>
+  <p>下面 7 条全部是我把讲义代码原样跑起来之后<b>量到的</b>，不是读代码猜的。每条都写了怎么验的。严重度分三档：<span class="tag warn">致命</span> 页面出不来；<span class="tag">要改</span> 功能有缺陷；<span class="tag ok">口径</span> 不算错，但要知道。</p>
+
+  <table>
+    <thead><tr><th style="width:44px">#</th><th style="width:120px">位置</th><th>讲义写法</th><th>我实测到的现象</th><th>结论与改法</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="num">1</td><td>Manage.vue</td>
+        <td>整份 Manage.vue 代码里<b>没有</b> <code>&lt;router-view /&gt;</code>，右侧只有三块占位 div</td>
+        <td>分别访问 <code>/manage</code> 与 <code>/manage/detail</code>，两张截图<b>完全相同</b>，右侧停在“数据展示区域”占位文字，Detail 从未渲染</td>
+        <td><span class="tag warn">致命</span> 嵌套路由只配了一半。右侧内容区必须放 <code>&lt;router-view /&gt;</code>；三块占位由 Detail 的三张卡片填，占位 div 删掉</td>
+      </tr>
+      <tr>
+        <td class="num">2</td><td>Manage.vue 子菜单</td>
+        <td><code>&lt;el-menu-item&gt;管理员信息&lt;/el-menu-item&gt;</code>，两条子菜单项都没有 <code>index</code></td>
+        <td>点开子菜单再点“管理员信息”，地址栏仍是 <code>/manage/detail</code>，页面毫无反应；控制台两条 <code>[Vue warn]: Missing required prop: "index"</code></td>
+        <td><span class="tag">要改</span> <code>index</code> 是必填项，补 <code>index="/manage/admin"</code>、<code>index="/manage/staff"</code>，并在 children 里加这两条路由</td>
+      </tr>
+      <tr>
+        <td class="num">3</td><td>Manage.vue 菜单</td>
+        <td>管理首页、个人信息、退出登录三项的 <code>index</code> 都写成 <code>/manage</code></td>
+        <td>停在 <code>/manage</code> 时，<code>.is-active</code> 同时命中三项，截图上三条菜单一起变蓝</td>
+        <td><span class="tag">要改</span> 一个 index 对应一个路径才会一个高亮。个人信息、退出登录应有各自路径（或改成按钮，不参与路由）</td>
+      </tr>
+      <tr>
+        <td class="num">4</td><td>index.js 守卫</td>
+        <td><code>document.title = to.meta.title</code></td>
+        <td>访问 <code>/home</code>（没配 meta）时标签页显示 <b>undefined</b>，页面内打印 <code>document.title</code> 得到字符串 “undefined”</td>
+        <td><span class="tag">要改</span> 加兜底：<code>to.meta.title || '默认标题'</code>。这条实训 5 已出现过，本讲又照抄了一遍</td>
+      </tr>
+      <tr>
+        <td class="num">5</td><td>index.js 路由表</td>
+        <td><code>detail</code> 那条子路由是 children 里唯一没写 <code>meta</code> 的</td>
+        <td>访问 <code>/manage/detail</code> 标签页显示“<b>后台管理</b>”（父级的标题），不是 undefined</td>
+        <td><span class="tag">要改</span> 后果是子页面标题不分。补 <code>meta:{title:'内容展示'}</code>。<b>顺带纠正一个常见臆断</b>：父子 meta 会合并，子级没写就继承父级</td>
+      </tr>
+      <tr>
+        <td class="num">6</td><td>index.js 守卫</td>
+        <td>第三个参数 <code>next()</code> 的写法</td>
+        <td>每次导航控制台都有一条 <code>[VUE_ROUTER_R0025] The `next()` callback in navigation guards is deprecated</code></td>
+        <td><span class="tag ok">口径</span> 讲义是按 vue-router 4 写的，本机装的是 5.3.1 已废弃 next。功能照常，新代码建议写 <code>return</code>。我保留 <code>next()</code> 以与报告一致</td>
+      </tr>
+      <tr>
+        <td class="num">7</td><td>Detail.vue</td>
+        <td><code>total: 50</code> 但 <code>tableData</code> 只有 9 条，也没按页码切片；三个 <code>class="card"</code> 而 <code>&lt;style scoped&gt;</code> 是空的</td>
+        <td>点第 2 页，页码高亮变了，表格仍是同样 9 行；卡片没有底色和边框（样式表里根本没有 .card 规则）</td>
+        <td><span class="tag ok">口径</span> 讲义目标只是“分页 UI 展示”，不算错。<code>class="card"</code> 是实训 4 就留下的无效类名。想让分页真生效见知识点 5 的切片写法</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>两张关键对比图</h3>
+  <div class="grid2">
+    <figure>
+      <img src="演示截图/06_讲义字面版_detail.png" alt="讲义字面代码下的 /manage/detail">
+      <figcaption><b>问题 1 的证据。</b>地址已经是 <code>/manage/detail</code>，右侧仍是占位文字。和上一张 <code>/manage</code> 的截图逐像素相同。</figcaption>
+    </figure>
+    <figure>
+      <img src="演示截图/06_目标界面_detail.png" alt="补上 router-view 后的 /manage/detail">
+      <figcaption><b>补上 <code>&lt;router-view /&gt;</code> 之后。</b>Detail 渲染进右侧内容区，与讲义目标界面一致。</figcaption>
+    </figure>
+  </div>
+  <div class="grid2">
+    <figure>
+      <img src="演示截图/06_原版守卫_home.png" alt="原版守卫下 /home 标题为 undefined">
+      <figcaption><b>问题 4 的证据。</b>原版守卫下访问 <code>/home</code>，页面自己打印出标签标题是 undefined。</figcaption>
+    </figure>
+    <figure>
+      <img src="演示截图/06_修正守卫_home.png" alt="修正守卫后 /home 标题为默认标题">
+      <figcaption><b>加兜底之后。</b>同一路径打印出“中药材后台管理系统”。</figcaption>
+    </figure>
+  </div>
+
+  <h3>另外两条量出来的小差异</h3>
+  <ul class="tight">
+    <li>头部 logo 用讲义的 <code>font-size:22px</code>，9 个字占 198 像素，正好塞满 <code>width:200px</code> 的内容盒，但会略微越过左侧导航那条分隔线；讲义目标图里这段文字约 20 像素。要更贴图纸，把 logo 字号压到 20px。我保留了 22px，以代码为准。</li>
+    <li>讲义正文里“最后实现的界面”是 1.25 缩放下截的图（头部量得 75 像素，对应代码 60px），截图对比时要把缩放口径对齐，否则会误判“我的导航栏偏窄”。</li>
+  </ul>
+</section>
+
+<!-- ============================ 5 ============================ -->
+<section id="s5">
+  <div class="kicker">SECTION 05</div>
+  <h2>报告“三、实验过程”这一栏怎么写</h2>
+  <p>这次得分卡在 0 分，不是因为代码不会，而是因为<b>“实验过程”那一栏是空的</b>：题目要求记录操作步骤、关键命令、截图、遇到的问题及解决方法，而卷面上只把题目原文抄了一遍，最后一行“使用EI框架”。这一节按作业的 3 大项 12 小点，逐条给出“做了什么、代码在哪、截图是哪张、遇到什么问题”。</p>
+
+  <h3>先备好的三条命令</h3>
+  <div class="codewrap">
+    <div class="codebar"><span>关键命令</span><button class="copy">复制</button></div>
+    <pre><code>npx --yes create-vue@latest admin-layout --force --router --bare   # 建工程，只勾 Router
+npm install                                                        # 装依赖
+npm install element-plus @element-plus/icons-vue                   # 装 UI 框架与图标
+npm run dev                                                        # 启动，默认 http://localhost:5173</code></pre>
+  </div>
+
+  <h3>逐项对照</h3>
+  <table>
+    <thead><tr><th style="width:56px">小点</th><th style="width:170px">要求</th><th>我做了什么（可直接改写进报告）</th><th style="width:150px">配图</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1-1</td><td>整体容器分四部分</td><td>在 Manage.vue 建最外层 div，内部依次是头部、左右分栏容器、右侧内容列，四块区域用注释标号</td><td>06_讲义字面版_manage</td></tr>
+      <tr><td class="num">1-2</td><td>flex 实现头部</td><td>头部 <code>height:60px; background:#3c7fff; display:flex; align-items:center</code>，左 logo 宽 200px，中间空 div 用 <code>flex:1</code> 当弹簧，右侧放 <code>el-avatar</code> 与“系统管理员”</td><td>06_目标界面_detail</td></tr>
+      <tr><td class="num">1-3</td><td>左右分栏 + el-menu + router 跳转</td><td>分栏容器 <code>display:flex</code>；左栏 200px 加右分隔线；<code>el-menu</code> 开 <code>router</code>，配 <code>:default-active</code> 与 <code>:default-openeds="['1']"</code>；含 2 个普通菜单项、1 个含 2 子项的 <code>el-sub-menu</code></td><td>06_子菜单_staff</td></tr>
+      <tr><td class="num">1-4</td><td>右侧划分三块 + 高度自适应</td><td>先按讲义写“搜索区域 / 数据展示区域 / 分页区域”三块占位并截图；随后在数据展示区放 <code>&lt;router-view /&gt;</code> 承载子页面；两侧都写 <code>min-height:calc(100vh - 60px)</code>，内容列 <code>flex:1; width:0</code></td><td>讲义框线图 + 两张对比</td></tr>
+      <tr><td class="num">2-1</td><td>查询区</td><td>Detail.vue 第一张卡片：<code>el-input</code> 宽 240px、<code>v-model="data.name"</code>、<code>prefix-icon="Search"</code>，后接 primary“查 询”与 warning“重 置”</td><td>06_目标界面_detail</td></tr>
+      <tr><td class="num">2-2</td><td>功能按钮区</td><td>第二张卡片四个按钮：新增 primary、批量删除 warning、导入 info、导出 success</td><td>同上</td></tr>
+      <tr><td class="num">2-3</td><td>el-table 展示</td><td>第三张卡片 <code>el-table :data="data.tableData" stripe</code>，三列 prop 分别 name / address / date</td><td>同上</td></tr>
+      <tr><td class="num">2-4</td><td>el-pagination</td><td>配 <code>v-model:current-page</code>、<code>v-model:page-size</code>、<code>:page-sizes="[5,10,15,20]"</code>、<code>background</code>、六段式 layout、<code>:total="data.total"</code></td><td>分页条可见“共 50 条”</td></tr>
+      <tr><td class="num">2-5</td><td>reactive 模拟数据</td><td><code>const data = reactive({ name:null, tableData:[9 条中药材], pageNum:1, pageSize:10, total:50 })</code>，字段含名称、产地、日期</td><td>同上</td></tr>
+      <tr><td class="num">3-1</td><td>父路由 /manage</td><td>children 之外配 <code>path:'/manage'</code>，懒加载 Manage.vue</td><td>router/index.js</td></tr>
+      <tr><td class="num">3-2</td><td>Detail 作为子路由</td><td><code>children</code> 内 <code>path:'detail'</code>（不带前导斜杠），拼出 <code>/manage/detail</code>；另补 <code>path:''</code> 重定向，避免直接访问 /manage 时右侧空白</td><td>06_目标界面_detail</td></tr>
+      <tr><td class="num">3-3</td><td>meta + beforeEach</td><td>各路由加 <code>meta:{title}</code>；守卫里 <code>document.title = to.meta.title || '默认标题'</code> 后 <code>next()</code></td><td>06_修正守卫_home</td></tr>
+      <tr><td class="num">3-4</td><td>运行验证跳转</td><td>点左侧菜单，地址栏在 <code>/manage/detail</code>、<code>/manage/user</code>、<code>/manage/staff</code> 之间变化，头部与导航不动，只有右侧内容区换，标签标题同步变</td><td>三张子路由截图</td></tr>
+    </tbody>
+  </table>
+
+  <h3>“遇到的问题以及解决方法”这一段，照实写最有力</h3>
+  <ol class="steps">
+    <li><b>点了“内容展示”右侧不变化。</b>查地址栏确认路由已经跳到 <code>/manage/detail</code>，说明路由没问题；再对照实训 5 的 Manage.vue，发现本讲讲义的 Manage.vue 里少了 <code>&lt;router-view /&gt;</code>。补上后子页面正常渲染。</li>
+    <li><b>子菜单点了没反应。</b>打开控制台看到 <code>Missing required prop: "index"</code>，才明白开了 <code>router</code> 之后 <code>index</code> 就是跳转地址，没写 index 的菜单项既不能跳也不会高亮。补 index 并加对应子路由。</li>
+    <li><b>浏览器标签出现 undefined。</b>定位到守卫 <code>document.title = to.meta.title</code>，对没有 meta 的路由会赋成字符串 undefined。加 <code>|| '默认标题'</code> 解决；同时发现 detail 不显示 undefined 是因为 meta 会父子合并。</li>
+    <li><b>三条菜单同时变蓝。</b>它们的 index 都写成 <code>/manage</code>，高亮按 index 匹配，所以一起点亮。改为各自路径后恢复单项高亮。</li>
+    <li><b>分页点了数据不变。</b>读组件属性确认 <code>total</code> 只影响页数计算，与 <code>tableData</code> 无关；本讲只要求分页 UI，若要真实翻页需按 <code>pageNum</code> 切片。</li>
+  </ol>
+</section>
+
+<!-- ============================ 6 ============================ -->
+<section id="s6">
+  <div class="kicker">SECTION 06</div>
+  <h2>自测题</h2>
+  <p>先自己想，再点开对答案。这 7 题覆盖本讲全部考点，也是答辩老师爱追问的方向。</p>
+  <details><summary>1. 嵌套路由配了 children，为什么点菜单右侧还是空白？</summary>
+    <div class="body"><p>因为父组件模板里没有 <code>&lt;router-view /&gt;</code>。children 只声明了“哪些路径属于我”，子页面渲染到哪个 DOM 位置由 <code>router-view</code> 决定，两者缺一不可。</p></div>
+  </details>
+  <details><summary>2. 子路由的 path 为什么写 detail 而不是 /detail？</summary>
+    <div class="body"><p>不带前导斜杠是相对父路径拼接，结果是 <code>/manage/detail</code>；带斜杠表示绝对路径，会脱离父级变成顶级路由，且嵌套语义失效。</p></div>
+  </details>
+  <details><summary>3. <code>el-menu</code> 的 <code>router</code> 属性和 <code>:default-active</code> 分别做什么？</summary>
+    <div class="body"><p><code>router</code> 让点击菜单项时执行 <code>router.push(index)</code>；<code>:default-active</code> 指定当前哪个 index 处于激活态，通常绑当前路径 <code>router.currentRoute.value.path</code>，这样刷新后高亮不会丢。</p></div>
+  </details>
+  <details><summary>4. 守卫里不写 <code>next()</code> 会怎样？</summary>
+    <div class="body"><p>导航会挂住，页面不切换。守卫必须显式放行。注意 vue-router 5 已把第三个参数 next 标记为废弃，推荐直接 return（return 真值放行、return false 取消、return 字符串跳去该路径）。</p></div>
+  </details>
+  <details><summary>5. 为什么 <code>prefix-icon="Search"</code> 传字符串也能显示图标？</summary>
+    <div class="body"><p>main.js 里遍历 <code>@element-plus/icons-vue</code> 做了全局组件注册，组件内部按名字解析组件。若没有全局注册，就必须写成 <code>:prefix-icon="Search"</code> 并局部 import。</p></div>
+  </details>
+  <details><summary>6. <code>background</code> 和 <code>:background</code> 有区别吗？</summary>
+    <div class="body"><p>有。<code>background</code> 是把该属性设为空字符串，对布尔属性等价于 true；<code>:background</code> 是绑定一个叫 background 的变量，变量不存在时拿到 undefined，样式就失效。实训 4 的分页就是踩在这里。</p></div>
+  </details>
+  <details><summary>7. 头部那行 <code>&lt;div style="flex:1"&gt;&lt;/div&gt;</code> 是干什么的？</summary>
+    <div class="body"><p>空弹簧。flex 容器里让一个无内容项 <code>flex:1</code>，它会吃掉全部剩余空间，从而把它右边的元素推到容器最右侧，实现“左 logo 右用户”的两端布局。</p></div>
+  </details>
+</section>
+
+<!-- ============================ 7 ============================ -->
+<section id="s7">
+  <div class="kicker">SECTION 07</div>
+  <h2>跑起来 / 文件清单</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">怎么运行</h3>
+      <div class="codewrap">
+        <div class="codebar"><span>终端</span><button class="copy">复制</button></div>
+        <pre><code>cd 实训6_后台管理页面/工程/admin-layout
+npm install
+npm run dev
+# 浏览器打开 http://localhost:5173/manage/detail</code></pre>
+      </div>
+      <p>如果 5173 被占用，Vite 会自动换端口，看终端提示；也可以 <code>npm run dev -- --port 5188</code>。生产构建 <code>npm run build</code> 已通过。</p>
+      <table style="margin-bottom:0">
+        <thead><tr><th>可访问路径</th><th>对应页面</th></tr></thead>
+        <tbody>
+          <tr><td><code>/home</code></td><td>无 meta，验证守卫兜底</td></tr>
+          <tr><td><code>/test?id=123&amp;name=手机</code></td><td>路由传参（实训 5 内容）</td></tr>
+          <tr><td><code>/manage</code></td><td>自动重定向到 detail</td></tr>
+          <tr><td><code>/manage/detail</code></td><td><b>本讲目标界面</b></td></tr>
+          <tr><td><code>/manage/user</code> <code>/goods</code> <code>/orders</code></td><td>讲义路由表里的其余子页</td></tr>
+          <tr><td><code>/manage/admin</code> <code>/staff</code></td><td>子菜单两项（补 index 后新增）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">文件清单</h3>
+      <table>
+        <thead><tr><th style="width:46%">文件</th><th>作用</th></tr></thead>
+        <tbody>
+          <tr><td><code>main.js</code></td><td>Element-Plus 与图标全局注册，引入 global.css</td></tr>
+          <tr><td><code>App.vue</code></td><td>只留一个 <code>RouterView</code>（讲义没提，但必须清掉默认外壳）</td></tr>
+          <tr><td><code>assets/global.css</code></td><td>去掉 body 默认 8px 外边距，否则头部四周有白边</td></tr>
+          <tr><td><code>router/index.js</code></td><td>嵌套路由 + meta + 全局前置守卫</td></tr>
+          <tr><td><code>views/Manage.vue</code></td><td>父页面：头部 + 左侧 el-menu + 右侧 router-view</td></tr>
+          <tr><td><code>views/Detail.vue</code></td><td>子页面：搜索区 / 按钮区 / 表格 + 分页</td></tr>
+          <tr><td><code>views/User.vue</code> 等 5 个</td><td>Goods、Orders、Admin、Staff 四个子页面</td></tr>
+          <tr><td><code>views/Home.vue</code>、<code>Test.vue</code></td><td>顶级页面，用于验证 meta 与守卫</td></tr>
+        </tbody>
+      </table>
+      <p>依赖版本：vue 3.5.42、vue-router 5.3.1、element-plus 2.14.7、@element-plus/icons-vue 2.3.2、vite 8.2.2。</p>
+      <p>两处讲义没写但必须做的：<code>App.vue</code> 要精简成只有 <code>&lt;RouterView /&gt;</code>（否则实训 5 那个带 padding 的外壳会把 100vh 布局挤坏）；<code>body</code> 要清 margin（否则蓝色头部四周露出 8 像素白边，与目标图不符）。</p>
+    </div>
+  </div>
+
+  <h3>三句话总结</h3>
+  <ol class="tight">
+    <li><b>布局层面</b>：后台界面不需要框架，两层 flex 加 <code>calc(100vh - 60px)</code> 就能切出头部、导航、内容三块，导航宽度与 logo 宽度对齐才好看。</li>
+    <li><b>路由层面</b>：嵌套路由是“路由表 children + 父组件 router-view”两件事，只写一半是这类页面最常见的空屏原因；菜单靠 <code>router</code> 属性把 index 当路径用。</li>
+    <li><b>方法层面</b>：讲义代码不能只读不跑。这讲 7 个问题里，“没有 router-view”和“菜单没有 index”两个只有真点一下才看得见，而“detail 标题不是 undefined”这条恰恰推翻了我自己读代码时的判断。</li>
+  </ol>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>JavaWeb 课程 实训 6 配套讲解 · 工程 <code>实训6_后台管理页面/工程/admin-layout</code> · 截图为 Edge 无头浏览器实拍（1280×720，1.25 缩放）· 本页无外部依赖，可离线打开。</p>
+</footer>
+
+<script>
+(function () {
+  // 代码高亮：单次扫描分词，避免把生成的 span 再当成代码处理
+  var esc = function (s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+  var TOKEN = /(&lt;!--[\s\S]*?--&gt;|(?<![:\w])\/\/[^\n]*)|(&lt;\/?)([a-zA-Z][\w-]*)|([-\w:]+)="([^"]*)"|\b(import|from|export|default|const|let|var|function|return|if|else|for|new|watch|computed)\b/g;
+  document.querySelectorAll('pre code').forEach(function (block) {
+    block.innerHTML = esc(block.textContent).replace(TOKEN, function (m, com, lt, tag, attr, val, kw) {
+      if (com) return '<span class="c">' + com + '</span>';
+      if (tag) return lt + '<span class="t">' + tag + '</span>';
+      if (attr) return '<span class="a">' + attr + '</span>=<span class="s">"' + val + '"</span>';
+      return '<span class="k">' + kw + '</span>';
+    });
+  });
+
+  // 窄屏下让宽表格横向滚动，而不是撑破整页
+  document.querySelectorAll('main table').forEach(function (t) {
+    var w = document.createElement('div');
+    w.className = 'tscroll';
+    t.parentNode.insertBefore(w, t);
+    w.appendChild(t);
+  });
+
+  // 复制按钮
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.closest('.codewrap').querySelector('pre code');
+      var text = code.innerText;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = '已复制';
+        setTimeout(function () { btn.textContent = '复制'; }, 1600);
+      }).catch(function () { btn.textContent = '请手动复制'; });
+    });
+  });
+
+
+  // 目录高亮
+  var links = [...document.querySelectorAll('.toc a')];
+  var spy = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-25% 0px -65% 0px' });
+  document.querySelectorAll('main section').forEach(function (s) { spy.observe(s); });
+})();
+</script>
+</body>
+</html>
