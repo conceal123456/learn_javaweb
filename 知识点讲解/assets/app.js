@@ -652,6 +652,104 @@
     railUpdate();
   }
 
+  /* ======================= 12. 动态交互：涟漪 / 倾斜 / 视差 / 转场 ======================= */
+  function initInteractive() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reduce && 'PointerEvent' in window) {
+      document.querySelectorAll('.lab-card').forEach(function (card) {
+        card.addEventListener('pointermove', function (e) {
+          var r = card.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width - 0.5;
+          var py = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transform = 'perspective(900px) rotateY(' + (px * 6).toFixed(2) +
+            'deg) rotateX(' + (-py * 6).toFixed(2) + 'deg) translateY(-6px)';
+        });
+        card.addEventListener('pointerleave', function () { card.style.transform = ''; });
+      });
+    }
+
+    var hero = document.querySelector('.cine-hero');
+    var scrollFig = document.querySelector('.cine-scroll');
+    var plum = document.querySelector('.cine-plum');
+    if (hero && scrollFig && !reduce) {
+      hero.addEventListener('pointermove', function (e) {
+        var r = hero.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        scrollFig.style.transform = 'translate3d(' + (px * 10).toFixed(1) + 'px,' + (py * 8).toFixed(1) + 'px,0)';
+        if (plum) plum.style.transform = 'translate3d(' + (-px * 14).toFixed(1) + 'px,' + (-py * 10).toFixed(1) + 'px,0)';
+      });
+      hero.addEventListener('pointerleave', function () {
+        scrollFig.style.transform = '';
+        if (plum) plum.style.transform = '';
+      });
+    }
+
+    var rc = document.getElementById('ripple-canvas');
+    if (rc && !reduce) {
+      var ctx = rc.getContext('2d');
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var W = 0, H = 0, ripples = [], last = 0;
+      var resize = function () {
+        var host = rc.parentElement;
+        W = host.clientWidth;
+        H = host.clientHeight;
+        rc.width = W * dpr;
+        rc.height = H * dpr;
+        rc.style.width = W + 'px';
+        rc.style.height = H + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      };
+      resize();
+      window.addEventListener('resize', resize);
+      var addRipple = function (x, y) {
+        if (ripples.length > 18) ripples.shift();
+        ripples.push({ x: x, y: y, r: 3, a: 0.7, max: 140 + Math.random() * 90 });
+      };
+      if (hero) {
+        hero.addEventListener('pointermove', function (e) {
+          var r = rc.getBoundingClientRect();
+          var now = performance.now();
+          if (now - last < 45) return;
+          last = now;
+          addRipple(e.clientX - r.left, e.clientY - r.top);
+        });
+      }
+      (function loop() {
+        ctx.clearRect(0, 0, W, H);
+        for (var i = ripples.length - 1; i >= 0; i--) {
+          var p = ripples[i];
+          p.r += (p.max - p.r) * 0.018;
+          p.a *= 0.992;
+          if (p.a < 0.004) { ripples.splice(i, 1); continue; }
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(160,120,80,' + (p.a * 0.28).toFixed(3) + ')';
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(74,56,33,' + p.a.toFixed(3) + ')';
+          ctx.lineWidth = 1.4;
+          ctx.stroke();
+        }
+        requestAnimationFrame(loop);
+      })();
+    }
+
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      var href = a.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || /^(https?:|mailto:|javascript:)/.test(href)) return;
+      if (!/\.html(\?|#|$)/.test(href)) return;
+      e.preventDefault();
+      document.body.classList.add('leaving');
+      setTimeout(function () { window.location.href = href; }, 280);
+    });
+    window.addEventListener('pageshow', function () {
+      document.body.classList.remove('leaving');
+    });
+  }
+
   /* ======================= 启动 ======================= */
   document.addEventListener('DOMContentLoaded', function () {
     initTheme();
@@ -663,6 +761,7 @@
     initQaTools();
     initCinema();
     initWow();
+    initInteractive();
     var ids = (window.KP_PAGE_IDS || []);
     initProgress(ids, ids.length);
   });
