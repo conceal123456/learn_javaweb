@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+<div class="page-in" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="scroll-rail" aria-hidden="true"><i></i></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
 <stop offset="0" stop-color="#9d3a2e"/><stop offset="1" stop-color="#c9a227"/>
@@ -32,11 +35,13 @@
 </header>
 <section class="cine-hero" id="top">
   <div class="cine-bg"><img src="assets/art/paintings/hero-bg.jpg" alt=""></div>
+  <canvas id="ink-canvas" class="ink-canvas" aria-hidden="true"></canvas>
+  <div class="cine-petals" id="petals" aria-hidden="true"></div>
   <div class="cine-veil"></div>
   <div class="cine-inner">
     <div class="cine-copy">
       <p class="cine-kicker">JAVA WEB · 实训一至七</p>
-      <h1>把每个知识点<br><em>看明白</em></h1>
+      <h1 class="hero-title">把每个知识点<br><em>看明白</em></h1>
       <p class="cine-sub">依 讲 义 · 授 七 讲 · 研 学 相 长</p>
       <div class="home-stats">
         <div class="s"><b>7</b><small>讲</small></div>
@@ -48,20 +53,31 @@
     </div>
     <figure class="cine-scroll">
       <div class="cine-scroll-frame"><img src="assets/art/paintings/hero-vscroll.jpg" alt="巨碑式山水"></div>
+      <span class="cine-seal" aria-hidden="true">研学</span>
       <figcaption>馆藏中国画 · 克利夫兰艺术博物馆（公有领域）</figcaption>
     </figure>
     <img class="cine-plum" src="assets/art/motifs/plum.png" alt="" aria-hidden="true">
   </div>
   <div class="cine-brand" aria-hidden="true">研 学 七 讲</div>
+  <div class="cine-side" aria-hidden="true"><span>依 讲 义 而 授</span><span>循 次 第 而 学</span></div>
   <a class="cine-down" href="#labs"><span></span>向下阅览</a>
 </section>
 
 <section class="pan" id="pan">
   <div class="pan-sticky">
     <div class="pan-head"><span>长卷 · 青绿山水</span><span>克利夫兰艺术博物馆藏</span></div>
-    <div class="pan-view"><img class="pan-img" src="assets/art/paintings/pan-scroll.jpg" alt="青绿山水长卷"></div>
+    <div class="pan-view"><span class="pan-roller left"></span><span class="pan-roller right"></span><img class="pan-img" src="assets/art/paintings/pan-scroll.jpg" alt="青绿山水长卷"></div>
     <div class="pan-foot"><span class="pan-hint">向下滚动，画卷徐徐展开</span><span class="pan-bar"><i></i></span></div>
   </div>
+</section>
+
+<section class="quote-band rv" aria-label="引言">
+  <figure class="quote-art"><img src="assets/art/paintings/prunus.jpg" alt="墨梅"></figure>
+  <blockquote class="quote-text">
+    <p class="quote-line">「学而时习之，不亦说乎」</p>
+    <cite>——《论语·学而》</cite>
+    <p class="quote-note">七讲实训，依讲义为纲：先读懂，再动手，后复盘。</p>
+  </blockquote>
 </section>
 <div class="shell">
   <aside class="side" id="side">

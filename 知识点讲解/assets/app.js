@@ -552,6 +552,106 @@
     }
   }
 
+  /* ======================= 11. 震撼细节：逐字 / 花瓣 / 墨粒子 / 进度轨 ======================= */
+  function initWow() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var titles = document.querySelectorAll('.hero-title, .lab-hero h1');
+    if (!reduce) {
+      titles.forEach(function (h) {
+        var chars = [];
+        (function walk(node) {
+          Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+            if (n.nodeType === 3) {
+              var frag = document.createDocumentFragment();
+              n.textContent.split('').forEach(function (ch) {
+                var s = document.createElement('span');
+                s.className = 'ch';
+                s.textContent = ch;
+                frag.appendChild(s);
+                chars.push(s);
+              });
+              node.replaceChild(frag, n);
+            } else if (n.nodeType === 1) {
+              walk(n);
+            }
+          });
+        })(h);
+        chars.forEach(function (c, i) { c.style.animationDelay = (120 + i * 45) + 'ms'; });
+      });
+    }
+
+    var petals = document.getElementById('petals');
+    if (petals && !reduce) {
+      for (var i = 0; i < 14; i++) {
+        var p = document.createElement('span');
+        p.className = 'petal';
+        var size = 6 + Math.random() * 8;
+        p.style.width = p.style.height = size + 'px';
+        p.style.left = (Math.random() * 100) + '%';
+        p.style.animationDuration = (12 + Math.random() * 14) + 's';
+        p.style.animationDelay = (-Math.random() * 20) + 's';
+        p.style.opacity = (0.22 + Math.random() * 0.32).toFixed(2);
+        petals.appendChild(p);
+      }
+    }
+
+    var cv = document.getElementById('ink-canvas');
+    if (cv && !reduce) {
+      var ctx = cv.getContext('2d');
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var W = 0, H = 0, dots = [];
+      var resize = function () {
+        var host = cv.parentElement;
+        W = host.clientWidth;
+        H = host.clientHeight;
+        cv.width = W * dpr;
+        cv.height = H * dpr;
+        cv.style.width = W + 'px';
+        cv.style.height = H + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        dots = [];
+        for (var k = 0; k < 46; k++) {
+          dots.push({
+            x: Math.random() * W, y: Math.random() * H,
+            r: 0.6 + Math.random() * 1.8,
+            vy: 0.08 + Math.random() * 0.22,
+            vx: -0.06 + Math.random() * 0.12,
+            a: 0.03 + Math.random() * 0.05
+          });
+        }
+      };
+      var frame = function () {
+        ctx.clearRect(0, 0, W, H);
+        dots.forEach(function (d) {
+          d.y -= d.vy;
+          d.x += d.vx;
+          if (d.y < -4) { d.y = H + 4; d.x = Math.random() * W; }
+          if (d.x < -4) d.x = W + 4;
+          if (d.x > W + 4) d.x = -4;
+          ctx.beginPath();
+          ctx.fillStyle = 'rgba(74,56,33,' + d.a + ')';
+          ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(frame);
+      };
+      resize();
+      frame();
+      window.addEventListener('resize', resize);
+    }
+
+    var rail = document.querySelector('.scroll-rail i');
+    var railUpdate = function () {
+      if (!rail) return;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      rail.style.height = (max > 0 ? Math.min(1, window.scrollY / max) * 100 : 0) + '%';
+    };
+    window.addEventListener('scroll', railUpdate, { passive: true });
+    window.addEventListener('resize', railUpdate);
+    railUpdate();
+  }
+
   /* ======================= 启动 ======================= */
   document.addEventListener('DOMContentLoaded', function () {
     initTheme();
@@ -562,6 +662,7 @@
     initSpy();
     initQaTools();
     initCinema();
+    initWow();
     var ids = (window.KP_PAGE_IDS || []);
     initProgress(ids, ids.length);
   });
