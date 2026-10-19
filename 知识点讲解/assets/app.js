@@ -250,7 +250,7 @@
     var KEY = 'kp-theme';
     var saved = null;
     try { saved = localStorage.getItem(KEY); } catch (e) {}
-    if (!saved) saved = 'dark';
+    if (!saved) saved = 'light';
     document.documentElement.setAttribute('data-theme', saved);
 
     var btn = document.getElementById('theme-btn');
