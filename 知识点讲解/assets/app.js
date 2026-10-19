@@ -250,7 +250,7 @@
     var KEY = 'kp-theme';
     var saved = null;
     try { saved = localStorage.getItem(KEY); } catch (e) {}
-    if (!saved) saved = 'light';
+    if (!saved) saved = 'dark';
     document.documentElement.setAttribute('data-theme', saved);
 
     var btn = document.getElementById('theme-btn');
@@ -494,6 +494,64 @@
     if (c) c.addEventListener('click', function () { all(false); });
   }
 
+  /* ======================= 10. 电影感：视差 / 长卷 / 数字 ======================= */
+  function initCinema() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var bg = document.querySelector('.cine-bg img');
+    var frame = document.querySelector('.cine-scroll-frame');
+    var pan = document.getElementById('pan');
+    var panImg = document.querySelector('.pan-img');
+    var panBar = document.querySelector('.pan-bar i');
+    var ticking = false;
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        var y = window.pageYOffset || document.documentElement.scrollTop;
+        if (bg && !reduce && y < window.innerHeight * 1.6) {
+          bg.style.transform = 'translate3d(0,' + (y * 0.16).toFixed(1) + 'px,0) scale(1.05)';
+        }
+        if (frame && !reduce && y < window.innerHeight * 1.6) {
+          frame.style.transform = 'translate3d(0,' + (y * -0.05).toFixed(1) + 'px,0)';
+        }
+        if (pan && panImg) {
+          var r = pan.getBoundingClientRect();
+          var total = pan.offsetHeight - window.innerHeight;
+          var prog = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
+          var max = Math.max(0, panImg.offsetWidth - window.innerWidth + 80);
+          panImg.style.transform = 'translate3d(' + (-prog * max).toFixed(1) + 'px,0,0)';
+          if (panBar) panBar.style.width = (prog * 100).toFixed(2) + '%';
+        }
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
+
+    var stats = document.querySelectorAll('.cine-hero .home-stats b');
+    if (stats.length && !reduce && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          var el = e.target;
+          var target = parseInt(el.textContent, 10) || 0;
+          var t0 = null;
+          var step = function (t) {
+            if (!t0) t0 = t;
+            var k = Math.min(1, (t - t0) / 1100);
+            el.textContent = Math.round(target * (1 - Math.pow(1 - k, 3)));
+            if (k < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+          io.unobserve(el);
+        });
+      }, { threshold: 0.6 });
+      stats.forEach(function (s) { io.observe(s); });
+    }
+  }
+
   /* ======================= 启动 ======================= */
   document.addEventListener('DOMContentLoaded', function () {
     initTheme();
@@ -503,6 +561,7 @@
     initSearch();
     initSpy();
     initQaTools();
+    initCinema();
     var ids = (window.KP_PAGE_IDS || []);
     initProgress(ids, ids.length);
   });
