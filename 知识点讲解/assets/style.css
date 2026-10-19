@@ -1290,6 +1290,7 @@ html[data-theme="dark"] .lab-poem { color: rgba(201,162,39,.5); }
   .quote-line { font-size: 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .page-in, .petal, .hero-title .ch, .cine-seal { animation: none !important; opacity: 1; }
+  .page-in { display: none !important; }
   .petal { display: none; }
+  .hero-title .ch, .cine-seal { animation: none !important; opacity: 1; transform: none; }
 }
