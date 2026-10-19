@@ -94,6 +94,32 @@
   }
 
   // 标记语言（html / xml / vue template）
+  // 关键：必须逐段构造输出，不能对“已经插入的 <span> 标记”再做正则替换，
+  // 否则会把标记自身再高亮一遍，生成坏掉的 HTML（旧版就是这个 bug）。
+  function scanAttrs(s) {
+    var out = '', last = 0, m;
+    var re = /(\s+)([A-Za-z_:@#][\w:.\-]*)(\s*=\s*)("[^"]*"|'[^']*'|[^\s>]+)?/g;
+    while ((m = re.exec(s))) {
+      out += esc(s.slice(last, m.index));
+      out += esc(m[1]);
+      out += '<span class="tk-a">' + esc(m[2]) + '</span>';
+      if (m[3]) {
+        out += esc(m[3]);
+        if (m[4]) {
+          var v = m[4];
+          if (v.charAt(0) === '"' || v.charAt(0) === "'") {
+            out += '<span class="tk-s">' + esc(v) + '</span>';
+          } else {
+            out += '<span class="tk-n">' + esc(v) + '</span>';
+          }
+        }
+      }
+      last = m.index + m[0].length;
+    }
+    out += esc(s.slice(last));
+    return out;
+  }
+
   function scanMarkup(code) {
     var out = '', i = 0, n = code.length;
     while (i < n) {
@@ -115,21 +141,20 @@
       if (code[i] === '<') {
         var e3 = code.indexOf('>', i);
         if (e3 > 0) {
-          var tag = code.slice(i, e3 + 1);
-          // 标签名
-          tag = tag.replace(/^(&lt;?|<\/?)([A-Za-z][\w:-]*)/, function (_, p, name) {
-            return '<span class="tk-p">' + esc(p) + '</span><span class="tk-t">' + esc(name) + '</span>';
-          });
-          // 属性名 = 属性值
-          tag = tag.replace(/([A-Za-z_:@#][\w:.-]*)(\s*=\s*)("[^"]*"|'[^']*')/g,
-            function (_, a, eq, v) {
-              return '<span class="tk-a">' + esc(a) + '</span>' + esc(eq) +
-                     '<span class="tk-s">' + esc(v) + '</span>';
-            });
-          // 属性名（无值）
-          tag = tag.replace(/(\s)([A-Za-z_:@#][\w:.-]*)(?=[\s/>]|$)/g,
-            function (_, sp, a) { return sp + '<span class="tk-a">' + esc(a) + '</span>'; });
-          out += tag;
+          var raw = code.slice(i, e3 + 1);
+          var inner = raw.slice(1, raw.length - 1);
+          var closing = inner.charAt(0) === '/';
+          if (closing) inner = inner.slice(1);
+          var selfClose = /\/\s*$/.test(inner);
+          if (selfClose) inner = inner.replace(/\/\s*$/, '');
+          var nm = /^\s*([A-Za-z][\w:-]*)/.exec(inner);
+          var tagName = '';
+          if (nm) { tagName = nm[1]; inner = inner.slice(nm.index + nm[0].length); }
+          out += '<span class="tk-p">&lt;' + (closing ? '/' : '') + '</span>';
+          if (tagName) out += '<span class="tk-t">' + esc(tagName) + '</span>';
+          out += scanAttrs(inner);
+          if (selfClose) out += '<span class="tk-p">/</span>';
+          out += '<span class="tk-p">&gt;</span>';
           i = e3 + 1; continue;
         }
       }
@@ -225,7 +250,7 @@
     var KEY = 'kp-theme';
     var saved = null;
     try { saved = localStorage.getItem(KEY); } catch (e) {}
-    if (!saved) saved = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    if (!saved) saved = 'light';
     document.documentElement.setAttribute('data-theme', saved);
 
     var btn = document.getElementById('theme-btn');
