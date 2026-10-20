@@ -1,0 +1,246 @@
+/* ==========================================================================
+   55 · 收尾精修层（后加载，用于压过响应式基础规则）
+   A. 首屏「墨色天幕」：一屏之内黑 / 白 / 朱三色分层
+   B. 竖排题跋安全边距 + 装饰层彻底不挡点击
+   C. 七块再拉开差距（①朱砂竖线宋体 / ②上下金线论断 / ④数字悬挂 / ⑤虚线档案 / ⑥警示条 / ⑦印章折叠）
+   ========================================================================== */
+
+/* ==================== A. 墨色天幕 ==================== */
+.cine-hero{
+  --hd-fg:    #f8efdd;
+  --hd-fg-2:  rgba(248,239,221,.74);
+  --hd-fg-3:  rgba(248,239,221,.52);
+  --hd-line:  rgba(248,239,221,.20);
+  --hd-cin:   #e0685a;
+  --hd-azure: #8fc3d8;
+  --hd-gold:  #e8c96e;
+}
+
+/* 底图压暗，山水退成墨 */
+.cine-hero .cine-bg img{
+  filter:saturate(.22) contrast(.92) brightness(.62);
+  opacity:.62;
+}
+[data-theme="dark"] .cine-hero .cine-bg img{
+  filter:invert(1) hue-rotate(180deg) saturate(.12) contrast(1.1) brightness(.5);
+  opacity:.55;
+}
+
+/* 天幕本体：上墨下纸，约 66% 处开始化开 */
+.cine-hero .cine-veil{
+  background:
+    radial-gradient(120% 70% at 82% 18%, rgba(201,162,39,.18) 0%, transparent 62%),
+    linear-gradient(180deg,
+      rgba(14,11,9,.965) 0%,
+      rgba(17,13,11,.945) 26%,
+      rgba(20,16,13,.90) 44%,
+      rgba(24,19,15,.78) 56%,
+      rgba(32,25,20,.52) 66%,
+      var(--wash-2) 74%,
+      var(--wash-4) 84%,
+      var(--wash-4) 100%);
+}
+/* 墨色区的界行改成浅色描线 */
+.cine-hero::after{
+  background:repeating-linear-gradient(90deg, rgba(248,239,221,.055) 0 1px, transparent 1px calc(100% / 12));
+  -webkit-mask-image:linear-gradient(180deg, #000 0 62%, transparent 82%);
+  mask-image:linear-gradient(180deg, #000 0 62%, transparent 82%);
+}
+/* 卷尾那缕金线压在纸上 */
+.cine-hero::before{
+  opacity:.55;
+}
+
+/* ---------- 墨区文字反白 ---------- */
+.cine-hero .hero-title{ color:var(--hd-fg); }
+.cine-hero .hero-title em{ color:var(--hd-cin); }
+.cine-hero .hero-title em::after{
+  background:linear-gradient(90deg, var(--hd-cin) 0%, var(--hd-gold) 68%, transparent 100%);
+  opacity:.55;
+}
+.cine-hero .cine-kicker{ color:var(--hd-azure); }
+.cine-hero .cine-kicker::before{ background:linear-gradient(90deg, transparent, var(--hd-cin)); }
+.cine-hero .cine-kicker::after{ background:var(--hd-cin); }
+.cine-hero .cine-sub{ color:var(--hd-fg-3); }
+
+.cine-hero .home-stats{ border-top-color:var(--hd-line); }
+.cine-hero .home-stats .s{ border-left-color:var(--hd-line); }
+.cine-hero .home-stats b{ color:var(--hd-fg); }
+.cine-hero .home-stats .s:nth-child(2) b{ color:var(--hd-cin); }
+.cine-hero .home-stats .s:nth-child(3) b{ color:var(--hd-azure); }
+.cine-hero .home-stats .s:nth-child(4) b{ color:var(--hd-gold); }
+.cine-hero .home-stats small{ color:var(--hd-fg-3); }
+
+.cine-hero .cine-copy::before{ color:var(--hd-fg); opacity:.05; }
+.cine-hero .cine-brand{ color:var(--hd-fg); opacity:.07; }
+.cine-hero .cine-side{ color:var(--hd-fg-3); }
+.cine-hero .cine-side span:first-child{ color:var(--hd-fg-2); }
+
+/* 墨梅在墨底上换成留白梅影 */
+.cine-hero .cine-plum{
+  mix-blend-mode:screen;
+  opacity:.10;
+  filter:invert(1) grayscale(1) brightness(1.1);
+}
+/* 向下阅览：底部落回纸上，用墨色 */
+.cine-hero .cine-down{ color:var(--fg-5); }
+.cine-hero .cine-down span{ background:linear-gradient(180deg, var(--line), transparent); }
+[data-theme="dark"] .cine-hero .cine-down{ color:var(--hd-fg-3); }
+[data-theme="dark"] .cine-hero .cine-down span{ background:linear-gradient(180deg, var(--hd-line), transparent); }
+
+/* ---------- 布局：标题压墨区，画卷落纸区 ---------- */
+.cine-hero .cine-inner{
+  align-items:start;
+  padding-top:calc(var(--h-top) + clamp(30px, 4.6vh, 62px));
+  padding-bottom:clamp(24px, 3vh, 44px);
+}
+.cine-hero .cine-scroll{
+  align-self:end;
+  margin-bottom:clamp(14px, 2.6vh, 32px);
+}
+.cine-hero .cine-scroll-inner{
+  width:clamp(202px, 15.6vw, 286px);
+}
+/* 画卷在纸上，给一层暖光 */
+.cine-hero .cine-scroll-frame{
+  box-shadow:
+    0 0 0 1px rgba(20,17,15,.14),
+    0 0 0 7px rgba(255,253,247,.5),
+    0 30px 60px -26px rgba(20,17,15,.55),
+    0 6px 16px rgba(20,17,15,.18);
+}
+.cine-hero .cine-scroll figcaption{ color:var(--fg-5); }
+.cine-hero .cine-seal{ color:#fff6ec; }
+
+/* ==================== B. 安全边距 / 不挡点击 ==================== */
+.cine-brand,
+.cine-side,
+.cine-plum,
+.cine-seal,
+.cine-axle,
+.cine-scroll figcaption,
+.lab-poem,
+.lab-hero-no,
+.lab-hero-plum,
+.lab-hero-cap,
+.blk[data-k="①"]::after,
+.blk[data-k="⑤"]::after,
+.blk[data-k="⑥"]::after,
+.blk[data-k="⑥"]::before,
+.kp.done .kp-head::before{ pointer-events:none; }
+
+/* 竖排题跋：给足右边距，永不被裁 */
+.cine-hero .cine-side{
+  right:max(10px, 1.2vw);
+  top:calc(var(--h-top) + 34px);
+  max-height:calc(100% - var(--h-top) - 80px);
+}
+.lab-poem{
+  right:max(12px, 1.6vw);
+  top:max(14px, 2.2vh);
+  max-height:calc(100% - 40px);
+}
+/* 首屏底部留出安全区，避免贴边被裁 */
+.cine-hero .cine-inner{ padding-bottom:clamp(30px, 4vh, 56px); }
+
+/* ==================== C. 七块再分层 ==================== */
+
+/* ① 朱砂竖线 + 宋体引文（不再用石青） */
+.blk[data-k="①"]{
+  border-left:3px solid var(--cinnabar);
+  background:linear-gradient(100deg, var(--cinnabar-4), transparent 62%);
+}
+.blk[data-k="①"]::after{
+  color:var(--cinnabar);
+  opacity:.14;
+  right:14px; top:-26px;
+  font-size:112px;
+}
+.blk[data-k="①"] .blk-tag{ color:var(--cinnabar); }
+.blk[data-k="①"] .blk-tag i{
+  background:var(--cinnabar);
+  color:#fff8ee;
+  border-radius:2px;
+}
+.blk[data-k="①"] .blk-body{
+  font-family:var(--f-song);
+  font-size:clamp(15.5px, 1.18vw, 18px);
+  line-height:2.02;
+  letter-spacing:.02em;
+  color:var(--fg-2);
+}
+.blk[data-k="①"] .blk-body strong{ color:var(--cinnabar); }
+
+/* ② 上下金线 + 无侧栏：「论断」像一块小榜 */
+.blk[data-k="②"]{
+  background:transparent;
+  border:0;
+  border-top:2px solid var(--gold-ink);
+  border-bottom:1px solid var(--gold-3);
+  border-left:0;
+  border-radius:0;
+  padding:clamp(14px, 1.7vw, 22px) clamp(6px, 1vw, 14px) clamp(14px, 1.7vw, 20px) clamp(16px, 2.2vw, 30px);
+}
+.blk[data-k="②"] .blk-tag{
+  color:var(--gold-ink);
+  letter-spacing:.3em;
+  margin-bottom:.7em;
+}
+.blk[data-k="②"] .blk-tag i{
+  background:var(--gold-ink);
+  color:var(--surface);
+  box-shadow:none;
+  border-radius:2px;
+  width:20px; height:20px;
+  font-size:11px;
+}
+.blk[data-k="②"].dc .blk-body > p:first-of-type::first-letter{ color:var(--gold-ink); }
+
+/* ④ 数字悬挂：加强数字块，让"悬挂"更明显 */
+.blk[data-k="④"] .blk-body li::before{
+  color:#fffdf5;
+  background:var(--gold-ink);
+  border-color:var(--gold-ink);
+  font-weight:700;
+  min-width:1.9em;
+  text-align:center;
+}
+
+/* ⑤ 等宽路径 chip + 虚线框：整块换白底，和 ④ 的米黄底分开 */
+.blk[data-k="⑤"]{
+  background:
+    repeating-linear-gradient(135deg, var(--azure-3) 0 9px, transparent 9px 18px),
+    var(--surface);
+  border-left:3px dashed var(--azure);
+}
+.blk[data-k="⑤"] .blk-body :not(pre) > code{
+  background:var(--bg-2);
+  border-left-width:2px;
+  font-weight:600;
+}
+
+/* ⑦ 印章式折叠标题 */
+.blk[data-k="⑦"] details.qa summary::before{
+  content:"问";
+  border-radius:2px;
+  transform:rotate(-4deg);
+  box-shadow:0 2px 6px -2px rgba(71,112,90,.6);
+}
+
+/* ==================== D. 移动端天幕 ==================== */
+@media (max-width:980px){
+  .cine-hero .cine-veil{
+    background:
+      radial-gradient(120% 60% at 80% 12%, rgba(201,162,39,.16) 0%, transparent 62%),
+      linear-gradient(180deg,
+        rgba(14,11,9,.965) 0%,
+        rgba(18,14,11,.94) 52%,
+        rgba(26,21,17,.80) 68%,
+        var(--wash-2) 82%,
+        var(--wash-4) 96%);
+  }
+  .cine-hero .cine-inner{
+    padding-top:calc(var(--h-top) + clamp(20px, 5vh, 40px));
+    padding-bottom:clamp(40px, 7vh, 72px);
+  }
+}

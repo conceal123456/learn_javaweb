@@ -1,0 +1,427 @@
+/* ==========================================================================
+   60 · 动效层：入场 / 逐字 / 花瓣 / 阅读辅助 / 命令面板 / 提示
+   全部动效在 prefers-reduced-motion 下关闭（见文末）
+   ========================================================================== */
+
+/* ==================== 滚动渐入 ==================== */
+/* 用独立 translate 属性，避免和组件的 transform hover 打架 */
+.rv{
+  opacity:0;
+  translate:0 20px;
+  transition:opacity .78s var(--ease-2), translate .78s var(--ease-2);
+}
+.rv.in{ opacity:1; translate:0 0; }
+
+/* 依次错开（同一父级内的相邻卡片） */
+.labs > .rv:nth-child(2){ transition-delay:.05s; }
+.labs > .rv:nth-child(3){ transition-delay:.10s; }
+.labs > .rv:nth-child(4){ transition-delay:.15s; }
+.labs > .rv:nth-child(5){ transition-delay:.20s; }
+.labs > .rv:nth-child(6){ transition-delay:.25s; }
+.labs > .rv:nth-child(7){ transition-delay:.30s; }
+
+/* ==================== 逐字入场 ==================== */
+.hero-title .ch,
+.lab-hero h1 .ch{
+  display:inline-block;
+  opacity:0;
+  animation:chIn .86s var(--ease-2) both;
+}
+@keyframes chIn{
+  from{ opacity:0; transform:translate3d(0,.34em,0) rotate(2.4deg); filter:blur(3px); }
+  to  { opacity:1; transform:none; filter:blur(0); }
+}
+
+/* ==================== 首屏入场编排 ==================== */
+.cine-kicker,
+.cine-sub,
+.home-stats,
+.cine-cta{
+  opacity:0;
+  animation:riseIn 1s var(--ease-2) both;
+}
+.cine-kicker{ animation-delay:.15s; }
+.hero-title { animation:heroFade .9s var(--ease-2) .05s both; }
+.cine-sub   { animation-delay:.5s; }
+.home-stats { animation-delay:.62s; }
+.cine-cta   { animation-delay:.74s; }
+@keyframes heroFade{ from{opacity:0} to{opacity:1} }
+@keyframes riseIn{
+  from{ opacity:0; transform:translate3d(0,22px,0); }
+  to  { opacity:1; transform:none; }
+}
+
+/* 立轴徐徐展开 */
+.cine-scroll{
+  animation:scrollIn 1s var(--ease-2) .18s both;
+}
+.cine-scroll-frame{
+  animation:unroll 1.35s var(--ease-2) .34s both;
+}
+@keyframes scrollIn{
+  from{ opacity:0; transform:translate3d(20px,10px,0); }
+  to  { opacity:1; transform:none; }
+}
+@keyframes unroll{
+  from{ clip-path:inset(0 0 100% 0); }
+  to  { clip-path:inset(0 0 0 0); }
+}
+
+/* 印章落下 */
+.cine-seal{
+  animation:stampIn .55s var(--ease-3) 1.45s both;
+}
+@keyframes stampIn{
+  0%  { opacity:0; transform:rotate(-3deg) scale(2.1); }
+  60% { opacity:1; transform:rotate(-3deg) scale(.94); }
+  100%{ opacity:1; transform:rotate(-3deg) scale(1); }
+}
+
+/* 讲解页卷首 */
+.lab-hero .lab-kicker,
+.lab-hero .lab-hero-sub,
+.lab-hero .meta{
+  opacity:0;
+  animation:riseIn .9s var(--ease-2) both;
+}
+.lab-hero .lab-kicker{ animation-delay:.1s; }
+.lab-hero .lab-hero-sub{ animation-delay:.42s; }
+.lab-hero .meta{ animation-delay:.52s; }
+
+/* ==================== 花瓣 ==================== */
+.petal{
+  position:absolute;
+  top:-6vh;
+  border-radius:50% 4% 50% 50%;
+  background:radial-gradient(circle at 32% 30%, #fff4ec 0%, #e7a7a0 44%, #c25c53 100%);
+  box-shadow:0 0 8px rgba(178,58,47,.18);
+  animation-name:petalFall;
+  animation-timing-function:linear;
+  animation-iteration-count:infinite;
+  will-change:transform;
+  pointer-events:none;
+}
+@keyframes petalFall{
+  0%  { transform:translate3d(0,0,0) rotate(0deg); }
+  100%{ transform:translate3d(48px,116vh,0) rotate(540deg); }
+}
+
+/* ==================== 阅读进度条（motion-dev 注入） ==================== */
+.read-bar{
+  position:fixed;
+  left:0; right:0; top:0;
+  height:2px;
+  z-index:220;
+  pointer-events:none;
+  background:transparent;
+}
+.read-bar > i{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg, var(--cinnabar), var(--gold) 70%, var(--gold-2));
+  box-shadow:0 0 10px var(--cinnabar-3);
+  transition:width .12s linear;
+}
+
+/* ==================== 轻提示 ==================== */
+.toast{
+  position:fixed;
+  left:50%; bottom:clamp(22px, 4vh, 44px);
+  z-index:320;
+  translate:-50% 14px;
+  opacity:0;
+  visibility:hidden;
+  display:inline-flex; align-items:center; gap:.6em;
+  padding:10px 20px;
+  font-size:13px;
+  letter-spacing:.06em;
+  color:var(--code-fg);
+  background:var(--code-bg);
+  border:1px solid rgba(233,223,202,.16);
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-3);
+  transition:opacity .3s var(--ease), translate .3s var(--ease-2), visibility .3s;
+  white-space:nowrap;
+}
+.toast::before{
+  content:"";
+  width:7px; height:7px;
+  border-radius:1px;
+  background:var(--jade);
+  transform:rotate(45deg);
+}
+.toast.on{ opacity:1; visibility:visible; translate:-50% 0; }
+
+/* ==================== 命令面板（Ctrl+K） ==================== */
+.cmdk{
+  position:fixed; inset:0;
+  z-index:340;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:min(14vh, 140px) 18px 40px;
+  background:rgba(20,17,15,.42);
+  -webkit-backdrop-filter:blur(8px) saturate(1.1);
+  backdrop-filter:blur(8px) saturate(1.1);
+  animation:cmdkIn .24s var(--ease) both;
+}
+.cmdk[hidden]{ display:none; }
+@keyframes cmdkIn{ from{opacity:0} to{opacity:1} }
+
+.cmdk-box{
+  position:relative;
+  width:min(100%, 680px);
+  max-height:min(70vh, 640px);
+  display:flex;
+  flex-direction:column;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-4);
+  box-shadow:var(--sh-3), 0 0 0 1px rgba(255,255,255,.04);
+  overflow:hidden;
+  animation:cmdkBox .32s var(--ease-2) both;
+}
+@keyframes cmdkBox{
+  from{ opacity:0; transform:translateY(-14px) scale(.985); }
+  to  { opacity:1; transform:none; }
+}
+.cmdk-box::before{
+  content:"";
+  position:absolute; left:0; right:0; top:0; height:2px;
+  background:linear-gradient(90deg, var(--cinnabar), var(--gold), transparent);
+}
+.cmdk-input{
+  width:100%;
+  padding:18px 20px;
+  font-family:var(--f-sans);
+  font-size:16px;
+  color:var(--fg);
+  background:transparent;
+  border:0;
+  border-bottom:1px solid var(--line-2);
+  outline:none;
+}
+.cmdk-input::placeholder{ color:var(--fg-5); }
+.cmdk-list{
+  margin:0;
+  padding:8px;
+  list-style:none;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+.cmdk-item{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  row-gap:1px;
+  gap:12px;
+  padding:10px 12px;
+  border-radius:var(--r-2);
+  font-size:13.5px;
+  color:var(--fg-3);
+  cursor:pointer;
+  transition:background .15s, color .15s;
+}
+.cmdk-item .cmdk-tag{
+  flex:none;
+  font-family:var(--f-mono);
+  font-size:10px;
+  letter-spacing:.08em;
+  padding:1px 7px;
+  border:1px solid var(--line-2);
+  border-radius:var(--r-pill);
+  color:var(--fg-5);
+}
+.cmdk-item b{ font-weight:600; color:var(--fg); }
+.cmdk-item.on,
+.cmdk-item:hover{
+  background:linear-gradient(90deg, var(--cinnabar-3), transparent);
+  color:var(--fg);
+  box-shadow:inset 2px 0 0 var(--cinnabar);
+}
+.cmdk-item.on .cmdk-tag{ border-color:var(--cinnabar); color:var(--cinnabar); }
+.cmdk-item mark{
+  background:linear-gradient(180deg, transparent 58%, var(--gold-3) 58%);
+  color:inherit;
+}
+.cmdk-empty{
+  padding:34px 20px;
+  text-align:center;
+  font-size:13.5px;
+  color:var(--fg-5);
+}
+.cmdk-hint{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:9px 16px;
+  border-top:1px solid var(--line-2);
+  background:var(--surface-2);
+  font-family:var(--f-mono);
+  font-size:10.5px;
+  letter-spacing:.06em;
+  color:var(--fg-5);
+}
+.cmdk-hint kbd{
+  font-size:9.5px;
+  padding:1px 5px;
+  border-radius:3px;
+  background:var(--bg-3);
+  border:1px solid var(--line-2);
+  border-bottom-width:2px;
+}
+/* 面板内的三段式条目（motion-dev 实际 DOM） */
+.cmdk-item > b{
+  flex:0 1 auto;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-weight:600;
+  color:var(--fg);
+}
+.cmdk-item > small{
+  flex:0 0 100%;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  opacity:.62;
+  font-size:11.5px;
+  line-height:1.5;
+  color:var(--fg-3);
+  font-family:var(--f-sans);
+  letter-spacing:0;
+}
+.cmdk-item > small{ padding-left:2px; }
+.cmdk-item.on small,
+.cmdk-item:hover small{ opacity:.78; }
+/* 分组标题 */
+.cmdk .x-group{
+  padding:9px 12px 3px;
+  font-family:var(--f-mono);
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--azure);
+  border-top:1px solid var(--line-3);
+  margin-top:4px;
+}
+.cmdk-list > .x-group:first-child{ border-top:0; margin-top:0; }
+
+/* 知识点计数 */
+.kp-nav .x-num{
+  display:block;
+  width:100%;
+  font-family:var(--f-mono);
+  font-size:9.5px;
+  letter-spacing:.02em;
+  color:var(--fg-3);
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-pill);
+  padding:0 4px;
+  text-align:center;
+  line-height:1.5;
+}
+
+/* 深链命中高亮（motion-dev 目前用内联 box-shadow，这里备一份） */
+.kp.x-hl{
+  border-color:var(--cinnabar);
+  box-shadow:0 0 0 2px var(--cinnabar-3), var(--sh-2);
+}
+
+/* 目录里的「已学」勾 */
+.toc a .done{
+  position:absolute;
+  right:6px; top:50%;
+  transform:translateY(-50%);
+  display:grid; place-items:center;
+  width:14px; height:14px;
+  font-size:9px;
+  line-height:1;
+  color:#fff;
+  background:var(--jade);
+  border-radius:50%;
+  opacity:.9;
+}
+
+/* ==================== 知识点前后导航（浮动） ==================== */
+.kp-nav{
+  position:fixed;
+  right:clamp(14px, 2vw, 30px);
+  bottom:calc(clamp(18px, 3vh, 34px) + 84px);
+  z-index:74;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  opacity:0;
+  visibility:hidden;
+  translate:0 8px;
+  transition:opacity .3s var(--ease), translate .3s var(--ease-2), visibility .3s;
+}
+.kp-nav.on{ opacity:1; visibility:visible; translate:0 0; }
+.kp-nav a{
+  display:flex; align-items:center; justify-content:center;
+  width:40px; height:40px;
+  font-family:var(--f-song);
+  font-size:15px;
+  color:var(--fg-3);
+  background:var(--surface);
+  border:1px solid var(--line-2);
+  border-radius:50%;
+  box-shadow:var(--sh-1);
+  transition:all .25s var(--ease);
+}
+.kp-nav a:hover{
+  color:#fff8ee;
+  background:var(--cinnabar);
+  border-color:var(--cinnabar);
+  transform:translateY(-2px);
+}
+.kp-nav a[aria-disabled="true"],
+.kp-nav a.dis{
+  opacity:.34;
+  pointer-events:none;
+}
+
+/* ==================== 通用动效工具类 ==================== */
+.x-fade{
+  animation:x-fade .5s var(--ease-2) both;
+}
+@keyframes x-fade{ from{opacity:0} to{opacity:1} }
+.x-up{
+  animation:x-up .55s var(--ease-2) both;
+}
+@keyframes x-up{
+  from{ opacity:0; transform:translate3d(0,16px,0); }
+  to  { opacity:1; transform:none; }
+}
+
+/* ==================== 离场 ==================== */
+body{ transition:opacity .26s var(--ease); }
+body.leaving{ opacity:0; pointer-events:none; }
+
+/* ==================== 降级：关闭一切动效 ==================== */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,
+  *::before,
+  *::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    animation-delay:0ms !important;
+    transition-duration:.001ms !important;
+    transition-delay:0ms !important;
+    scroll-behavior:auto !important;
+  }
+  .rv{ opacity:1; translate:0 0; }
+  .cine-bg img{ transform:none; }
+  .cine-scroll-frame{ clip-path:none; }
+  .marquee-track{ animation:none; transform:translate3d(0,0,0); }
+  .cine-petals{ display:none; }
+  .ink-canvas,
+  .ripple-canvas{ display:none; }
+  .dist-bar i{ transform:scaleX(1); }
+}

@@ -1,0 +1,432 @@
+/* ==========================================================================
+   20 · 首页首屏「卷首」
+   记忆点：界行纸上，巨幅宋体 + 右侧立轴徐徐展开 + 朱砂落款印
+   ========================================================================== */
+
+.cine-hero{
+  position:relative;
+  isolation:isolate;
+  min-height:100vh;
+  min-height:100svh;
+  overflow:hidden;
+  display:flex;
+  align-items:stretch;
+  border-bottom:1px solid var(--line-2);
+}
+
+/* 宋版界行：把首屏切成 12 个"行" */
+.cine-hero::after{
+  content:"";
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:repeating-linear-gradient(90deg, var(--line-3) 0 1px, transparent 1px calc(100% / 12));
+}
+/* 卷尾一缕金线 */
+.cine-hero::before{
+  content:"";
+  position:absolute; z-index:5; pointer-events:none;
+  left:0; right:0; bottom:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
+  opacity:.5;
+}
+
+/* ---------- 背景画 ---------- */
+.cine-bg{ position:absolute; inset:0; z-index:0; overflow:hidden; }
+.cine-bg img{
+  width:100%; height:100%;
+  object-fit:cover;
+  object-position:50% 52%;
+  filter:saturate(.30) contrast(.96) brightness(1.10);
+  opacity:.80;
+  transform:scale(1.05);
+  will-change:transform;
+}
+[data-theme="dark"] .cine-bg img{
+  filter:invert(1) hue-rotate(180deg) saturate(.14) contrast(1.12) brightness(.55);
+  opacity:.72;
+}
+
+/* ---------- 洗淡层：左上几乎纯纸，山水只在中下部透出 ---------- */
+.cine-veil{
+  position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:
+    linear-gradient(180deg, var(--wash-4) 0%, var(--wash-3) 22%, var(--wash-1) 56%, var(--wash-1) 74%, var(--wash-3) 100%),
+    linear-gradient(96deg, var(--wash-4) 0%, var(--wash-3) 38%, var(--wash-2) 62%, var(--wash-1) 86%, var(--wash-2) 100%);
+}
+
+/* ---------- canvas 层 ---------- */
+.ink-canvas,
+.ripple-canvas{
+  position:absolute; inset:0; z-index:2;
+  pointer-events:none;
+  display:block;
+}
+.ripple-canvas{ z-index:3; }
+.ink-canvas{ opacity:.9; }
+
+.cine-petals{
+  position:absolute; inset:0; z-index:3;
+  pointer-events:none; overflow:hidden;
+}
+
+/* ==================== 内容网格 ==================== */
+.cine-inner{
+  position:relative; z-index:4;
+  width:100%;
+  max-width:var(--w-max);
+  margin:0 auto;
+  padding:calc(var(--h-top) + clamp(26px, 4vh, 56px)) var(--pad-x) clamp(72px, 9vh, 130px);
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) auto;
+  align-items:center;
+  gap:clamp(24px, 3.4vw, 64px);
+}
+
+.cine-copy{
+  position:relative;
+  z-index:2;
+  max-width:min(100%, 860px);
+}
+/* 背景巨字水印 */
+.cine-copy::before{
+  content:"學";
+  position:absolute;
+  left:-.10em; top:-.40em;
+  z-index:-1;
+  font-family:var(--f-song);
+  font-size:clamp(190px, 25vw, 400px);
+  line-height:.9;
+  font-weight:700;
+  color:var(--fg);
+  opacity:.032;
+  pointer-events:none;
+  user-select:none;
+}
+[data-theme="dark"] .cine-copy::before{ opacity:.05; }
+
+/* ---------- 楣题 ---------- */
+.cine-kicker{
+  display:inline-flex; align-items:center; gap:.85em;
+  margin:0 0 clamp(14px, 2vh, 24px);
+  font-family:var(--f-mono);
+  font-size:clamp(10.5px, .82vw, 12.5px);
+  letter-spacing:.42em;
+  text-transform:uppercase;
+  color:var(--azure);
+}
+.cine-kicker::before{
+  content:"";
+  width:clamp(26px, 3vw, 52px); height:1px;
+  background:linear-gradient(90deg, transparent, var(--cinnabar));
+}
+.cine-kicker::after{
+  content:"";
+  width:7px; height:7px;
+  border-radius:1px;
+  background:var(--cinnabar);
+  transform:rotate(45deg);
+  order:2;
+}
+
+/* ---------- 巨幅标题 ---------- */
+.hero-title{
+  margin:0 0 clamp(16px, 2.2vh, 26px);
+  font-family:var(--f-song);
+  font-size:var(--t-hero);
+  font-weight:700;
+  line-height:1.05;
+  letter-spacing:.012em;
+  color:var(--fg);
+  text-wrap:balance;
+}
+.hero-title em{
+  position:relative;
+  font-style:normal;
+  color:var(--cinnabar);
+  padding:0 .04em;
+}
+/* "看明白"下方的笔痕 */
+.hero-title em::after{
+  content:"";
+  position:absolute; left:.02em; right:.02em; bottom:.02em;
+  height:.085em;
+  background:linear-gradient(90deg, var(--cinnabar) 0%, var(--gold) 62%, transparent 100%);
+  opacity:.30;
+  border-radius:.06em;
+  transform:rotate(-.4deg);
+}
+.hero-title .ch{
+  display:inline-block;
+  will-change:transform, opacity;
+}
+
+/* ---------- 副题 ---------- */
+.cine-sub{
+  margin:0 0 clamp(22px, 3.2vh, 38px);
+  font-family:var(--f-song);
+  font-size:clamp(13px, 1.06vw, 16px);
+  letter-spacing:.36em;
+  color:var(--fg-4);
+}
+
+/* ---------- 数据 ---------- */
+.home-stats{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:flex-end;
+  gap:0;
+  margin:0 0 clamp(26px, 3.4vh, 40px);
+  padding-top:clamp(16px, 2.2vh, 24px);
+  border-top:1px solid var(--line-2);
+  max-width:600px;
+}
+.home-stats .s{
+  position:relative;
+  display:flex;
+  align-items:baseline;
+  gap:.28em;
+  padding:0 clamp(10px, 1.35vw, 22px);
+  border-left:1px solid var(--line-2);
+}
+.home-stats .s:first-child{ padding-left:0; border-left:0; }
+.home-stats b{
+  font-family:var(--f-song);
+  font-size:clamp(28px, 2.9vw, 42px);
+  font-weight:700;
+  line-height:1;
+  color:var(--fg);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.01em;
+}
+.home-stats .s:nth-child(2) b{ color:var(--cinnabar); }
+.home-stats .s:nth-child(3) b{ color:var(--azure); }
+.home-stats .s:nth-child(4) b{ color:var(--gold); }
+.home-stats small{
+  font-size:clamp(10px, .76vw, 12px);
+  letter-spacing:.12em;
+  color:var(--fg-5);
+  white-space:nowrap;
+  transform:translateY(-.12em);
+}
+
+/* ---------- 主按钮 ---------- */
+.cine-cta{
+  display:inline-flex; align-items:center; gap:.9em;
+  padding:clamp(12px, 1.3vh, 15px) clamp(24px, 2.2vw, 34px);
+  font-family:var(--f-song);
+  font-size:clamp(14px, 1.04vw, 16px);
+  font-weight:600;
+  letter-spacing:.22em;
+  color:#fff8ee;
+  background:var(--cinnabar);
+  border-radius:var(--r-2);
+  box-shadow:0 10px 26px -12px rgba(178,58,47,.75), inset 0 1px 0 rgba(255,255,255,.22);
+  transition:all .32s var(--ease-2);
+  position:relative;
+  overflow:hidden;
+}
+.cine-cta::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(100deg, transparent 30%, rgba(255,255,255,.34) 50%, transparent 70%);
+  transform:translateX(-120%);
+  transition:transform .7s var(--ease-2);
+}
+.cine-cta:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 38px -14px rgba(178,58,47,.8), inset 0 1px 0 rgba(255,255,255,.3);
+  background:var(--cinnabar-2);
+}
+.cine-cta:hover::after{ transform:translateX(120%); }
+.cine-cta .arrow{
+  font-family:var(--f-mono);
+  font-size:1.05em;
+  transition:transform .32s var(--ease-2);
+}
+.cine-cta:hover .arrow{ transform:translateY(3px); }
+
+/* ==================== 右侧立轴 ==================== */
+.cine-scroll{
+  position:relative;
+  justify-self:end;
+  align-self:center;
+  margin:0;
+  transition:transform .5s var(--ease-2);
+  will-change:transform;
+}
+.cine-scroll-inner{
+  position:relative;
+  /* 1300 × 2218 的原作比例 */
+  width:clamp(232px, 18.4vw, 336px);
+}
+.cine-scroll-frame{
+  position:relative;
+  width:100%;
+  aspect-ratio:1300 / 2218;
+  background:var(--bg-3);
+  box-shadow:
+    0 0 0 1px var(--line-2),
+    0 26px 60px -22px rgba(58,42,22,.5),
+    0 4px 14px rgba(58,42,22,.14);
+  overflow:hidden;
+}
+[data-theme="dark"] .cine-scroll-frame{
+  box-shadow:
+    0 0 0 1px rgba(243,234,217,.10),
+    0 26px 60px -22px rgba(0,0,0,.9),
+    0 4px 14px rgba(0,0,0,.6);
+}
+.cine-scroll-frame::after{
+  content:"";
+  position:absolute; inset:0; z-index:2;
+  background:radial-gradient(120% 90% at 50% 42%, transparent 46%, rgba(58,42,22,.20) 100%);
+  pointer-events:none;
+}
+.cine-scroll-frame img{
+  display:block;
+  width:100%; height:100%;
+  object-fit:cover;
+  object-position:50% 50%;
+  filter:saturate(.72) contrast(1.04);
+}
+[data-theme="dark"] .cine-scroll-frame img{
+  filter:saturate(.55) contrast(1.06) brightness(.84);
+}
+
+/* 上下木轴 */
+.cine-axle{
+  position:absolute;
+  left:-4.6%; right:-4.6%;
+  height:clamp(12px, 1vw, 15px);
+  z-index:3;
+  border-radius:3px;
+  background:
+    linear-gradient(180deg, #7a5f3f 0%, #4a3826 40%, #241a11 100%);
+  box-shadow:0 3px 12px rgba(30,20,10,.45), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.cine-axle.top{ top:calc(-1 * clamp(12px, 1vw, 15px) * .55); }
+.cine-axle.bot{ bottom:calc(-1 * clamp(12px, 1vw, 15px) * .55); }
+[data-theme="dark"] .cine-axle{
+  background:linear-gradient(180deg, #9a7a52 0%, #55402a 42%, #2a2016 100%);
+  box-shadow:0 3px 14px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+/* 朱砂落款印 */
+.cine-seal{
+  position:absolute;
+  right:-22px; bottom:9%;
+  z-index:4;
+  display:grid; place-items:center;
+  padding:6px 5px;
+  font-family:var(--f-song);
+  font-size:clamp(14px, 1.18vw, 18px);
+  font-weight:700;
+  line-height:1.16;
+  letter-spacing:.02em;
+  text-align:center;
+  color:#fff6ec;
+  background:var(--cinnabar);
+  border:1.5px solid rgba(255,246,236,.42);
+  border-radius:3px;
+  box-shadow:0 6px 18px -6px rgba(178,58,47,.8);
+  transform:rotate(-3.2deg);
+}
+
+.cine-scroll figcaption{
+  margin-top:25px;
+  font-size:10.5px;
+  letter-spacing:.14em;
+  text-align:right;
+  color:var(--fg-5);
+}
+
+/* ---------- 墨梅 ---------- */
+.cine-plum{
+  position:absolute;
+  left:33%; bottom:-13%;
+  z-index:2;
+  width:min(25vw, 330px);
+  opacity:.16;
+  pointer-events:none;
+  mix-blend-mode:multiply;
+  filter:grayscale(.75) contrast(1.1) brightness(.8);
+  transition:transform .8s var(--ease-2);
+  will-change:transform;
+}
+[data-theme="dark"] .cine-plum{
+  mix-blend-mode:screen;
+  opacity:.12;
+  filter:invert(1) grayscale(1) brightness(.9);
+}
+
+/* ---------- 竖排装饰 ---------- */
+.cine-brand{
+  position:absolute;
+  right:clamp(58px, 5.6vw, 92px);
+  top:15%;
+  z-index:2;
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  font-family:var(--f-song);
+  font-size:clamp(56px, 7.2vw, 112px);
+  font-weight:700;
+  letter-spacing:.12em;
+  line-height:1;
+  color:var(--fg);
+  opacity:.035;
+  pointer-events:none;
+  user-select:none;
+}
+[data-theme="dark"] .cine-brand{ opacity:.06; }
+
+.cine-side{
+  position:absolute;
+  right:clamp(10px, 1.1vw, 18px);
+  top:17%;
+  z-index:4;
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  font-family:var(--f-song);
+  font-size:clamp(10.5px, .84vw, 12.5px);
+  letter-spacing:.42em;
+  color:var(--fg-5);
+  pointer-events:none;
+  user-select:none;
+}
+.cine-side span{ display:block; }
+.cine-side span:first-child{
+  margin-left:1.1em;
+  color:var(--fg-4);
+}
+
+/* ---------- 向下阅览 ---------- */
+.cine-down{
+  position:absolute;
+  left:var(--pad-x);
+  bottom:clamp(18px, 3vh, 34px);
+  z-index:5;
+  display:inline-flex; align-items:center; gap:.8em;
+  font-family:var(--f-mono);
+  font-size:10.5px;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--fg-5);
+  transition:color .25s;
+}
+.cine-down span{
+  position:relative;
+  display:block;
+  width:1px; height:34px;
+  background:linear-gradient(180deg, var(--line), transparent);
+  overflow:hidden;
+}
+.cine-down span::after{
+  content:"";
+  position:absolute; left:0; top:-100%;
+  width:1px; height:100%;
+  background:var(--cinnabar);
+  animation:downTick 2.4s var(--ease) infinite;
+}
+.cine-down:hover{ color:var(--cinnabar); }
+@keyframes downTick{
+  0%{ top:-100%; } 60%,100%{ top:100%; }
+}

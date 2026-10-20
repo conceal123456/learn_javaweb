@@ -2,7 +2,9 @@
 
 > 这是按老师 **7 份讲义**整理的一份**可运行、可照着学**的课程仓库：讲义原件、七个工程、逐知识点精讲、实验过程、运行截图、讲义勘误、离线学习网页全在里面。
 >
-> 写给自己复习，也写给学弟学妹入门——**不只是交作业的代码堆，而是从“照着敲”到“真看懂”的一条路线。**
+> 写给自己复习，也写给学弟学妹入门——**不只是交作业的代码堆，而是从"照着敲"到"真看懂"的一条路线。**
+>
+> **2026-10-20 全面复核**：七个工程全部重新构建并实跑（前端逐路由断言、后端逐接口按字节校验），七份讲义逐条对照代码裁定，共整理 **71 条讲义勘误**（其中 3 条旧结论被实测推翻并公开撤回）；离线学习网页按「宋版书 × 电影感」整体重做。所有结论都有命令输出与截图背书，见每讲的 `构建验证_*.md`。
 
 ## 这个仓库里有什么
 
@@ -12,14 +14,33 @@
 | 可运行工程 | 每讲 `工程/` | 自己敲完后对照；也能直接跑起来看效果 |
 | 知识点精讲 | 每讲 `知识点精讲_实训N.md` | 逐条讲透讲义里的每个知识点（七块结构，见下） |
 | 实验过程 | 每讲 `实验过程_实训N.md` | 交作业用，逐小点写清步骤、代码、结果、截图 |
+| **构建验证（实跑报告）** | 每讲 `构建验证_实训N.md` | **构建能不能过、页面/接口实测结果、与讲义差在哪**，含原始命令输出与截图路径 |
 | 运行截图 | 每讲 `演示截图/`（部分有 `过程截图/`） | 对照自己的运行结果，检查是否做对 |
-| 讲义勘误 | 每讲 `讲义勘误_实训N.md` | 讲义写错/不生效的地方，以及正确写法 |
+| 讲义勘误 | 每讲 `讲义勘误_实训N.md` | 讲义写错/不生效的地方、旧勘误的裁定与撤回、正确写法（2026-10-20 逐条实测） |
 | 离线学习网页 | `知识点讲解/` | 双击 `index.html`，可搜索、可记进度，覆盖 109 个知识点 |
+| **网页生成器** | `知识点讲解/_build/build_site.py` | 改完精讲 md 后一条命令重建整站（见文末） |
 | 补基础训练营 | `基础补课/补基础训练营.html` | 补 JS 异步、HTTP、前后端联调；故意不给可抄的代码 |
 | 实训4 工程说明 | `实训4_Element-Plus组件的使用/工程说明.md` | 实训4 与实训3 共用同一工程，这里说明从哪跑、看哪个路由 |
 
 **知识点精讲的固定七块**：
 `① 讲义怎么说` → `② 一句话讲透` → `③ 可直接运行的示例代码` → `④ 逐行拆解` → `⑤ 在你仓库里的真实文件与行号` → `⑥ 常见坑` → `⑦ 自测（答案默认折叠）`。
+
+## 2026-10-20 全面实跑复核（新增）
+
+七个工程逐个 `npm run build` + 起 dev server 用浏览器逐项断言（不只看 HTTP 200），后端逐接口按原始字节校验。完整证据在各讲 `构建验证_*.md`。
+
+| 讲 | 工程 | 构建 | 实跑结论（一句话） | 报告 |
+|---|---|---|---|---|
+| 实训1 | `hello-vue` | ✅ 1.13s / 24 modules / 无告警 | 首页只剩一行欢迎语，无 HelloWorld 残留；`global.css` 实测生效（margin/padding 归零、14px、#333） | [`构建验证_实训1.md`](实训1_软件安装及创建Vue项目/构建验证_实训1.md) |
+| 实训2 | `vue-syntax` | ✅ 0.91s / 25 modules / 无告警 | 9 个语法点**全部真实可交互**（输入→插值跟随、加 10 分→优秀、方块变蓝、`:src` 换图、`onMounted` 真触发），`v-for` 均带 `:key` | [`构建验证_实训2.md`](实训2_Vue基本语法/构建验证_实训2.md) |
+| 实训3 | `element-plus` | ✅ 5.67s / 1595 modules（⚠️ chunk > 500 kB） | `/home` 图标与中文包均生效；`#6666` 实测 `rgba(102,102,102,0.4)`；全量引入 EP 使主 chunk 达 1.16 MB | [`构建验证_实训3-4.md`](实训3_前端ElementPlus框架/构建验证_实训3-4.md) |
+| 实训4 | 复用实训3 | ✅ 同上 | `/comp` 17 小节全渲染、分页**真切片**；`/comp-orig` 三个讲义问题全部复现（`:background` 无底色、`interval` 告警、假分页） | 同上 |
+| 实训5 | `vue-router` | ✅ / 1598 modules | `/`→`/home`；push 使 `history.position`+1、replace 不变（后退跳过 /home）；query 两种写法一致；嵌套父子同屏；讲义原版守卫实测标题为字符串 `"undefined"` | [`构建验证_实训5.md`](实训5_Vue-Router实现路由跳转/构建验证_实训5.md) |
+| 实训6 | `admin-layout` | ✅ / 1601 modules | `/manage`→`/manage/detail`，6 个子路由正常；布局实测 60px 头 / 201px 左栏 / 1079px 内容；表格 9 行、共 50 条、分页**翻页数据不变**；三条 `/manage` 菜单会出现**同时高亮并粘住**（EP 2.14.7 竞态） | [`构建验证_实训6.md`](实训6_后台管理页面/构建验证_实训6.md) |
+| 实训7 前端 | `xm-pro/vue` | ✅ / 1620 modules | `/manage` 不重定向；3 个菜单路径无对应路由 → 点击后**整页空白** + `No match found`；工程**无 axios/fetch、无 proxy**，抓包 0 个后端请求 → 本讲前端不联调 | [`构建验证_实训7-前端.md`](实训7_新建SpringBoot项目/构建验证_实训7-前端.md) |
+| 实训7 后端 | `springboot` | ✅ `mvn clean package` 3.97s，fat jar 26.6 MB | `Started SpringbootApplication` 2.67s；5 个接口**实测全部 HTTP 200**，错误码在 body；响应头 `charset=UTF-8`、响应体合法 UTF-8；**MySQL 实际未被连接** | [`构建验证_实训7-后端.md`](实训7_新建SpringBoot项目/构建验证_实训7-后端.md) |
+
+> **一句话总结：七讲的代码都能跑。** 跑不起来的原因基本是环境（Node/Maven/端口/编码），不是代码；而讲义本身确有 71 处需要订正的地方，见文末「讲义勘误速查」。
 
 ## 建议的学习顺序
 
@@ -42,7 +63,7 @@
 1. **读讲义**（`讲义/` 里的 docx/pdf）：先知道这一讲要做什么、交什么。
 2. **自己敲工程**（`工程/`）：先别打开现成代码，照讲义的步骤自己写；卡住了再对照。
 3. **读精讲复盘**（`知识点精讲_实训N.md`）：把每个知识点的“为什么”弄明白，做 ⑦ 自测题（先答后看答案）。
-4. **对结果 + 记坑**：跑起来和 `演示截图/` 比；把遇到的问题和 `讲义勘误_实训N.md` 对一遍。
+4. **对结果 + 记坑**：跑起来和 `演示截图/`、`构建验证_实训N.md` 比；把遇到的问题和 `讲义勘误_实训N.md` 对一遍。
 
 > 只敲不看精讲 = 会抄不会改；只看精讲不敲 = 看得懂写不出。两边都要走。
 
@@ -50,11 +71,11 @@
 
 | 工具 | 版本 | 备注 |
 |---|---|---|
-| Node.js | 20.19+ 或 22.12+（讲义是 20.15.1） | 低于要求会报 `EBADENGINE` 警告 |
-| npm | 随 Node 自带 | 建议配国内镜像 |
-| JDK | 21 | 实训7 用 |
+| Node.js | **实训1/7 工程：20.19+ 或 22.12+；实训2/3/5/6 工程：22.18+ 或 24.12+** | 讲义写 20.15.1，**低于脚手架要求**，会报 `EBADENGINE`（只警告不阻塞，见实训1 勘误） |
+| npm | 随 Node 自带 | 建议配国内镜像（**用 https**） |
+| JDK | 21 | 实训7 用（实测 21.0.11） |
 | Maven | 3.8.1（与讲义同版本） | 本地仓库 `D:\software\apache-maven-3.8.1\repo` |
-| MySQL | 8.x | 建库名 `xm-pro`，账号 root / 123456 |
+| MySQL | 8.x | 账号 root / 123456。**实训7 后端目前不连数据库**：yml 里配的是 `xm_pro`（下划线），该库已建但 **0 张表**；工程没有 DAO/Mapper，**库名不一致或 MySQL 没启动，后端照样能起、5 个接口照常返回** |
 | IDEA | 2025 旗舰版 | 实训7 跑 SpringBoot |
 | VS Code / Edge | 任意 | 前端开发和截图 |
 
@@ -65,9 +86,11 @@ java -version
 mvn -v
 mysql --version
 
-# npm 国内镜像（建议 https）
+# npm 国内镜像（必须 https，http 会被 npm 301 重定向）
 npm config set registry https://registry.npmmirror.com
 ```
+
+> 本仓库实测环境：Node v24.17.0 / npm 11.13.0 / JDK 21.0.11 / Maven 3.8.1 / MySQL 8.0.43 / Windows PowerShell 5.1（**没有** pwsh 7）。
 
 ## 七讲总览
 
@@ -85,45 +108,53 @@ npm config set registry https://registry.npmmirror.com
 
 **实训1**
 - `npm create vue@3.21.0` 里的 `3.21.0` 是脚手架 `create-vue` 的版本，不是 Vue 版本；
-- 必须选“跳过示例代码”，否则会多出一堆 `HelloWorld` 组件；
+- **讲义"做如下选择"那张四问截图其实是 `@latest`（3.22+）的界面**：按 3.21.0 敲会少一问、多一问，别慌（详见 `讲义勘误_实训1.md` 勘误 2）；
+- Node 20.15.1 会报 `EBADENGINE`，**只是警告不阻塞**，但建议升到 20.19+；
 - 讲义让删的文件别舍不得，骨架越干净后面越顺；
 - App.vue 是根组件，真正的入口是 `main.js`。
 
 **实训2**
 - `ref` 取值要 `.value`（模板里自动脱，脚本里不能忘）；
-- `v-for` 一定要写 `:key`；
-- `onMounted` 是“组件挂载完成”，不是“所有图片加载完”。
+- `v-for` 一定要写 `:key`（讲义示例漏了，截图右上角自己都在报 ⚠2）；
+- `onMounted` 是“组件挂载完成”，不是“所有图片/资源加载完”；
+- 本讲**所有示例代码都只在截图/GIF 里**，正文只有概念文字——想练手就直接抄 `工程/vue-syntax/src` 里的页面。
 
 **实训3**
-- `app.use(ElementPlus)` 要在 `createApp` 之后；
+- `app.use(ElementPlus)` 要在 `createApp` 之后，放前面会 `ReferenceError` 直接白屏；
 - 图标要先全局注册才能在模板里直接用 `<School />`；
-- 讲义里 `color="#6666"` 是 4 位十六进制（半透明灰），要写 `#666666` 才是正常灰。
+- 讲义里 `color="#6666"` 是 4 位十六进制（`#RGBA` → 半透明灰 `rgba(102,102,102,0.4)`），要写 `#666666` 才是正常灰；
+- 讲义附的 `讲义/资源/main.js` 是**没注册图标**的中间版本，拿它覆盖会丢图标。
 
 **实训4**
-- 数字类型的属性要加冒号：`:interval="3000"`，不是 `interval="3000"`；
-- `background` 是裸属性，写成 `:background` 会绑到不存在的变量；
-- 讲义的分页只给了 UI、没按页切片，翻页数据不会变；
-- 轮播、日期、弹窗这几组最容易只抄一半，对照 `演示截图/` 一张张核。
+- 数字类型的属性要加冒号：`:interval="3000"`，不是 `interval="3000"`（后者有 `Invalid prop` 告警，**但轮播仍能每 3 秒切**）；
+- `background` 是裸属性；写成 `:background` 会被 Vue 3.4+ 当成**同名简写**绑到不存在的变量，页码没底色还报警告；
+- **讲义的分页是假分页**：`:data` 绑整份数组、`pageSize4=ref(100)`，翻页数据不变——修正版见 `工程/.../Components.vue` 的 `computed` 切片；
+- 讲义“十一、弹窗”那节其实**没有弹窗组件**，只有 `{{scope.row}}` 调试列 + 原生 `alert()`；
+- `:total=tableData.length` 不加引号是合法的（旧勘误已撤回）。
 
 **实训5**
-- `$router.push` 和 `replace` 的区别在浏览器后退；
+- `$router.push` 和 `replace` 的区别在浏览器后退（实测：push 让 `history.position` +1，replace 不变、后退跳过上一页）；
 - 重定向用 `{ path: '/', redirect: '/home' }`；
 - 嵌套路由的父组件里必须有 `<RouterView />`，否则子页面永远不显示；
-- 守卫里 `document.title = to.meta.title` 对没有 `meta` 的路由会变成字符串 `"undefined"`，要写 `to.meta.title || '默认标题'`。
+- 守卫里 `document.title = to.meta.title` 对没有 `meta` 的路由会变成字符串 `"undefined"`，要写 `to.meta.title || '默认标题'`；
+- 讲义用 `<el-button>`，所以**实训5 其实依赖实训3 装了 Element Plus**。
 
 **实训6**
-- 左侧菜单 `index` 要唯一，不然会同时高亮；
-- 讲义里两份 `<el-menu-item>` 漏了 `index`，点了没反应，要看控制台报错；
-- `Manage.vue` 里必须有 `<router-view />`，嵌套路由才会渲染；
-- 用的 vue-router 新版本里 `next()` 已废弃，新代码建议直接 `return`。
+- 左侧菜单 `index` 要唯一，不然会同时高亮；讲义里三条菜单都写 `/manage`，在 `/manage/admin` 点“管理首页”会出现**三条同时亮并粘住**（element-plus 2.14.7 的 `activeIndex` 竞态，实测复现）；
+- 讲义里两份 `<el-menu-item>` 漏了 `index`，点了没反应，控制台报 `Missing required prop: "index"`；
+- `Manage.vue` 里必须有 `<router-view />`，嵌套路由才会渲染（讲义原版缺，右侧永远同一块占位、且不报错）；
+- `/manage` 没有默认子路由，补了 `router-view` 后“管理首页”点进去右侧仍是空白；
+- 表格分页只有 UI、没按页切片（本讲与实训4 同一类问题）；
+- vue-router 5 里 `next()` 已废弃（功能仍可用，dev 模式每次导航告警），新代码建议直接 `return`。
 
 **实训7**
 - **IDEA 打开 `实训7_新建SpringBoot项目\工程\xm-pro` 这一层**，才能同时看到 `springboot` 和 `vue`；打开 `springboot` 只能看到后端；
 - Maven 的 `~\.m2\settings.xml` 优先级高于 `<MavenHome>\conf\settings.xml`，只改后者不生效；
 - Maven 3.8.1 起默认拦截 http 仓库，阿里云镜像必须写 https；
-- MySQL 8 连接串要带 `allowPublicKeyRetrieval=true`；
-- `@ResponseBody` 返回 String 默认用 ISO-8859-1，中文会乱码，要配 `WebConfig` 或 `produces`；
-- 8080 被占用先查孤儿进程，别反复重启。
+- 命令行验证要 `mvn clean package`：源码没改时 `mvn package` 会 `BUILD SUCCESS` 但**根本不重打 jar**（看着成功，其实空转）；
+- MySQL 8 连接串要带 `allowPublicKeyRetrieval=true`（本项目 yml 已带；但**本讲不查库**）；
+- 8080 被占用先查孤儿进程，别反复重启。注意 `java -jar` 是**两层进程**（javapath stub → 真 JVM），要按 `Get-NetTCPConnection -LocalPort 8080` 找到真正监听的 PID 再 `taskkill /T /F`；
+- 异常被统一处理后 **HTTP 状态码仍是 200**，判成功与否要看 body 的 `code`。
 
 ## 实训7：后端怎么跑 + 一键验证
 
@@ -136,13 +167,41 @@ npm config set registry https://registry.npmmirror.com
 
 三种启动方式、启动成功的判据、以及踩过的坑，都写在 `实训7_新建SpringBoot项目/实验过程_实训7.md`。
 
+**命令行打包（要 `clean`）**：
+
+```powershell
+cd "D:\course\Javaweb\实训7_新建SpringBoot项目\工程\xm-pro\springboot"
+mvn -B -DskipTests clean package     # 实测 3.97s，BUILD SUCCESS，jar 26.6 MB
+java -jar target\springboot-0.0.1-SNAPSHOT.jar
+```
+
 **一键端到端验证**（自动检查环境 → 打包 → 起服务 → 打 5 个接口并按字节校验中文 → 收尾杀进程）：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File "D:\course\Javaweb\实训7_新建SpringBoot项目\_verify_lab7.ps1" -ProjectPath "D:\course\Javaweb\实训7_新建SpringBoot项目\工程\xm-pro\springboot"
 ```
 
-实测 12 项全部通过：`/hello`→200 带中文、`/number`→500 系统错误、`/map`→原生 JSON、`/result`→200 包装类、`/business`→400 业务异常。
+实测 **12 项全部通过**，收尾 `8080 已释放`。
+
+> ⚠️ 脚本必须保持 **UTF-8 with BOM** 保存：Windows PowerShell 5.1 读无 BOM 的 `.ps1` 会按系统 ANSI 解码，脚本里的中文哈希键变乱码，导致**解析阶段就失败、一个检查项都不执行**（EXIT=1、stdout 0 字节）。若重新保存过脚本，先确认编码带 BOM，或改用 PowerShell 7（`pwsh`）执行。
+
+**5 个接口的实测结果**（注意：**HTTP 状态码全是 200**，500/400 是 body 里的业务码）：
+
+| 接口 | HTTP | 响应体 |
+|---|---|---|
+| `/hello` | 200 | `{"code":"200","msg":"请求成功","data":"Hello 安徽中医药大学！"}` |
+| `/number` | 200 | `{"code":"500","msg":"系统错误"}`（除零被全局异常处理器接住，控制台另有 `ArithmeticException` 堆栈） |
+| `/map` | 200 | `{"name":"安徽中医药大学","age":18}`（不包装的原生 JSON） |
+| `/result` | 200 | `{"code":"200","msg":"请求成功","data":"测试统一返回包装类成功！"}` |
+| `/business` | 200 | `{"code":"400","msg":"用户名已存在，请换一个！"}` |
+
+> 响应头统一 `Content-Type: application/json;charset=UTF-8`，响应体实测是**合法 UTF-8**（中文正常）。`@ResponseBody` 返回 String 默认 ISO-8859-1 在 **Spring Boot 3.x 已经不成立**：Boot 用 `server.servlet.encoding.charset`（默认 UTF-8）构造 `StringHttpMessageConverter`（已从 sources jar 核对源码）。本项目的 `WebConfig` 是**显式加固、并非必需**——所以别照着旧资料去“修乱码”，先看响应头。
+
+### 实训8 之前先做两件事
+
+1. **统一库名**：`application.yml` 用 `xm_pro`，讲义/旧版 README 写 `xm-pro`，先定一个；
+2. **把表建出来**：`xm_pro` 目前 **0 张表**，实训7 没 DAO 所以不查库，但实训8 一加 Mapper 就会报 `Table 'xm_pro.xxx' doesn't exist`；
+3. 加完 Mapper 后再跑一次 `_verify_lab7.ps1`——它现在只验 MySQL 服务和 3306 端口，**不验库名和表**，库错了也不会报。
 
 ## 七讲为什么不是一个工程
 
@@ -161,18 +220,20 @@ powershell -ExecutionPolicy Bypass -File "D:\course\Javaweb\实训7_新建Spring
 | 实训7 | SpringBoot、Result、全局异常 | 实训6 的前端页面（复制到 `xm-pro/vue`） |
 
 > 实训5 讲义里的跳转按钮是 `<el-button>`，所以**实训5 其实依赖实训3**；`实训5_Vue-Router实现路由跳转/工程/vue-router` 已经装好 Element Plus，别以为是纯 Vue 项目。
+>
+> 另外要注意：**实训1、实训7 的前端是 create-vue 3.21.0 代（Vite 7）**，**实训2/3/5/6 是 3.24.0 代（Vite 8）**，两代的 Node 要求不同（见环境准备）。
 
 ## 交作业：要交哪些文档、配哪些截图
 
-| 讲次 | 实验过程文档 | 截图目录 |
-|---|---|---|
-| 实训1 | `实训1_软件安装及创建Vue项目/实验过程_实训1.md` | `演示截图/`、`讲义截图/` |
-| 实训2 | `实训2_Vue基本语法/实验过程_实训2.md` | `演示截图/`、`过程截图/` |
-| 实训3 | `实训3_前端ElementPlus框架/实验过程_实训3.md` | `演示截图/`（`03_*`） |
-| 实训4 | `实训4_Element-Plus组件的使用/实验过程_实训4.md` | `演示截图/`（`04_*`） |
-| 实训5 | `实训5_Vue-Router实现路由跳转/实验过程_实训5.md` | `演示截图/`（`05_*`） |
-| 实训6 | `实训6_后台管理页面/构建验证_实训6.md` + `知识点讲解_实训6.html` 第 5 节 | `演示截图/`（`06_*`） |
-| 实训7 | `实训7_新建SpringBoot项目/实验过程_实训7.md` | 按文档里的截图清单截 |
+| 讲次 | 实验过程文档 | 构建验证（实跑证据） | 截图目录 |
+|---|---|---|---|
+| 实训1 | `实训1_软件安装及创建Vue项目/实验过程_实训1.md` | `构建验证_实训1.md` | `演示截图/`、`讲义截图/` |
+| 实训2 | `实训2_Vue基本语法/实验过程_实训2.md` | `构建验证_实训2.md` | `演示截图/`、`过程截图/` |
+| 实训3 | `实训3_前端ElementPlus框架/实验过程_实训3.md` | `构建验证_实训3-4.md` | `演示截图/`（`03_*`） |
+| 实训4 | `实训4_Element-Plus组件的使用/实验过程_实训4.md` | 同上（实训3-4 共用） | `演示截图/`（`04_*`） |
+| 实训5 | `实训5_Vue-Router实现路由跳转/实验过程_实训5.md` | `构建验证_实训5.md` | `演示截图/`（`05_*`） |
+| 实训6 | `实训6_后台管理页面/构建验证_实训6.md` + `知识点讲解_实训6.html` 第 5 节 | `构建验证_实训6.md` | `演示截图/`（`06_*`） |
+| 实训7 | `实训7_新建SpringBoot项目/实验过程_实训7.md` | `构建验证_实训7-前端.md`、`构建验证_实训7-后端.md` | 按文档里的截图清单截 |
 
 每份实验过程文档都按作业小点写：环境版本 → 操作步骤与代码 → 观察结果 → 关键命令 → 该配哪张截图 → 遇到的问题及解决。
 
@@ -190,7 +251,17 @@ powershell -ExecutionPolicy Bypass -File "D:\course\Javaweb\实训7_新建Spring
 | 实训6 | [`知识点精讲_实训6.md`](实训6_后台管理页面/知识点精讲_实训6.md) | `实训6_后台管理页面/讲义/实训6__后台管理页面.pdf` |
 | 实训7 | [`知识点精讲_实训7.md`](实训7_新建SpringBoot项目/知识点精讲_实训7.md) | `实训7_新建SpringBoot项目/讲义/实训7__新建SpringBoot项目.docx` |
 
-**网页版**：双击 `知识点讲解/index.html`，七讲 109 个知识点，按“讲义要点 → 核心讲解 → 示例演示 → 代码解读 → 工程对照 → 易错提醒 → 课堂思考”七个环节组织，支持搜索（`Ctrl+K`）、深浅色、勾选进度。页面配馆藏中国画与花竹透明素材（公有领域，见 `知识点讲解/assets/art/说明.md`）。
+**网页版**：双击 `知识点讲解/index.html`，七讲 109 个知识点，按“讲义要点 → 核心讲解 → 示例演示 → 代码解读 → 工程对照 → 易错提醒 → 课堂思考”七个环节组织，支持全文搜索（`Ctrl+K` 命令面板）、深浅两套主题、勾选学习进度（存本机浏览器）。页面配馆藏中国画与花竹透明素材（公有领域，见 `知识点讲解/assets/art/说明.md`），**完全离线**：不引用任何 CDN 与外部字体。
+
+**网页版怎么改、怎么重建**（生成器在仓库里，内容源就是上面 7 份精讲 md）：
+
+```powershell
+# 改完任意一份 知识点精讲_实训N.md 后，一条命令重建全站
+cd D:\course\Javaweb
+python 知识点讲解\_build\build_site.py
+```
+
+生成器会自检每个知识点是否齐备 7 块，并打印各讲的「知识点 / 代码块 / 折叠问答」数量（当前：7 讲 / 109 个知识点 / 232 个代码块 / 109 道自测）。写法与设计 token 见 [`知识点讲解/_build/README.md`](知识点讲解/_build/README.md)。
 
 **二、补基础训练营**：[`基础补课/补基础训练营.html`](基础补课/补基础训练营.html)，双击打开，离线可用。
 
@@ -201,22 +272,38 @@ powershell -ExecutionPolicy Bypass -File "D:\course\Javaweb\实训7_新建Spring
 
 > **精讲用来“看懂”，训练营用来“写会”。** 看精讲别只看不敲——L7 要把 `实训7_新建SpringBoot项目/工程/xm-pro` 的前后端真正接通。
 
-## 讲义勘误速查
+## 讲义勘误速查（2026-10-20 逐条实测，共 71 条）
 
-详细版在各讲 `讲义勘误_实训N.md`，这里只挑会影响结果的：
+完整版在各讲 `讲义勘误_实训N.md`（每条含【讲义原文·带章节】【问题】【实测证据】【正确写法】【影响程度】）。这里只列**会影响结果**的和**曾被传错**的。
 
-| 讲次 | 问题 | 正确做法 |
-|---|---|---|
-| 实训6 | `Manage.vue` 没有 `<router-view />`，嵌套路由只配一半 | 右侧内容区加 `<router-view />` |
-| 实训6 | 两个子菜单 `<el-menu-item>` 缺 `index`，点了没反应 | 补唯一 `index` |
-| 实训6 | 三个菜单 `index` 都写 `/manage`，同时高亮 | 每个菜单给不同路径 |
-| 实训5 | 守卫 `to.meta.title` 对无 meta 路由变成 `"undefined"` | `to.meta.title || '默认标题'` |
-| 实训3 | `color="#6666"` 是 4 位十六进制，图标发淡 | 写 `#666666` |
-| 实训4 | `interval="3000"` 传成字符串 | 写 `:interval="3000"` |
-| 实训4 | `:background` 绑到未定义变量，无底色 | 用裸属性 `background` |
-| 实训4 | 分页未按页切片，翻页数据不变 | 用 `computed` 切片 |
-| 实训2 | `v-for` 没写 `:key` | 补 `:key` |
-| 实训1 | Node 20.15.1 低于脚手架要求，报 `EBADENGINE` | 升到 20.19+ 或 22.12+ |
+| 讲次 | 问题 | 正确做法 / 本次实测结论 | 级别 |
+|---|---|---|---|
+| 实训4 | 分页示例是**假分页**：`:data` 绑整份数组、从未按页切片，`pageSize4=ref(100)` 也不在 `:page-sizes` 里 | 用 `computed` 按 `(currentPage-1)*pageSize` 切片；`pageSize` 要在候选列表内 | **高** |
+| 实训7 | Maven 镜像写 `http://`，Maven 3.8.1 起**直接拦截** | 镜像地址必须 `https://` | **高** |
+| 实训7 | `application.yml` 正文里 `url:` 没缩进，照抄**启动失败** | 与 `driver-class-name` 同级缩进 | **高** |
+| 实训6 | `Manage.vue` 缺 `<router-view />`，嵌套路由只配一半 | 右侧内容区加 `<router-view />`（原版不报错，只是永远同一块占位） | **高** |
+| 实训6 | 两个子菜单 `<el-menu-item>` 缺 `index`，点了没反应 | 补唯一 `index`（原版报 `Missing required prop: "index"`） | **高** |
+| 实训6 | 三条菜单 `index` 都写 `/manage`，会出现**同时高亮并粘住** | 每个菜单给不同路径（EP 2.14.7 `activeIndex` 竞态，实测 2 秒不退） | 中 |
+| 实训6 | 表格 `total=50` 是写死的，翻页 9 行数据不变 | 按 `pageNum` 切片 | 中 |
+| 实训5 | 守卫 `to.meta.title` 对无 meta 路由变成字符串 `"undefined"` | `to.meta.title \|\| '默认标题'` | 中 |
+| 实训4 | `:background` 被 Vue 3.4+ 当**同名简写** → `undefined`，页码没底色 + 告警 | 用裸属性 `background` | 中 |
+| 实训4 | `interval="3000"` 传成字符串 | 写 `:interval="3000"`；**注意**：旧资料说“不写冒号就不轮播”是错的——实测有告警但照常 3 秒切 | 中 |
+| 实训4 | 讲义“十一、弹窗”**没有任何弹窗组件** | 只有 `{{scope.row}}` 调试列 + 原生 `alert()`；`el-dialog`/`ElMessageBox` 要自己补 | 中 |
+| 实训4 | “当数据量过多时，使用分页分解数据”——概念错 | 分页组件**不切数据**，切数据是你自己的 `computed`/接口 | 中 |
+| 实训3 | `color="#6666"` 是 4 位 `#RGBA`（半透明灰），图标发淡 | 写 `#666666` | 中 |
+| 实训3 | `app.use(ElementPlus)` 讲义只说“放在合适的位置” | 必须在 `createApp` 之后，否则 `ReferenceError` 白屏 | 中 |
+| 实训3 | 讲义附的 `资源/main.js` 是**未注册图标**的中间版本 | 别直接覆盖，会丢图标 | 中 |
+| 实训2 | `v-for` 没写 `:key`（讲义截图自己都在报 ⚠2） | 补 `:key` | 中 |
+| 实训2 | `onMounted` 说成“所有资源加载完” | 是“组件 DOM 挂载完成” | 低 |
+| 实训1 | Node 20.15.1 低于脚手架要求，报 `EBADENGINE`（讲义自己的截图里就印着） | 升到 20.19+（实测只警告不阻塞） | 中 |
+| 实训1 | “做如下选择”四问截图其实是 `@latest`(3.22+) 界面，不是正文 3.21.0 的界面 | 按 3.21.0 敲会少“是否使用 TS”一问；三种版本界面差异见勘误 | 中 |
+| 实训1 | “App.vue 是项目入口” | 入口是 `main.js`，App.vue 是根组件 | 低 |
+| 实训7 | “`@ResponseBody` 返回 String 默认 ISO-8859-1 会乱码” | **Spring Boot 3.x 起不成立**：默认按 `server.servlet.encoding.charset`（UTF-8）构造 `StringHttpMessageConverter`，实测响应头 `charset=UTF-8`、中文正常；本仓库 `WebConfig` 只是显式加固 | 澄清 |
+| 实训6 | “`detail` 没配 meta 标题会变 undefined” | 实测**继承父级「后台管理」**，不是 undefined（只有完全无 meta 的顶层路由才是） | 澄清 |
+| 实训4 | 旧勘误“`:total=tableData.length` 要补引号” | **公开撤回**：HTML 无引号属性合法，实测渲染“共 23 条” | 撤回 |
+| 实训1 | 旧勘误“讲义截图中没有跳过示例这一问” | **已更正**：3.21.0 有该问；是 @latest 界面恢复了独立 TS 问 | 撤回 |
+
+> 勘误的用法：**先按讲义做，卡住了再查**。看到某条写着“撤回/澄清”，说明我们之前也传错过——错的地方一起改，别互相抄错版本。
 
 ## 仓库结构
 
@@ -227,7 +314,7 @@ Javaweb/
 │  ├─ 讲义截图/        讲义原图
 │  ├─ 工程/hello-vue/  可运行工程
 │  ├─ 演示截图/ 勘误图/
-│  └─ 实验过程 / 知识点精讲 / 讲义勘误 三份 md
+│  └─ 实验过程 / 知识点精讲 / 讲义勘误 / 构建验证 四份 md
 ├─ 实训2_Vue基本语法/
 │  ├─ 讲义/（含 7 张动图） 工程/vue-syntax/
 │  ├─ 演示截图/ 勘误图/ 过程截图/
@@ -235,7 +322,7 @@ Javaweb/
 ├─ 实训3_前端ElementPlus框架/
 │  ├─ 讲义/（含动图、资源/main.js） 工程/element-plus/  ← 实训3、4 共用
 │  ├─ 演示截图/ 勘误图/
-│  └─ 四份 md（含 构建验证_实训3-4.md）
+│  └─ 四份 md
 ├─ 实训4_Element-Plus组件的使用/
 │  ├─ 讲义/ 工程说明.md（指向实训3 的工程）
 │  ├─ 演示截图/ 勘误图/
@@ -247,35 +334,37 @@ Javaweb/
 ├─ 实训6_后台管理页面/
 │  ├─ 讲义/ 工程/admin-layout/
 │  ├─ 演示截图/ 勘误图/
-│  └─ 构建验证 / 知识点精讲 md + 知识点讲解_实训6.html
+│  └─ 构建验证 / 知识点精讲 / 讲义勘误 md + 知识点讲解_实训6.html
 ├─ 实训7_新建SpringBoot项目/
 │  ├─ 讲义/ 工程/xm-pro/（springboot 后端 + vue 前端）
 │  ├─ _verify_lab7.ps1
-│  └─ 实验过程 / 知识点精讲 两份 md
+│  └─ 实验过程 / 知识点精讲 / 讲义勘误 / 构建验证（前端+后端） md
 ├─ 知识点讲解/         离线网页版精讲（109 个知识点）
+│  ├─ index.html + 实训1~7.html + assets/
+│  └─ _build/build_site.py   ← 网页生成器 + 设计 token（见 _build/README.md）
 ├─ 基础补课/           补基础训练营 + js练习 目录
 ├─ .gitignore
 └─ README.md           （本文件）
 ```
 
-**约定**：新增一讲就建 `实训N_讲名/`，里面放 `讲义/`、`工程/`、截图目录和 md 文档；文档里的仓库路径写相对仓库根的完整路径，方便跨讲引用。`node_modules/`、`dist/`、`target/`、`.idea/`、`.vscode/`、`.extract/`、`*.mp4`、`*.exe` 都已在 `.gitignore` 里，不会进仓库。
+**约定**：新增一讲就建 `实训N_讲名/`，里面放 `讲义/`、`工程/`、截图目录和 md 文档；文档里的仓库路径写相对仓库根的完整路径，方便跨讲引用。`node_modules/`、`dist/`、`target/`、`.idea/`、`.vscode/`、`.extract/`、`*.mp4`、`*.exe` 都已在 `.gitignore` 里，不会进仓库（`.extract/` 是验证脚本与临时证据的堆放处，不入库）。
 
 ## 常见问题（FAQ）
 
 **1. `npm install` 很慢 / 报 `EBADENGINE`？**
-先换国内镜像（https）；`EBADENGINE` 是 Node 版本低于脚手架要求，升 Node 或忽略警告继续装。
+先换国内镜像（**https**）；`EBADENGINE` 是 Node 版本低于脚手架要求（实训2/3/5/6 要求 22.18+ 或 24.12+），只警告不阻塞，升 Node 更稳。
 
 **2. 5173 端口被占用？**
-`netstat -ano | findstr :5173` 找到 PID，`taskkill /PID <pid> /F` 杀掉；或在 `vite.config.js` 里改端口。
+`netstat -ano | findstr :5173` 找到 PID，`taskkill /PID <pid> /F` 杀掉；或在 `vite.config.js` 里改端口，或 `npm run dev -- --port 5174 --strictPort`。
 
 **3. 页面白屏 / 路由不生效？**
-检查 `App.vue` 里是否有 `<RouterView />`；`router/index.js` 的 `routes` 是否配了；嵌套路由父组件里有没有 `<router-view />`。
+检查 `App.vue` 里是否有 `<RouterView />`；`router/index.js` 的 `routes` 是否配了；嵌套路由父组件里有没有 `<router-view />`；再检查控制台的 `No match found`（实训7 前端有 3 个菜单指向不存在的路由，点了就是白屏）。
 
 **4. 中文乱码？**
-后端 `@ResponseBody` 返回 String 默认 ISO-8859-1，配 `WebConfig`（`extendMessageConverters`）或给接口加 `produces = "application/json;charset=UTF-8"`。和数据库 utf8mb4、yml 编码是两码事。
+本项目后端不会乱码（实测响应头 `charset=UTF-8`、响应体合法 UTF-8）。`@ResponseBody` 返回 String 默认 ISO-8859-1 是 **Spring Boot 2.x 时代**的坑，Boot 3.x 默认就按 `server.servlet.encoding.charset`（UTF-8）走，本仓库的 `WebConfig` 属于显式加固。真遇到乱码先看响应头的 `charset`，再查前端解码，别第一时间改代码。
 
 **5. MySQL 8 连不上，报 `Public Key Retrieval is not allowed`？**
-连接串加 `allowPublicKeyRetrieval=true&useSSL=false`。
+连接串加 `allowPublicKeyRetrieval=true&useSSL=false`。另外：**实训7 后端不连库**，跑起来跟 MySQL 没关系，别在这上面浪费时间。
 
 **6. Maven 依赖下载不下来？**
 `~\.m2\settings.xml` 优先于 Maven 安装目录的 `conf\settings.xml`；3.8.1 起 http 仓库会被拦，镜像地址必须写 https。
@@ -290,7 +379,16 @@ Javaweb/
 直接改 `src` 下的文件，Vite 会热更新，不用重装依赖。
 
 **10. 提交作业时截图放哪？**
-各讲 `演示截图/` 里已按 `03_`、`04_` 等前缀排好，实验过程文档里写了每题配哪张。
+各讲 `演示截图/` 里已按 `03_`、`04_` 等前缀排好，实验过程文档里写了每题配哪张；实跑证据截图在对应的 `构建验证_*.md` 里引用了路径。
+
+**11. `mvn package` 显示 `BUILD SUCCESS`，但 jar 没更新？**
+正常——`maven-jar-plugin` 输入没变会跳过打 jar。命令行验证一律用 `mvn clean package`。
+
+**12. 8080 杀不掉 / 杀了还在？**
+`java -jar` 是两层进程（javapath stub → 真 JVM）。用 `Get-NetTCPConnection -LocalPort 8080 -State Listen` 找真正监听的 PID，再 `taskkill /PID <PID> /T /F` 结束整棵树。
+
+**13. 网页版怎么改内容 / 加了知识点页面没变？**
+网页内容来自 7 份 `知识点精讲_实训N.md`，改完必须重建：`python 知识点讲解\_build\build_site.py`（生成器会自检七块是否齐备）。
 
 ## 给学弟学妹的话
 
@@ -299,4 +397,5 @@ Javaweb/
 - **报错原文不要转述**，原样粘给 AI 或学长，定位快十倍。
 - **别怕把工程删了重来**，讲义第 1 讲就教你重建；`npm create vue` 五分钟一个新工程。
 - 学完一讲，试着**不看讲义把这一讲的项目从零再做一遍**，这是最有效的检验。
+- **讲义也会错**。这次逐条实测就订正了 71 处，还有 3 条是我们自己以前写错、这次公开撤回的——遇到“讲义明明这么写却跑不通”，先查 `讲义勘误_实训N.md`，再相信自己的实测。
 - 最后：**这套资料是给自己复习用的，不是背的。** 哪个知识点讲得不对，欢迎提 issue 一起改。

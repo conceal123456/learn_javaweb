@@ -1,0 +1,237 @@
+/* ==========================================================================
+   80 · 打印：把讲解页还原成一张"讲义"
+   ========================================================================== */
+@media print{
+  @page{
+    size:A4;
+    margin:16mm 14mm;
+  }
+
+  :root{
+    --bg:#ffffff;
+    --bg-2:#ffffff;
+    --bg-3:#ffffff;
+    --surface:#ffffff;
+    --surface-2:#ffffff;
+    --fg:#000000;
+    --fg-2:#141414;
+    --fg-3:#2b2b2b;
+    --fg-4:#3d3d3d;
+    --fg-5:#5a5a5a;
+    --line:#c8c8c8;
+    --line-2:#dddddd;
+    --line-3:#eeeeee;
+    --code-bg:#f4f1ea;
+    --code-bg-2:#efe9de;
+    --code-fg:#141414;
+    --tk-k:#0d4f66;
+    --tk-f:#7a5a00;
+    --tk-s:#2f6b2f;
+    --tk-n:#8c2f24;
+    --tk-c:#6b6b6b;
+    --tk-a:#8a4a12;
+    --tk-t:#0d4f66;
+    --tk-p:#4d443b;
+  }
+
+  html,body{
+    background:#fff !important;
+    color:#000;
+    font-size:11pt;
+  }
+  body::before,
+  .grain,
+  .page-in,
+  .scroll-rail,
+  .top,
+  .side,
+  #scrim,
+  #top-btn,
+  .kp-nav,
+  .read-bar,
+  .toast,
+  .cmdk,
+  .foot-banner,
+  .marquee,
+  .pan,
+  .series,
+  .lab-hero-bg,
+  .lab-hero-veil,
+  .lab-hero-plum,
+  .lab-poem,
+  .lab-hero-no,
+  .cine-petals,
+  .ink-canvas,
+  .ripple-canvas,
+  .cine-plum,
+  .cine-brand,
+  .cine-side,
+  .cine-down,
+  .cine-scroll,
+  .cine-bg,
+  .cine-veil,
+  .foot-lotus,
+  .quote-art,
+  .cine-cta{ display:none !important; }
+
+  .rv,
+  .rv.in,
+  .cine-kicker,
+  .cine-sub,
+  .home-stats,
+  .lab-hero,
+  .lab-hero kbd{
+    opacity:1 !important;
+    translate:0 0 !important;
+    transform:none !important;
+    animation:none !important;
+  }
+  .hero-title .ch,
+  .lab-hero h1 .ch{
+    opacity:1 !important;
+    animation:none !important;
+    transform:none !important;
+    filter:none !important;
+  }
+
+  .shell{
+    display:block;
+    max-width:none;
+    padding:0;
+    margin:0;
+  }
+  main{ padding:0; }
+
+  .cine-hero,
+  .lab-hero{
+    min-height:0;
+    height:auto;
+    border:0;
+    overflow:visible;
+    padding:0;
+    margin-bottom:14pt;
+  }
+  .lab-hero::after,
+  .cine-hero::before,
+  .cine-hero::after{ display:none; }
+  .lab-hero-inner,
+  .cine-inner{
+    padding:0;
+    display:block;
+    max-width:none;
+  }
+  .hero-title{ font-size:26pt; line-height:1.2; margin:0 0 6pt; }
+  .lab-hero h1{ font-size:24pt; margin:0 0 4pt; }
+  .cine-copy::before{ display:none; }
+  .lab-kicker,
+  .cine-kicker{ font-size:8pt; letter-spacing:.2em; margin-bottom:4pt; }
+  .cine-sub,
+  .lab-hero-sub{ font-size:9pt; color:#444; }
+  .home-stats{ border-top:1px solid #ccc; padding-top:6pt; }
+  .home-stats b{ font-size:16pt; }
+  .chip{ border:1px solid #ccc; }
+
+  .sec-title{
+    margin:18pt 0 8pt;
+    padding-bottom:4pt;
+    border-bottom:1px solid #ccc;
+    break-after:avoid;
+  }
+  .sec-title h2{ font-size:15pt; }
+  .sec-title::after{ display:none; }
+
+  .kp{
+    border:0;
+    border-top:1pt solid #999;
+    border-radius:0;
+    box-shadow:none;
+    padding:10pt 0 0;
+    margin:0 0 16pt;
+    background:#fff !important;
+    transform:none !important;
+    break-inside:auto;
+  }
+  .kp::before{ display:none; }
+  .kp-head{
+    border-bottom:1px solid #ccc;
+    padding-bottom:5pt;
+    margin-bottom:7pt;
+    break-after:avoid;
+  }
+  .kp-head h3{ font-size:13pt; }
+  .kp-num{ border:1px solid #999; background:#fff; color:#000; }
+  .kp-done{ display:none; }
+  .kp.done .kp-head::before{ display:none; }
+  .kp-head h3 code{ background:none; border:0; color:#000; }
+
+  .blk{
+    border:0 !important;
+    border-left:2pt solid #999 !important;
+    border-radius:0;
+    background:#fff !important;
+    padding:4pt 0 4pt 8pt;
+    margin:0 0 8pt;
+    break-inside:avoid;
+  }
+  .blk-tag{ font-size:8.5pt; color:#333; margin-bottom:2pt; }
+  .blk-tag i{ background:none !important; color:#000 !important; box-shadow:none !important; }
+  .blk[data-k="②"] .blk-body > p:first-of-type::first-letter{
+    float:none; font-size:1em; color:inherit; margin:0;
+  }
+  .blk[data-k="①"] .blk-body{ font-family:inherit; }
+
+  .code{
+    border:1px solid #bbb;
+    background:#f6f3ec !important;
+    box-shadow:none;
+    break-inside:avoid;
+  }
+  .code::before{ display:none; }
+  .code-bar{
+    background:#eee !important;
+    border-bottom:1px solid #ccc;
+  }
+  .code-lang{ color:#333 !important; opacity:1; }
+  .code-lang::before{ background:#666; }
+  .copy{ display:none; }
+  .code pre{ padding:6pt 8pt; overflow:visible; }
+  .code code{
+    font-size:8.6pt;
+    line-height:1.5;
+    white-space:pre-wrap;
+    word-break:break-word;
+    color:#111 !important;
+  }
+
+  .tw{ border:1px solid #bbb; overflow:visible; }
+  .tw table{ min-width:0; font-size:8.8pt; }
+  .tw thead th{ background:#eee !important; color:#000; }
+  .tw tbody tr:nth-child(even){ background:#f7f7f7 !important; }
+
+  details.qa{ border:1px solid #bbb; break-inside:avoid; }
+  details.qa summary::before,
+  details.qa summary::after{ display:none; }
+  details.qa summary{ padding:4pt 7pt; }
+  details.qa .qa-body{
+    padding:4pt 7pt;
+    background:#fafafa !important;
+    border-left:2pt solid #999;
+    animation:none;
+  }
+  details.qa .qa-body::before{ display:none; }
+  details.qa[open] .qa-body{ display:block; }
+
+  blockquote{
+    background:#f7f7f7 !important;
+    border-left:2pt solid #666;
+    font-family:inherit;
+  }
+  a{ color:#000; text-decoration:none; border:0 !important; }
+  footer{
+    padding:14pt 0 0;
+    border-top:1pt solid #999;
+    margin-top:16pt;
+  }
+  footer p{ color:#333; font-size:8.6pt; }
+  footer code{ background:none; border:0; }
+}

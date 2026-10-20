@@ -1,0 +1,332 @@
+/* ==========================================================================
+   00 · 设计令牌 / 重置 / 基础排版
+   方向：「宋版书 × 电影感」新中式
+   —— 宣纸为底、界行为骨、朱砂为眼、墨色为肉。
+   本文件由 知识点讲解/_build/build_site.py 拼接输出到 assets/style.css
+   ========================================================================== */
+
+:root{
+  color-scheme: light;
+
+  /* ---------- 材质：宣纸 ---------- */
+  --bg:        #f7f1e6;
+  --bg-2:      #f1e9d9;
+  --bg-3:      #e9dfca;
+  --bg-deep:   #ded2b8;
+  --surface:   #fffdf7;
+  --surface-2: #faf5e9;
+  --veil:      rgba(247,241,230,.86);
+
+  /* ---------- 墨色阶：正文与层级 ---------- */
+  --fg:   #14110f;
+  --fg-2: #2b2521;
+  --fg-3: #4d443b;
+  --fg-4: #625a4d;
+  --fg-5: #746a59;
+
+  --line:   rgba(20,17,15,.15);
+  --line-2: rgba(20,17,15,.08);
+  --line-3: rgba(20,17,15,.04);
+
+  /* ---------- 五彩 ---------- */
+  --cinnabar:   #b23a2f;
+  --cinnabar-2: #c9553f;
+  --cinnabar-3: rgba(178,58,47,.10);
+  --cinnabar-4: rgba(178,58,47,.055);
+  --azure:      #2c5d73;
+  --azure-2:    #3f7d97;
+  --azure-3:    rgba(44,93,115,.09);
+  --gold:       #c9a227;
+  --gold-2:     #dfbe55;
+  --gold-3:     rgba(201,162,39,.13);
+  --gold-ink:   #8a6c12;
+  --jade:       #47705a;
+  --jade-3:     rgba(79,122,99,.10);
+
+  /* ---------- 阴影：克制、偏暖 ---------- */
+  --sh-1: 0 1px 1px rgba(58,42,22,.05), 0 3px 10px rgba(58,42,22,.045);
+  --sh-2: 0 2px 4px rgba(58,42,22,.06), 0 14px 34px -10px rgba(58,42,22,.16);
+  --sh-3: 0 6px 12px rgba(58,42,22,.07), 0 34px 74px -26px rgba(58,42,22,.30);
+  --sh-inset: inset 0 1px 0 rgba(255,255,255,.7);
+
+  /* ---------- 罩色（用于首屏 / 图片上的"洗淡"层） ---------- */
+  --wash-0: rgba(247,241,230,0);
+  --wash-1: rgba(247,241,230,.28);
+  --wash-2: rgba(247,241,230,.60);
+  --wash-3: rgba(247,241,230,.90);
+  --wash-4: rgba(247,241,230,1);
+
+  /* ---------- 纸张纹理（内联 SVG，完全离线） ---------- */
+  --tx-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.44'/%3E%3C/svg%3E");
+  --tx-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .5' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23f)' opacity='.30'/%3E%3C/svg%3E");
+
+  /* ---------- 字体 ---------- */
+  --f-song: "Source Han Serif SC","Noto Serif SC","Songti SC","STSong","SimSun","NSimSun",serif;
+  --f-sans: "Microsoft YaHei","PingFang SC","Hiragino Sans GB","Source Han Sans SC","Noto Sans SC","Helvetica Neue",Arial,sans-serif;
+  --f-kai:  "Kaiti SC","STKaiti","KaiTi","楷体",var(--f-song);
+  --f-mono: "Cascadia Mono","Consolas","JetBrains Mono","SFMono-Regular","Menlo","Courier New",monospace;
+
+  /* ---------- 字号阶梯 ---------- */
+  --t-hero: clamp(52px, 6.6vw, 118px);
+  --t-h1:   clamp(40px, 4.4vw, 76px);
+  --t-h2:   clamp(26px, 2.5vw, 42px);
+  --t-h3:   clamp(21px, 1.7vw, 28px);
+  --t-lead: clamp(16px, 1.15vw, 19px);
+  --t-body: 16.5px;
+  --t-sm:   14.5px;
+  --t-xs:   12.5px;
+
+  /* ---------- 尺寸 / 节奏 ---------- */
+  --h-top:  64px;
+  --w-side: 296px;
+  --w-max:  1720px;
+  --r-1: 3px;  --r-2: 7px;  --r-3: 12px;  --r-4: 20px;  --r-pill: 999px;
+  --pad-x: clamp(20px, 4.4vw, 76px);
+  --gap:   clamp(16px, 1.8vw, 28px);
+  --measure: 70ch;
+
+  /* ---------- 动效 ---------- */
+  --ease:   cubic-bezier(.22,.61,.36,1);
+  --ease-2: cubic-bezier(.16,1,.30,1);
+  --ease-3: cubic-bezier(.68,-.4,.27,1.4);
+  --dur: .42s;
+
+  /* ---------- 代码面板（两套主题都保持"拓片"深色） ---------- */
+  --code-bg:   #17130f;
+  --code-bg-2: #1e1915;
+  --code-fg:   #e9dfca;
+  --code-line: rgba(233,223,202,.10);
+  --tk-k: #7fb6cc;   /* 关键字 */
+  --tk-f: #e3c169;   /* 函数名 */
+  --tk-s: #a8c48a;   /* 字符串 */
+  --tk-n: #dd8a7c;   /* 数字 */
+  --tk-c: #8a8172;   /* 注释 */
+  --tk-a: #d99f74;   /* 属性 */
+  --tk-t: #8fbfd6;   /* 标签 */
+  --tk-p: #9a8f7d;   /* 标点 */
+
+  --seal-font: var(--f-song);
+}
+
+/* ==================== 夜色拓片（深色） ==================== */
+[data-theme="dark"]{
+  color-scheme: dark;
+
+  --bg:        #100d0b;
+  --bg-2:      #16110f;
+  --bg-3:      #1c1714;
+  --bg-deep:   #241d18;
+  --surface:   #191412;
+  --surface-2: #1f1916;
+  --veil:      rgba(16,13,11,.84);
+
+  --fg:   #f3ead9;
+  --fg-2: #e2d7c3;
+  --fg-3: #bdb29c;
+  --fg-4: #9d9382;
+  --fg-5: #8a8172;
+
+  --line:   rgba(243,234,217,.15);
+  --line-2: rgba(243,234,217,.085);
+  --line-3: rgba(243,234,217,.04);
+
+  --cinnabar:   #e2685a;
+  --cinnabar-2: #f08072;
+  --cinnabar-3: rgba(226,104,90,.15);
+  --cinnabar-4: rgba(226,104,90,.07);
+  --azure:      #7cb4ca;
+  --azure-2:    #96cadd;
+  --azure-3:    rgba(124,180,202,.13);
+  --gold:       #e3c169;
+  --gold-2:     #f2db96;
+  --gold-3:     rgba(227,193,105,.16);
+  --gold-ink:   #e8c96e;
+  --jade:       #82b398;
+  --jade-3:     rgba(130,179,152,.13);
+
+  --sh-1: 0 1px 2px rgba(0,0,0,.55), 0 4px 14px rgba(0,0,0,.38);
+  --sh-2: 0 2px 6px rgba(0,0,0,.55), 0 16px 40px -12px rgba(0,0,0,.72);
+  --sh-3: 0 8px 16px rgba(0,0,0,.5), 0 36px 80px -26px rgba(0,0,0,.9);
+  --sh-inset: inset 0 1px 0 rgba(255,255,255,.05);
+
+  --wash-0: rgba(16,13,11,0);
+  --wash-1: rgba(16,13,11,.34);
+  --wash-2: rgba(16,13,11,.66);
+  --wash-3: rgba(16,13,11,.92);
+  --wash-4: rgba(16,13,11,1);
+
+  --code-bg:   #0c0a08;
+  --code-bg-2: #141110;
+  --code-fg:   #efe5d0;
+  --code-line: rgba(239,229,208,.10);
+}
+
+/* ==================== 重置 ==================== */
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{
+  overflow-x:clip;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  scroll-padding-top: calc(var(--h-top) + 26px);
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100%;
+  background-color:var(--bg);
+  color:var(--fg);
+  font-family:var(--f-sans);
+  font-size:var(--t-body);
+  line-height:1.9;
+  letter-spacing:.008em;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  /* clip 不建立滚动容器，position:sticky 仍然有效（不能用 hidden） */
+  overflow-x:clip;
+  text-rendering:optimizeLegibility;
+}
+
+/* 全局纸底：极浅的界行 + 顶部晕染，给整页"纸感" */
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(120% 60% at 50% -10%, var(--gold-3) 0%, transparent 58%),
+    repeating-linear-gradient(90deg, var(--line-3) 0 1px, transparent 1px 96px),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg) 40%, var(--bg-2) 100%);
+  opacity:.9;
+}
+
+/* 所有锚点都让开固定顶栏 */
+[id]{ scroll-margin-top:calc(var(--h-top) + 24px); }
+
+img,svg,video{ max-width:100%; height:auto; display:block; }
+img{ border-style:none; }
+
+a{ color:inherit; text-decoration:none; }
+
+h1,h2,h3,h4,h5,h6{
+  font-family:var(--f-song);
+  font-weight:600;
+  line-height:1.28;
+  letter-spacing:.01em;
+  margin:0 0 .6em;
+  color:var(--fg);
+  text-wrap:balance;
+}
+
+p{ margin:0 0 1.05em; }
+p:last-child{ margin-bottom:0; }
+
+ul,ol{ margin:0 0 1.05em; padding-left:1.5em; }
+li{ margin:.28em 0; }
+li::marker{ color:var(--cinnabar); }
+
+strong,b{ font-weight:700; color:var(--fg); }
+em{ font-style:normal; color:var(--cinnabar); }
+
+hr{
+  border:0; height:1px; margin:2.2em 0;
+  background:linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+/* ==================== 行内代码 / 键盘 ==================== */
+code,kbd,samp{
+  font-family:var(--f-mono);
+  font-size:.875em;
+  letter-spacing:0;
+}
+:not(pre) > code{
+  padding:.14em .42em;
+  border-radius:var(--r-1);
+  background:var(--azure-3);
+  border:1px solid var(--line-2);
+  color:var(--fg-2);
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+kbd{
+  padding:.1em .45em;
+  border:1px solid var(--line);
+  border-bottom-width:2px;
+  border-radius:var(--r-1);
+  background:var(--surface);
+  font-size:.78em;
+}
+
+mark{
+  background:linear-gradient(180deg, transparent 58%, var(--gold-3) 58%);
+  color:inherit;
+  padding:0 .1em;
+  border-radius:2px;
+}
+
+::selection{ background:var(--cinnabar); color:#fff8ee; }
+::selection([data-theme="dark"]){ color:#100d0b; }
+
+/* ==================== 滚动条 ==================== */
+*{ scrollbar-width:thin; scrollbar-color:var(--line) transparent; }
+::-webkit-scrollbar{ width:10px; height:10px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{
+  background:var(--line);
+  border-radius:99px;
+  border:3px solid transparent;
+  background-clip:content-box;
+}
+::-webkit-scrollbar-thumb:hover{ background:var(--fg-5); background-clip:content-box; }
+
+/* ==================== 焦点 ==================== */
+:focus{ outline:none; }
+:focus-visible{
+  outline:2px solid var(--cinnabar);
+  outline-offset:3px;
+  border-radius:var(--r-1);
+}
+
+/* ==================== 无障碍工具类 ==================== */
+.sr-only,
+.sr-only-focusable:not(:focus){
+  position:absolute !important;
+  width:1px; height:1px;
+  margin:-1px; padding:0; border:0;
+  clip:rect(0 0 0 0); clip-path:inset(50%);
+  overflow:hidden; white-space:nowrap;
+}
+
+/* ==================== 通用排版助手 ==================== */
+.song{ font-family:var(--f-song); }
+.kai{ font-family:var(--f-kai); }
+.mono{ font-family:var(--f-mono); }
+.num{ font-variant-numeric:tabular-nums; letter-spacing:0; }
+
+/* 竖排（题跋 / 落款） */
+.vert{
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  letter-spacing:.32em;
+}
+
+/* 朱砂印章 */
+.seal{
+  display:inline-grid;
+  place-items:center;
+  font-family:var(--seal-font);
+  font-weight:700;
+  color:#fff6ec;
+  background:var(--cinnabar);
+  border-radius:var(--r-1);
+  letter-spacing:.06em;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);
+  line-height:1.1;
+  text-align:center;
+}
+
+/* 宋版"鱼尾/边栏"细线 */
+.hair{
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--line) 12%, var(--line) 88%, transparent);
+}

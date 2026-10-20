@@ -1,4 +1,4 @@
-# =====================================================================
+﻿# =====================================================================
 #  实训7 SpringBoot 项目 —— 端到端验证脚本
 #  用法:  powershell -ExecutionPolicy Bypass -File _verify_lab7.ps1 -ProjectPath "D:\course\Javaweb\实训7_新建SpringBoot项目\工程\xm-pro\springboot"
 #
