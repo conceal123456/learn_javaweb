@@ -540,6 +540,8 @@
       if (!card || card.getAttribute('data-x-shown') === '1') return;
       card.setAttribute('data-x-shown', '1');
       var blocks = $$('.kp-body .blk', card);
+      // prefers-reduced-motion：一块都不挂，避免 CSS 动画在降级模式里仍在跑
+      if (CTX.reduce) return;
       for (var i = 0; i < blocks.length; i++) {
         var b = blocks[i];
         b.style.animationDelay = (Math.min(i, 5) * 70) + 'ms';
@@ -1338,39 +1340,192 @@
   }
 
   /* ==================================================================== */
-  /* 17. 首页细节：逐字标题 / 花瓣 / 墨点画布（hidden 暂停）              */
+  /* 17. 标题入场：每页一种（整块 / 按行，绝不逐字）                       */
+  /*     用户反馈：8 页全是"一个字一个字蹦出来"，太腻。改成每页一套：       */
+  /*       index=墨洇 / 1=卷起 / 2=横披 / 3=晕开 / 4=落印 / 5=翻页 /        */
+  /*       6=侧幕 / 7=对焦                                                  */
+  /*     全部走 WAAPI + 内联样式，不依赖也不修改 style.css；初始态保持 CSS  */
+  /*     的可见状态（JS 失效时标题照样看得见），动画首帧由 fill:'both' 立即 */
+  /*     生效，所以不会先闪一下再消失。                                      */
   /* ==================================================================== */
-  function initWow() {
-    // 逐字浮现
-    var titles = $$('.hero-title, .lab-hero h1');
-    if (!CTX.reduce) {
-      titles.forEach(function (h) {
-        var chars = [];
-        (function walk(node) {
-          var kids = Array.prototype.slice.call(node.childNodes);
-          kids.forEach(function (n) {
-            if (n.nodeType === 3) {
-              var frag = D.createDocumentFragment();
-              var parts = n.textContent.split('');
-              for (var i = 0; i < parts.length; i++) {
-                var s = D.createElement('span');
-                s.className = 'ch';
-                s.textContent = parts[i];
-                frag.appendChild(s);
-                chars.push(s);
-              }
-              node.replaceChild(frag, n);
-            } else if (n.nodeType === 1) {
-              if (n.classList && n.classList.contains('ch')) return;
-              walk(n);
-            }
-          });
-        })(h);
-        chars.forEach(function (c, i) { c.style.animationDelay = (120 + i * 45) + 'ms'; });
-      });
+  var TITLE_EFFECTS = {
+    'index.html': 'ink',
+    '实训1.html': 'scroll',
+    '实训2.html': 'wipe',
+    '实训3.html': 'bloom',
+    '实训4.html': 'stamp',
+    '实训5.html': 'flip',
+    '实训6.html': 'curtain',
+    '实训7.html': 'focus'
+  };
+
+  function currentPageFile() {
+    var path = W.location.pathname || '';
+    var file = path.slice(path.lastIndexOf('/') + 1);
+    try { file = decodeURIComponent(file); } catch (e) {}
+    return file || 'index.html';
+  }
+
+  function titleNode() {
+    return $('.cine-hero .hero-title') || $('.hero-title') || $('.lab-hero h1');
+  }
+
+  function lsBase(el) {
+    var v = '';
+    try { v = W.getComputedStyle(el).letterSpacing; } catch (e) { v = ''; }
+    return (!v || v === 'normal') ? '0px' : v;
+  }
+  function lsNudge(base, delta) {
+    var n = parseFloat(base);
+    if (isNaN(n)) n = 0;
+    return (n + delta).toFixed(2) + 'px';
+  }
+
+  /* 按「视觉行」拆（仅纯文本标题；index 的 <br><em> 不拆）。
+     返回 null = 单行 / 有子元素 / 不可拆，调用方回落到整块动画。
+     拆完在动画结束后会 innerHTML 还原，复制出来仍是完整原文。 */
+  function splitTitleLines(el) {
+    if (el.children && el.children.length) return null;
+    var text = el.textContent || '';
+    if (text.length < 2) return null;
+    var node = el.firstChild;
+    if (!node || node.nodeType !== 3) return null;
+    var range = D.createRange();
+    var lines = [], lastTop = null, start = 0, i, rect;
+    for (i = 0; i < text.length; i++) {
+      range.setStart(node, i);
+      range.setEnd(node, i + 1);
+      rect = range.getBoundingClientRect();
+      if (lastTop === null) { lastTop = rect.top; start = i; continue; }
+      if (Math.abs(rect.top - lastTop) > 2) { lines.push([start, i]); start = i; lastTop = rect.top; }
+    }
+    if (start < text.length) lines.push([start, text.length]);
+    if (lines.length < 2) return null;
+
+    var original = el.innerHTML;
+    var frag = D.createDocumentFragment();
+    for (i = 0; i < lines.length; i++) {
+      var sp = D.createElement('span');
+      sp.className = 'x-line';
+      sp.style.display = 'inline-block';
+      sp.style.whiteSpace = 'pre';
+      sp.textContent = text.slice(lines[i][0], lines[i][1]);
+      frag.appendChild(sp);
+    }
+    el.innerHTML = '';
+    el.appendChild(frag);
+    return { html: original, lines: $$('.x-line', el) };
+  }
+
+  function initTitleReveal() {
+    var el = titleNode();
+    var effect = TITLE_EFFECTS[currentPageFile()] || 'ink';
+    D.documentElement.setAttribute('data-reveal', effect);   // 验收标记：8 页各不相同
+    if (!el) return;
+
+    var durMap = { ink: 1200, scroll: 760, wipe: 900, bloom: 1050, stamp: 700, flip: 800, curtain: 850, focus: 1100 };
+    var dur = durMap[effect] || 900;
+    var easing = (effect === 'stamp') ? 'cubic-bezier(.16,1.2,.3,1)' : 'cubic-bezier(.22,1,.36,1)';
+    var base = lsBase(el);
+    var targets = [el];
+    var split = null;
+    var anims = [];
+
+    if (effect === 'scroll') {
+      split = splitTitleLines(el);
+      if (split && split.lines.length) targets = split.lines;
     }
 
-    // 花瓣
+    api.titleReveal = {
+      effect: effect,
+      duration: dur,
+      lines: targets.length,
+      startedAt: (W.performance && W.performance.now) ? W.performance.now() : Date.now()
+    };
+
+    if (CTX.reduce) {                    // 省电模式：直接显示，不建任何动画
+      if (split) el.innerHTML = split.html;
+      return;
+    }
+
+    for (var t = 0; t < targets.length; t++) {
+      var node = targets[t];
+      var frames;
+      switch (effect) {
+        case 'ink':          // 墨落宣纸：模糊晕开 + 微放大
+          frames = [
+            { opacity: 0, filter: 'blur(14px)', transform: 'scale(1.04)' },
+            { opacity: 1, filter: 'blur(0px)', transform: 'scale(1)' }
+          ];
+          break;
+        case 'scroll':       // 卷起：每行自下而上揭开，行间 90ms
+          frames = [
+            { clipPath: 'inset(100% 0 0 0)', transform: 'translateY(.55em)', opacity: 0 },
+            { clipPath: 'inset(0 0 0 0)', transform: 'translateY(0)', opacity: 1 }
+          ];
+          break;
+        case 'wipe':         // 横披：从左向右擦出，字不动，字距微收
+          frames = [
+            { clipPath: 'inset(0 100% 0 0)', letterSpacing: lsNudge(base, 2) },
+            { clipPath: 'inset(0 0 0 0)', letterSpacing: base }
+          ];
+          break;
+        case 'bloom':        // 晕开：字距收紧 + 由虚到实
+          frames = [
+            { opacity: 0, filter: 'blur(8px)', letterSpacing: lsNudge(base, 6) },
+            { opacity: 1, filter: 'blur(0px)', letterSpacing: base }
+          ];
+          break;
+        case 'stamp':        // 落印：带过冲的压下
+          frames = [
+            { opacity: 0, transform: 'scale(1.18) rotate(-2.4deg)' },
+            { opacity: 1, transform: 'scale(1) rotate(0deg)' }
+          ];
+          break;
+        case 'flip':         // 翻页：以底边为轴翻起
+          node.style.transformOrigin = 'bottom center';
+          frames = [
+            { opacity: 0, transform: 'perspective(900px) rotateX(72deg)' },
+            { opacity: 1, transform: 'perspective(900px) rotateX(0deg)' }
+          ];
+          break;
+        case 'curtain':      // 侧幕：右侧揭开 + 轻微斜切滑入
+          frames = [
+            { opacity: 0, transform: 'translateX(64px) skewX(7deg)', clipPath: 'inset(0 0 0 100%)' },
+            { opacity: 1, transform: 'translateX(0) skewX(0deg)', clipPath: 'inset(0 0 0 0)' }
+          ];
+          break;
+        default:             // focus：镜头对焦
+          frames = [
+            { opacity: 0, filter: 'blur(18px) brightness(1.35)', transform: 'scale(1.06)' },
+            { opacity: 1, filter: 'blur(0px) brightness(1)', transform: 'scale(1)' }
+          ];
+      }
+      try {
+        anims.push(node.animate(frames, {
+          duration: dur,
+          delay: (effect === 'scroll') ? t * 90 : 0,
+          easing: easing,
+          fill: 'both'
+        }));
+      } catch (e) { /* 老内核不支持 WAAPI 时保持 CSS 可见态 */ }
+    }
+
+    // 收尾：撤掉 WAAPI 让 CSS 最终态接管；按行拆的 DOM 还原（保证可复制/可搜索）
+    var total = dur + ((effect === 'scroll') ? (targets.length - 1) * 90 : 0);
+    setTimeout(function () {
+      for (var k = 0; k < anims.length; k++) { try { anims[k].cancel(); } catch (e) {} }
+      if (split) { try { el.innerHTML = split.html; } catch (e) {} }
+      for (var m = 0; m < targets.length; m++) {
+        if (targets[m] && targets[m].style) targets[m].style.transformOrigin = '';
+      }
+    }, total + 120);
+  }
+
+  /* ==================================================================== */
+  /* 17b. 首页细节：花瓣 / 墨点画布（hidden 暂停）                        */
+  /* ==================================================================== */
+  function initWow() {    // 花瓣
     var petals = D.getElementById('petals');
     if (petals && !CTX.reduce) {
       for (var i = 0; i < 14; i++) {
@@ -1811,6 +1966,7 @@
     safe('cmdk', initCmdk);
     safe('kpnav', initKpNav);
     safe('cinema', initCinema);
+    safe('titleReveal', initTitleReveal);
     safe('wow', initWow);
     safe('interactive', initInteractive);
     safe('keyboard', initKeyboard);

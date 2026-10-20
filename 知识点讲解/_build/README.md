@@ -224,3 +224,57 @@ node .extract\art\shoot.mjs
    ├─ README.md             ← 本文件
    └─ src/css/*.css         ← 9 个样式分片（真正的源）
 ```
+
+---
+
+## 7. 已知取舍 / 待办
+
+> 2026-10-20 冻结时记录。以下都是**已知、已评估、本期不修**的项，下一轮随手做即可。
+> 改动任何一条都要走「改 `src/css` → 重建 → 复跑溢出矩阵 → 重新截图」的完整流程。
+
+### 7.1 无 JS 时首屏标题起手透明（CSS-only 入场）· 已裁定不修
+
+- **现象**：禁用 JavaScript 时，`index.html` 的 `.hero-title` 起手 `opacity=0`，
+  约 0.9–1.0s 后到 1（实测 0ms→0、300ms→0.178、600ms→0.922、1.6s→1）。
+  同类还有 `.cine-kicker`、`.cine-sub`、`.home-stats`、`.cine-cta`、`.cine-scroll`、
+  `.cine-scroll-frame`、`.cine-seal`。**讲解页（实训1–7）没有这个问题**，它们首屏即时可见。
+- **原因**：`60-motion.css` 里的入场动画用了 `animation-fill-mode: both`，
+  例如 `.hero-title{animation:heroFade .9s var(--ease-2) .05s both}` +
+  `@keyframes heroFade{from{opacity:0} to{opacity:1}}`，填充模式让元素在动画开始前就取 `from` 值。
+  **与 `assets/app.js` 无关**——这是纯 CSS 动画，无 JS 时照样播。
+- **影响**：仅「浏览器禁用 JS」的极端场景；最终完全可读，正常访问零影响。
+  Lead 裁定：属既有 CSS 的渐进增强降级，可接受，不在冻结前为它触发一次全量复验。
+- **修法（留档，下一轮可直接抄）**：
+  1. `_build/src/css/55-overrides.css` 末尾加：
+     ```css
+     @media (scripting: none){
+       .hero-title,.cine-kicker,.cine-sub,.home-stats,.cine-cta,
+       .cine-scroll,.cine-scroll-frame,.cine-seal,
+       .lab-kicker,.lab-hero-sub,.lab-hero .meta,
+       .hero-title .ch,.lab-hero h1 .ch{
+         animation:none !important; opacity:1 !important;
+         transform:none !important; clip-path:none !important;
+       }
+     }
+     ```
+  2. 生成器 `render_top()` 的 `<noscript><style>` 块同步补上面同一份选择器
+     （给不认 `scripting` 媒体查询的浏览器兜底）。
+  3. 两条都**只在禁 JS 时生效**，对正常访问一个像素都不变。
+
+### 7.2 375 宽下 `.kp-nav` 浮动按钮会压住一行正文 · 桌面无此问题
+
+- **现象**：窄屏时右侧 `.kp-nav`（↑ / ↓ / `n / N` 计数）浮在正文上方，会盖住当前行末尾约 1 行文字。
+  1280 / 1440 桌面档不存在这个问题（正文列右侧有足够留白）。
+- **影响**：只是移动端阅读时的轻微遮挡，可滚动避开，不阻断操作；`.kp-nav` 本身在 `#top-btn` 上方
+  38px，两者不重叠。
+- **可选修法（未采用）**：≤768 时 `display:none` 收起 `.kp-nav`，改用顶栏进度环 + 目录抽屉承担导航；
+  或把 `.kp-nav` 改为贴底的半透明条。注意别和 `#top-btn`、`.toast` 的层级打架。
+
+### 7.3 其它记录在案的小取舍
+
+- **长卷 `.pan` 用固定 220vh 滚动距离**，未按图片实际宽度动态计算；1440 以上展开偏慢。属 JS 侧改动。
+- **浅色主题首屏 66%→84% 的「化开带」是线性渐变**，没有做墨在水里散开的颗粒感；
+  要更狠需要一张墨晕 PNG 或 `feTurbulence` + displacement 滤镜。
+- **`.kp` 没有加 `overflow-x: clip`**：会裁掉 `.kp.done` 的「已」印章，所以选择用
+  `overflow-wrap:anywhere` 断词治本（`.kp-head h3` / `.blk-body p·li·td·th` / `.tw th·td`）。
+- **`assets/app.js` 归 motion-dev**，本目录只在生成器里引用，不改其内容。
