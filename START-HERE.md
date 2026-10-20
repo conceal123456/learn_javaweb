@@ -304,6 +304,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-stage.ps1 -Stage 7
 **离线网页**（同一份克隆，`file://` 直接打开）：`index.html` 28 张图 0 加载失败、CSS 生效（宣纸底 `rgb(247,241,230)`）、8 个页面链接齐全；`实训7.html` 26 个知识点、0 坏图、`data-reveal=focus`。✅
 
 > 详细命令、原始输出、截图见 `.extract/clone/final/`（该目录不入库，属于本地验证证据）。
+>
+> 上面这批数据是在 commit `128c758` 的干净克隆里跑出来的；补完本指南和 `scripts/` 之后（commit `801f345`），又从**全新 clone** 按本文档原样跑了一遍阶段 3：`npm ci` 25.2s → `build` 2s → dev 1.1s，**7/7 PASS，总 30.2s**。
 
 ---
 
