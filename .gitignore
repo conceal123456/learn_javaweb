@@ -31,3 +31,7 @@ Thumbs.db
 
 # Office 临时锁文件
 ~$*
+
+# 部署生成物（由 scripts/build-deploy.py 生成）
+deploy-site/
+deploy-site.zip

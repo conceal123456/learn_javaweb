@@ -9,6 +9,9 @@
 > 🚀 **第一次来，只想先把代码跑起来？** 直接看 **[`START-HERE.md`](START-HERE.md)**——它按七个阶段写清了「进哪个目录、敲什么命令、看到什么才算跑对」，并在干净克隆里逐阶段实测过。
 > 懒人版：`powershell -ExecutionPolicy Bypass -File .\scripts\verify-stage.ps1 -Stage 3`（把 3 换成你在学的讲次）。
 
+> 🌐 **在线版（免费托管，公网直接访问）**：<https://conceal123456.github.io/learn_javaweb/>
+> 手机、平板、电脑打开就能看，不需要装任何东西。部署方式与更新流程见 [`DEPLOY.md`](DEPLOY.md)。
+
 ## 这个仓库里有什么
 
 | 内容 | 位置 | 用来干什么 |
