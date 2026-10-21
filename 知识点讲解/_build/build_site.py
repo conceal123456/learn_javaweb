@@ -622,9 +622,21 @@ def render_top(active_lab, labs, page_title, hero=""):
     if cur:
         st_seal, st_main = cur["cn"], f'实训 {cur["id"].lstrip("0")} · {html.escape(cur["short"])}'
         st_sub = f'{cur["count"]} 个知识点 · {cur["code"]} 段代码 · 约 {cur["minutes"]} 分钟'
+        preload_img = "assets/art/paintings/" + LAB_ART[cur["id"]]
     else:
         st_seal, st_main = "七", "JavaWeb 知识点讲解"
         st_sub = f'7 讲 · {total} 个知识点 · {total_code} 段代码'
+        preload_img = "assets/art/paintings/hero-bg.jpg"
+
+    # 站点图标：一枚朱砂印章里的「讲」字（内联 SVG，不额外请求）
+    favicon = (
+        "data:image/svg+xml,"
+        "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E"
+        "%3Crect width='64' height='64' rx='11' fill='%23b23a2f'/%3E"
+        "%3Ctext x='32' y='45' font-size='36' text-anchor='middle' fill='%23f8efdd' "
+        "font-family='Songti SC,STSong,SimSun,serif'%3E%E8%AE%B2%3C/text%3E%3C/svg%3E"
+    )
+    desc = f"JavaWeb 实训 1~7 知识点精讲：{total} 个知识点、{total_code} 段代码、{total_qa} 道课堂自测，完全离线可用。"
 
     return f"""<!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
@@ -632,9 +644,20 @@ def render_top(active_lab, labs, page_title, hero=""):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(page_title)}</title>
-<meta name="description" content="JavaWeb 实训 1~7 知识点精讲：{total} 个知识点、{total_code} 段代码、{total_qa} 道课堂自测，完全离线可用。">
-<meta name="color-scheme" content="light">
-<link rel="icon" href="data:,">
+<meta name="description" content="{desc}">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#14110f">
+<link rel="icon" href="{favicon}">
+<!-- 分享卡片：微信/QQ/Twitter 抓取这三条 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JavaWeb 知识点讲解">
+<meta property="og:title" content="{html.escape(page_title)}">
+<meta property="og:description" content="{desc}">
+<meta property="og:image" content="https://conceal123456.github.io/learn_javaweb/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="{preload_img}" fetchpriority="high">
 <link rel="stylesheet" href="assets/style.css">
 <noscript><style>
 /* 禁 JS / app.js 加载失败时：正文必须可见，纯 JS 组件隐藏 */
@@ -643,6 +666,7 @@ def render_top(active_lab, labs, page_title, hero=""):
 </style></noscript>
 </head>
 <body>
+<a class="skip-link" href="#main">跳到主要内容</a>
 <div class="page-in" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 <div class="scroll-rail" aria-hidden="true"><i></i></div>
@@ -685,15 +709,14 @@ def render_foot():
     return """</div>
 <div id="scrim"></div>
 <button class="icon-btn" id="top-btn" title="回到顶部" aria-label="回到顶部">↑</button>
-<div class="foot-banner" aria-hidden="true"><img src="assets/art/paintings/band-ink.jpg" alt=""></div>
-<footer><img class="foot-lotus" src="assets/art/motifs/lotus.png" alt="" aria-hidden="true">
+<div class="foot-banner" aria-hidden="true"><img src="assets/art/paintings/band-ink.jpg" alt="" loading="lazy" decoding="async"></div>
+<footer><img class="foot-lotus" src="assets/art/motifs/lotus.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
   <div class="in">
   <p><b>JavaWeb 知识点讲解</b> · 覆盖实训 1~7 共 109 个知识点。每讲按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，供课堂讲授与课后复习使用。</p>
   <p>全部内容离线可用：不引用任何 CDN 与外部字体。学习进度保存在本机浏览器中，更换设备后不同步。</p>
   <p>讲解内容依据课程讲义编写，建议配合 <code>实验过程_实训N.md</code>（实验操作步骤）与 <code>讲义勘误_实训N.md</code>（讲义勘误说明）对照学习。</p>
   </div>
   <div class="foot-sign" aria-hidden="true">
-    <span class="seal">研学</span>
     <span>依 讲 义 而 授 · 循 次 第 而 学</span>
   </div>
 </footer>
@@ -740,6 +763,9 @@ def write_lab_page(lab, labs):
         m2 = re.sub(r"\*\*(.+?)\*\*", r"\1", m)
         # 单行 chip 会被 ellipsis 截断，把完整文本放进 title，悬停可看全
         plain = strip_html(inline(m2))
+        # 「讲义原文：…docx」这类出处在页脚与精讲里都有，首屏不放，避免像作业封面
+        if plain.startswith("讲义原文") or plain.startswith("讲义"):
+            continue
         meta.append(f'<span class="chip" title="{html.escape(plain, quote=True)}">{inline(m2)}</span>')
 
     banner = LAB_ART[lab["id"]]
@@ -776,22 +802,17 @@ def write_lab_page(lab, labs):
         href = f"实训{i}.html" if set_href == "" else set_href
         items.append(
             f'<a class="ser-item{on}" href="{href}">'
-            f'<img src="assets/art/paintings/{f}" alt="组图第 {i} 幅"><i>{i}</i></a>'
+            f'<img src="assets/art/paintings/{f}" alt="组图第 {i} 幅" loading="lazy" decoding="async"><i>{i}</i></a>'
         )
 
     body = [
         '<div id="hits"></div>',
-        # 本讲速览
-        f'<div class="lab-glance rv"><span class="gl-k">本讲速览</span>'
+        # 本讲速览：一行小字，不做成表格/卡片
+        f'<div class="lab-glance rv"><span class="gl-k">本讲</span>'
         f'<span class="gl-i"><b>{lab["count"]}</b> 个知识点</span>'
         f'<span class="gl-i"><b>{lab["code"]}</b> 段代码</span>'
         f'<span class="gl-i"><b>{lab["qa"]}</b> 道自测</span>'
-        f'<span class="gl-i"><b>{lab["minutes"]}</b> 分钟通读</span>'
-        f'<span class="gl-note">七个环节逐条展开</span></div>',
-        # 册页索引（压缩成一条细带）
-        f'<div class="series rv"><div class="series-head"><span>{set_label}</span>'
-        f'<span class="series-sub">{set_sub}</span></div>'
-        f'<div class="series-row">{"".join(items)}</div></div>',
+        f'<span class="gl-i">约 <b>{lab["minutes"]}</b> 分钟通读</span></div>',
     ]
 
     for s in lab["sections"]:
@@ -819,8 +840,7 @@ def write_lab_page(lab, labs):
                      f'<span class="en-arrow">→</span></a>')
     body.append(
         f'<section class="lab-end rv" aria-label="本讲结束">'
-        f'<div class="end-seal">本讲完</div>'
-        f'<p class="end-line">实训 {lab["id"].lstrip("0")} · {html.escape(lab["short"])}　'
+        f'<p class="end-line">本讲完 · 实训 {lab["id"].lstrip("0")} · {html.escape(lab["short"])}　'
         f'{lab["count"]} 个知识点，{lab["code"]} 段代码，{lab["qa"]} 道自测 —— 全部读完。</p>'
         f'{next_html}'
         f'</section>'
@@ -832,7 +852,7 @@ def write_lab_page(lab, labs):
         + '<div class="side-tools">'
           '<button class="tool-btn" id="qa-open" type="button">展开全部自测答案</button>'
           '<button class="tool-btn" id="qa-close" type="button">收起全部答案</button>'
-          '</div>\n  </aside>\n  <main>'
+          '</div>\n  </aside>\n  <main id="main">'
         + "".join(body)
         + "</main>\n"
         + render_foot()
@@ -862,7 +882,7 @@ def write_index(labs):
         art = LAB_ART[l["id"]]
         cards.append(
             f'<a class="lab-card rv" href="{l["file"]}">'
-            f'<div class="lab-thumb"><img src="assets/art/paintings/{art}" alt="">'
+            f'<div class="lab-thumb"><img src="assets/art/paintings/{art}" alt="" loading="lazy" decoding="async">'
             f'<span class="num-seal">{l["id"].lstrip("0")}</span></div>'
             f'<div class="lab-body"><div class="k">实训 {l["id"].lstrip("0")} · {html.escape(l["stage"])}</div>'
             f'<h3>{html.escape(l["short"])}</h3>'
@@ -877,7 +897,7 @@ def write_index(labs):
         img = "back-1.jpg" if l["id"] == "07" else f"front-{i + 1}.jpg"
         mq_items.append(
             f'<a class="mq-item" href="{l["file"]}">'
-            f'<img src="assets/art/paintings/{img}" alt="实训 {l["id"].lstrip("0")}">'
+            f'<img src="assets/art/paintings/{img}" alt="实训 {l["id"].lstrip("0")}" loading="lazy" decoding="async">'
             f'<span class="mq-cap">实训 {l["id"].lstrip("0")} · {html.escape(l["short"])}</span></a>'
         )
     marquee = "".join(mq_items) * 2
@@ -995,13 +1015,13 @@ def write_index(labs):
 <section class="pan" id="pan">
   <div class="pan-sticky">
     <div class="pan-head"><span>长卷 · 青绿山水</span><span>克利夫兰艺术博物馆藏</span></div>
-    <div class="pan-view"><i class="pan-roller left"></i><i class="pan-roller right"></i><img class="pan-img" src="assets/art/paintings/pan-scroll.jpg" alt="青绿山水长卷"></div>
+    <div class="pan-view"><i class="pan-roller left"></i><i class="pan-roller right"></i><img class="pan-img" src="assets/art/paintings/pan-scroll.jpg" alt="青绿山水长卷" loading="lazy" decoding="async"></div>
     <div class="pan-foot"><span class="pan-hint">向下滚动，画卷徐徐展开</span><span class="pan-bar"><i></i></span></div>
   </div>
 </section>
 
 <section class="quote-band rv" aria-label="引言">
-  <figure class="quote-art"><img src="assets/art/paintings/prunus.jpg" alt="墨梅"></figure>
+  <figure class="quote-art"><img src="assets/art/paintings/prunus.jpg" alt="墨梅" loading="lazy" decoding="async"></figure>
   <blockquote class="quote-text">
     <p class="quote-line">「学而时习之，不亦说乎」</p>
     <cite>——《论语·学而》</cite>
@@ -1066,7 +1086,7 @@ def write_index(labs):
 
     page = (
         render_top("", labs, "JavaWeb 知识点讲解 · 实训 1~7", hero)
-        + "\n  </aside>\n  <main>"
+        + "\n  </aside>\n  <main id=\"main\">"
         + body
         + "</main>\n"
         + render_foot()

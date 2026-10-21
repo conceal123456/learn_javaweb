@@ -2175,35 +2175,43 @@ main > .rv > p{
    40 · 讲解页：卷首 / 册页 / 知识点卡
    ========================================================================== */
 
-/* ==================== 本讲速览 ==================== */
+/* ==================== 本讲速览（一行小字，不做卡片） ==================== */
 .lab-glance{
   display:flex;
   flex-wrap:wrap;
-  align-items:center;
-  gap:8px clamp(12px, 1.6vw, 24px);
-  margin:clamp(18px, 2.2vw, 28px) 0 clamp(2px, .6vw, 8px);
-  padding:clamp(11px, 1.3vw, 15px) clamp(13px, 1.5vw, 18px);
-  border:1px solid var(--line-2);
-  border-left:2px solid var(--gold);
-  border-radius:0 var(--r-2) var(--r-2) 0;
-  background:linear-gradient(100deg, var(--gold-3), var(--surface-2) 60%);
+  align-items:baseline;
+  gap:6px clamp(14px, 1.8vw, 26px);
+  margin:clamp(16px, 2vw, 26px) 0 clamp(10px, 1.2vw, 18px);
+  padding:0;
+  border:0;
+  background:none;
 }
 .lab-glance .gl-k{
   font-family:var(--f-song);
   font-size:11.5px;
   font-weight:600;
   letter-spacing:.24em;
-  color:var(--gold);
+  color:var(--cinnabar);
+  padding-right:2px;
+}
+.lab-glance .gl-k::after{
+  content:"";
+  display:inline-block;
+  width:clamp(16px, 1.6vw, 26px); height:1px;
+  margin-left:10px;
+  vertical-align:middle;
+  background:var(--cinnabar);
+  opacity:.45;
 }
 .lab-glance .gl-i{
   display:inline-flex; align-items:baseline; gap:.28em;
   font-size:11.5px;
   letter-spacing:.06em;
-  color:var(--fg-4);
+  color:var(--fg-5);
 }
 .lab-glance .gl-i b{
   font-family:var(--f-song);
-  font-size:16px;
+  font-size:15px;
   font-weight:700;
   color:var(--fg-2);
   font-variant-numeric:tabular-nums;
@@ -2251,6 +2259,14 @@ main > .rv > p{
   content:"";
   position:absolute; inset:0; z-index:2; pointer-events:none;
   background:repeating-linear-gradient(90deg, var(--line-3) 0 1px, transparent 1px calc(100% / 10));
+}
+/* 下缘轻轻化进纸面，避免一条生硬的分界线 */
+.lab-hero::before{
+  content:"";
+  position:absolute; left:0; right:0; bottom:0;
+  height:clamp(36px, 5vw, 84px);
+  z-index:3; pointer-events:none;
+  background:linear-gradient(180deg, transparent, var(--wash-4));
 }
 .lab-hero-inner{
   position:relative; z-index:4;
@@ -2480,11 +2496,10 @@ main > .rv > p{
 .lab-end{
   position:relative;
   margin:clamp(40px, 5vw, 72px) 0 0;
-  padding:clamp(26px, 3.4vw, 44px) clamp(18px, 2.4vw, 34px);
+  padding:clamp(22px, 3vw, 38px) clamp(18px, 2.4vw, 34px);
   text-align:center;
   border-top:1px solid var(--line-2);
-  background:
-    radial-gradient(70% 120% at 50% 0%, var(--cinnabar-4), transparent 70%);
+  background:none;
 }
 .lab-end .end-seal{
   display:inline-grid;
@@ -3484,7 +3499,7 @@ main > .rv > .tw{ max-width:100%; }
     radial-gradient(38% 130% at 76% 100%, rgba(28,23,18,.38) 0%, rgba(28,23,18,0) 74%),
     radial-gradient(58% 110% at 96% 100%, rgba(32,26,21,.44) 0%, rgba(32,26,21,0) 72%);
   filter:blur(8px);
-  opacity:.9;
+  opacity:.55;
 }
 /* 墨色区的界行改成浅色描线 */
 .cine-hero::after{
@@ -3594,7 +3609,8 @@ main > .rv > .tw{ max-width:100%; }
 /* ① 朱砂竖线 + 宋体引文（不再用石青） */
 .blk[data-k="①"]{
   border-left:3px solid var(--cinnabar);
-  background:linear-gradient(100deg, var(--cinnabar-4), transparent 62%);
+  background:var(--surface);
+  box-shadow:inset 0 0 0 1px var(--line-3);
 }
 .blk[data-k="①"]::after{
   color:var(--cinnabar);
@@ -3709,6 +3725,28 @@ p, li, blockquote, .blk-body p{ text-wrap:pretty; }
     transform:none !important;
     clip-path:none !important;
   }
+}
+
+/* ==================== G. 无障碍：跳转链接与键盘焦点 ==================== */
+.skip-link{
+  position:fixed; left:12px; top:-60px; z-index:999;
+  padding:10px 16px;
+  font:600 13px/1 var(--f-sans);
+  letter-spacing:.04em;
+  color:#f8efdd;
+  background:var(--cinnabar);
+  border-radius:0 0 8px 8px;
+  box-shadow:0 6px 18px -8px rgba(0,0,0,.5);
+  transition:top .18s var(--ease-2);
+}
+.skip-link:focus,
+.skip-link:focus-visible{ top:0; }
+
+/* 键盘 Tab 时才显示焦点环，鼠标点击不显示 */
+:focus-visible{
+  outline:2px solid var(--cinnabar);
+  outline-offset:3px;
+  border-radius:4px;
 }
 
 
