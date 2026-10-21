@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaWeb 知识点讲解 · 实训 1~7</title>
+<meta name="description" content="JavaWeb 实训 1~7 知识点精讲：109 个知识点、232 段代码、109 道课堂自测，完全离线可用。">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="assets/style.css">
+<noscript><style>
+/* 禁 JS / app.js 加载失败时：正文必须可见，纯 JS 组件隐藏 */
+.rv{opacity:1 !important; translate:none !important; transform:none !important}
+.kp-nav,.read-bar,#top-btn,.toast,.cmdk{display:none !important}
+</style></noscript>
+</head>
+<body>
+<div class="page-in" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="scroll-rail" aria-hidden="true"><i></i></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#9d3a2e"/><stop offset="1" stop-color="#c9a227"/>
+</linearGradient></defs></svg>
+
+<header class="top">
+  <div class="top-in">
+    <button class="icon-btn menu-btn" id="menu-btn" title="目录" aria-label="目录">☰</button>
+    <a class="logo" href="index.html">
+      <span class="dot"></span><b>知识点讲解</b><span class="txt">· JavaWeb</span>
+    </a>
+    <div class="search"><input id="search" type="search" placeholder="搜知识点，如 v-model、跨域、Result　(Ctrl+K)" aria-label="搜索知识点"></div>
+    <div class="spacer"></div>
+    <div class="prog" title="学习进度">
+      <svg class="ring" viewBox="0 0 30 30" aria-hidden="true">
+        <circle class="bg" cx="15" cy="15" r="12"></circle>
+        <circle class="fg" cx="15" cy="15" r="12"></circle>
+      </svg>
+      <span id="prog-txt">0/0</span>
+    </div>
+    <button class="icon-btn" id="theme-btn" title="切换主题" aria-label="切换主题">☀</button>
+  </div>
+</header>
+<section class="cine-hero" id="top">
+  <div class="cine-bg"><img src="assets/art/paintings/hero-bg.jpg" alt=""></div>
+  <canvas id="ink-canvas" class="ink-canvas" aria-hidden="true"></canvas><canvas id="ripple-canvas" class="ripple-canvas" aria-hidden="true"></canvas>
+  <div class="cine-petals" id="petals" aria-hidden="true"></div>
+  <div class="cine-veil"></div>
+  <div class="cine-inner">
+    <div class="cine-copy">
+      <p class="cine-kicker">JAVA WEB · 实训一至七</p>
+      <h1 class="hero-title">把每个知识点<br><em>看明白</em></h1>
+      <p class="cine-sub">依 讲 义 · 授 七 讲 · 研 学 相 长</p>
+      <div class="home-stats">
+        <div class="s"><b>7</b><small>讲</small></div>
+        <div class="s"><b>109</b><small>个知识点</small></div>
+        <div class="s"><b>232</b><small>个代码块</small></div>
+        <div class="s"><b>109</b><small>道课堂思考</small></div>
+      </div>
+      <a class="cine-cta" href="#labs">开始研学<span class="arrow">↓</span></a>
+    </div>
+    <figure class="cine-scroll">
+      <div class="cine-scroll-inner">
+        <i class="cine-axle top" aria-hidden="true"></i>
+        <div class="cine-scroll-frame"><img src="assets/art/paintings/hero-vscroll.jpg" alt="巨碑式山水"></div>
+        <i class="cine-axle bot" aria-hidden="true"></i>
+        <span class="cine-seal" aria-hidden="true">研学<br>七讲</span>
+      </div>
+      <figcaption>馆藏中国画 · 克利夫兰艺术博物馆（公有领域）</figcaption>
+    </figure>
+    <img class="cine-plum" src="assets/art/motifs/plum.png" alt="" aria-hidden="true">
+  </div>
+  <div class="cine-brand" aria-hidden="true">研 学 七 讲</div>
+  <div class="cine-side" aria-hidden="true"><span>依 讲 义 而 授</span><span>循 次 第 而 学</span></div>
+  <a class="cine-down" href="#labs"><span></span>向下阅览</a>
+</section>
+
+<section class="pan" id="pan">
+  <div class="pan-sticky">
+    <div class="pan-head"><span>长卷 · 青绿山水</span><span>克利夫兰艺术博物馆藏</span></div>
+    <div class="pan-view"><i class="pan-roller left"></i><i class="pan-roller right"></i><img class="pan-img" src="assets/art/paintings/pan-scroll.jpg" alt="青绿山水长卷"></div>
+    <div class="pan-foot"><span class="pan-hint">向下滚动，画卷徐徐展开</span><span class="pan-bar"><i></i></span></div>
+  </div>
+</section>
+
+<section class="quote-band rv" aria-label="引言">
+  <figure class="quote-art"><img src="assets/art/paintings/prunus.jpg" alt="墨梅"></figure>
+  <blockquote class="quote-text">
+    <p class="quote-line">「学而时习之，不亦说乎」</p>
+    <cite>——《论语·学而》</cite>
+    <p class="quote-note">七讲实训，依讲义为纲：先读懂，再动手，后复盘。</p>
+  </blockquote>
+</section>
+<div class="shell">
+  <aside class="side" id="side">
+    <div class="side-top">
+      <span class="st-seal">七</span>
+      <span class="st-txt"><b>JavaWeb 知识点讲解</b><span>7 讲 · 109 个知识点 · 232 段代码</span></span>
+    </div>
+    <h4>七讲</h4>
+    <nav class="nav-lab"><a class="" href="lab1.html"><span class="k">1</span><span>创建 Vue 项目</span><span class="n">22</span></a><a class="" href="lab2.html"><span class="k">2</span><span>Vue 基本语法</span><span class="n">10</span></a><a class="" href="lab3.html"><span class="k">3</span><span>Element Plus</span><span class="n">6</span></a><a class="" href="lab4.html"><span class="k">4</span><span>Element Plus 组件</span><span class="n">11</span></a><a class="" href="lab5.html"><span class="k">5</span><span>Vue-Router 路由</span><span class="n">13</span></a><a class="" href="lab6.html"><span class="k">6</span><span>后台管理页面</span><span class="n">21</span></a><a class="" href="lab7.html"><span class="k">7</span><span>SpringBoot 后端</span><span class="n">26</span></a></nav>
+
+  </aside>
+  <main><div id="hits"></div>
+<div id="home-body">
+
+<div class="sec-title rv"><span class="bar"></span><span class="sec-no">壹</span><h2>一图看全站</h2><span class="sec-en">At a glance</span></div>
+<section class="stats-band rv" aria-label="全站数据总览">
+  <p class="lede">七讲实训，109 个知识点逐条拆开：每一讲都按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，配 232 段可运行代码与 109 道折叠自测。</p>
+  <div class="stat-grid"><div class="stat"><b>7</b><span>讲实训</span><i>LECTURES</i></div><div class="stat"><b>109</b><span>个知识点</span><i>KNOWLEDGE POINTS</i></div><div class="stat"><b>232</b><span>段代码</span><i>CODE BLOCKS</i></div><div class="stat"><b>109</b><span>道自测</span><i>FOLDED Q & A</i></div></div>
+  <div class="dist-head"><span>知识点分布</span><span>共 109 个</span></div>
+  <div class="dist" aria-label="各讲知识点数量"><div class="dist-row"><span class="dk"><em>1</em>创建 Vue 项目</span><span class="dist-bar"><i style="width:84.6%"></i></span><span class="dv">22</span></div><div class="dist-row"><span class="dk"><em>2</em>Vue 基本语法</span><span class="dist-bar"><i style="width:38.5%"></i></span><span class="dv">10</span></div><div class="dist-row"><span class="dk"><em>3</em>Element Plus</span><span class="dist-bar"><i style="width:23.1%"></i></span><span class="dv">6</span></div><div class="dist-row"><span class="dk"><em>4</em>Element Plus 组件</span><span class="dist-bar"><i style="width:42.3%"></i></span><span class="dv">11</span></div><div class="dist-row"><span class="dk"><em>5</em>Vue-Router 路由</span><span class="dist-bar"><i style="width:50.0%"></i></span><span class="dv">13</span></div><div class="dist-row"><span class="dk"><em>6</em>后台管理页面</span><span class="dist-bar"><i style="width:80.8%"></i></span><span class="dv">21</span></div><div class="dist-row"><span class="dk"><em>7</em>SpringBoot 后端</span><span class="dist-bar"><i style="width:100.0%"></i></span><span class="dv">26</span></div></div>
+</section>
+
+<section class="marquee" aria-label="七讲组图巡览">
+  <div class="marquee-track"><a class="mq-item" href="lab1.html"><img src="assets/art/paintings/front-1.jpg" alt="实训 1"><span class="mq-cap">实训 1 · 创建 Vue 项目</span></a><a class="mq-item" href="lab2.html"><img src="assets/art/paintings/front-2.jpg" alt="实训 2"><span class="mq-cap">实训 2 · Vue 基本语法</span></a><a class="mq-item" href="lab3.html"><img src="assets/art/paintings/front-3.jpg" alt="实训 3"><span class="mq-cap">实训 3 · Element Plus</span></a><a class="mq-item" href="lab4.html"><img src="assets/art/paintings/front-4.jpg" alt="实训 4"><span class="mq-cap">实训 4 · Element Plus 组件</span></a><a class="mq-item" href="lab5.html"><img src="assets/art/paintings/front-5.jpg" alt="实训 5"><span class="mq-cap">实训 5 · Vue-Router 路由</span></a><a class="mq-item" href="lab6.html"><img src="assets/art/paintings/front-6.jpg" alt="实训 6"><span class="mq-cap">实训 6 · 后台管理页面</span></a><a class="mq-item" href="lab7.html"><img src="assets/art/paintings/back-1.jpg" alt="实训 7"><span class="mq-cap">实训 7 · SpringBoot 后端</span></a><a class="mq-item" href="lab1.html"><img src="assets/art/paintings/front-1.jpg" alt="实训 1"><span class="mq-cap">实训 1 · 创建 Vue 项目</span></a><a class="mq-item" href="lab2.html"><img src="assets/art/paintings/front-2.jpg" alt="实训 2"><span class="mq-cap">实训 2 · Vue 基本语法</span></a><a class="mq-item" href="lab3.html"><img src="assets/art/paintings/front-3.jpg" alt="实训 3"><span class="mq-cap">实训 3 · Element Plus</span></a><a class="mq-item" href="lab4.html"><img src="assets/art/paintings/front-4.jpg" alt="实训 4"><span class="mq-cap">实训 4 · Element Plus 组件</span></a><a class="mq-item" href="lab5.html"><img src="assets/art/paintings/front-5.jpg" alt="实训 5"><span class="mq-cap">实训 5 · Vue-Router 路由</span></a><a class="mq-item" href="lab6.html"><img src="assets/art/paintings/front-6.jpg" alt="实训 6"><span class="mq-cap">实训 6 · 后台管理页面</span></a><a class="mq-item" href="lab7.html"><img src="assets/art/paintings/back-1.jpg" alt="实训 7"><span class="mq-cap">实训 7 · SpringBoot 后端</span></a></div>
+</section>
+
+<div class="sec-title rv" id="labs"><span class="bar"></span><span class="sec-no">贰</span><h2>七讲</h2><span class="sec-en">Seven Lectures</span></div>
+<p class="labs-lede rv">七讲按课上次序排开。点开任意一讲，左侧会出现「讲义目录 + 本讲知识点」，每个知识点的「学会了」会自动汇进右上角的进度圆环。</p>
+<div class="labs"><a class="lab-card rv" href="lab1.html"><div class="lab-thumb"><img src="assets/art/paintings/front-1.jpg" alt=""><span class="num-seal">1</span></div><div class="lab-body"><div class="k">实训 1 · 前端 · 环境</div><h3>创建 Vue 项目</h3><p>搭工程、目录骨架、入口三件套</p><div class="foot"><span class="pill">22 个知识点 · 56 段代码</span><span class="go">开始学习 →</span></div></div></a><a class="lab-card rv" href="lab2.html"><div class="lab-thumb"><img src="assets/art/paintings/front-2.jpg" alt=""><span class="num-seal">2</span></div><div class="lab-body"><div class="k">实训 2 · 前端 · 语法</div><h3>Vue 基本语法</h3><p>插值、响应式、7 个指令、生命周期</p><div class="foot"><span class="pill">10 个知识点 · 10 段代码</span><span class="go">开始学习 →</span></div></div></a><a class="lab-card rv" href="lab3.html"><div class="lab-thumb"><img src="assets/art/paintings/front-3.jpg" alt=""><span class="num-seal">3</span></div><div class="lab-body"><div class="k">实训 3 · 前端 · 组件库</div><h3>Element Plus</h3><p>装组件库、中文包、图标全局注册</p><div class="foot"><span class="pill">6 个知识点 · 16 段代码</span><span class="go">开始学习 →</span></div></div></a><a class="lab-card rv" href="lab4.html"><div class="lab-thumb"><img src="assets/art/paintings/front-4.jpg" alt=""><span class="num-seal">4</span></div><div class="lab-body"><div class="k">实训 4 · 前端 · 组件</div><h3>Element Plus 组件</h3><p>输入、选择、图片、轮播、表格、分页</p><div class="foot"><span class="pill">11 个知识点 · 11 段代码</span><span class="go">开始学习 →</span></div></div></a><a class="lab-card rv" href="lab5.html"><div class="lab-thumb"><img src="assets/art/paintings/front-5.jpg" alt=""><span class="num-seal">5</span></div><div class="lab-body"><div class="k">实训 5 · 前端 · 路由</div><h3>Vue-Router 路由</h3><p>跳转、传参、嵌套、守卫</p><div class="foot"><span class="pill">13 个知识点 · 24 段代码</span><span class="go">开始学习 →</span></div></div></a><a class="lab-card rv" href="lab6.html"><div class="lab-thumb"><img src="assets/art/paintings/front-6.jpg" alt=""><span class="num-seal">6</span></div><div class="lab-body"><div class="k">实训 6 · 前端 · 综合</div><h3>后台管理页面</h3><p>flex 布局、菜单、嵌套路由落地</p><div class="foot"><span class="pill">21 个知识点 · 54 段代码</span><span class="go">开始学习 →</span></div></div></a><a class="lab-card rv" href="lab7.html"><div class="lab-thumb"><img src="assets/art/paintings/back-1.jpg" alt=""><span class="num-seal">7</span></div><div class="lab-body"><div class="k">实训 7 · 后端 · SpringBoot</div><h3>SpringBoot 后端</h3><p>建工程、连库、统一返回、全局异常</p><div class="foot"><span class="pill">26 个知识点 · 61 段代码</span><span class="go">开始学习 →</span></div></div></a></div>
+
+<section class="timeline rv" aria-label="七讲时间轴">
+  <div class="sec-title rv"><span class="bar"></span><span class="sec-no">叁</span><h2>七讲时间轴</h2><span class="sec-en">In order</span></div>
+  <ol class="tl"><li class="tl-item"><a href="lab1.html"><span class="tl-node">01</span><div class="tl-body"><span class="tl-k">前端 · 环境</span><h3>创建 Vue 项目</h3><p>搭工程、目录骨架、入口三件套</p><span class="tl-meta"><span>22 个知识点</span><span>56 段代码</span><span>22 道自测</span></span></div></a></li><li class="tl-item"><a href="lab2.html"><span class="tl-node">02</span><div class="tl-body"><span class="tl-k">前端 · 语法</span><h3>Vue 基本语法</h3><p>插值、响应式、7 个指令、生命周期</p><span class="tl-meta"><span>10 个知识点</span><span>10 段代码</span><span>10 道自测</span></span></div></a></li><li class="tl-item"><a href="lab3.html"><span class="tl-node">03</span><div class="tl-body"><span class="tl-k">前端 · 组件库</span><h3>Element Plus</h3><p>装组件库、中文包、图标全局注册</p><span class="tl-meta"><span>6 个知识点</span><span>16 段代码</span><span>6 道自测</span></span></div></a></li><li class="tl-item"><a href="lab4.html"><span class="tl-node">04</span><div class="tl-body"><span class="tl-k">前端 · 组件</span><h3>Element Plus 组件</h3><p>输入、选择、图片、轮播、表格、分页</p><span class="tl-meta"><span>11 个知识点</span><span>11 段代码</span><span>11 道自测</span></span></div></a></li><li class="tl-item"><a href="lab5.html"><span class="tl-node">05</span><div class="tl-body"><span class="tl-k">前端 · 路由</span><h3>Vue-Router 路由</h3><p>跳转、传参、嵌套、守卫</p><span class="tl-meta"><span>13 个知识点</span><span>24 段代码</span><span>13 道自测</span></span></div></a></li><li class="tl-item"><a href="lab6.html"><span class="tl-node">06</span><div class="tl-body"><span class="tl-k">前端 · 综合</span><h3>后台管理页面</h3><p>flex 布局、菜单、嵌套路由落地</p><span class="tl-meta"><span>21 个知识点</span><span>54 段代码</span><span>21 道自测</span></span></div></a></li><li class="tl-item"><a href="lab7.html"><span class="tl-node">07</span><div class="tl-body"><span class="tl-k">后端 · SpringBoot</span><h3>SpringBoot 后端</h3><p>建工程、连库、统一返回、全局异常</p><span class="tl-meta"><span>26 个知识点</span><span>61 段代码</span><span>26 道自测</span></span></div></a></li></ol>
+</section>
+
+<section class="path rv" aria-label="学习路径">
+  <div class="sec-title rv"><span class="bar"></span><span class="sec-no">肆</span><h2>学习路径</h2><span class="sec-en">How to go</span></div>
+  <p class="lede">六站走完，就是一整条 JavaWeb 前后端链路：从装 Node 到 SpringBoot 跑通接口。每一站都标了要过的知识点数量，走不动就回头补。</p>
+  <ol class="path-row"><li class="path-step"><span class="p-i">壹</span><h4>把环境跑起来</h4><p>Node、npm、镜像源与 Vue 工程骨架</p><a class="p-link" href="lab1.html">进入实训 1 · 22 个知识点 →</a></li><li class="path-step"><span class="p-i">贰</span><h4>看懂语法与响应式</h4><p>插值、指令、生命周期，先会读再会写</p><a class="p-link" href="lab2.html">进入实训 2 · 10 个知识点 →</a></li><li class="path-step"><span class="p-i">叁</span><h4>会用组件库</h4><p>Element Plus 安装、中文包、图标与常用组件</p><a class="p-link" href="lab3.html">进入实训 3 · 17 个知识点 →</a></li><li class="path-step"><span class="p-i">肆</span><h4>把页面连起来</h4><p>Vue-Router 跳转、传参、嵌套与守卫</p><a class="p-link" href="lab5.html">进入实训 5 · 13 个知识点 →</a></li><li class="path-step"><span class="p-i">伍</span><h4>做出一套后台</h4><p>flex 布局、菜单与嵌套路由落地</p><a class="p-link" href="lab6.html">进入实训 6 · 21 个知识点 →</a></li><li class="path-step"><span class="p-i">陆</span><h4>接上后端</h4><p>SpringBoot 建工程、连库、统一返回与异常</p><a class="p-link" href="lab7.html">进入实训 7 · 26 个知识点 →</a></li></ol>
+</section>
+
+<section class="errata rv" aria-label="勘误速查">
+  <div class="sec-title rv"><span class="bar"></span><span class="sec-no">伍</span><h2>勘误速查</h2><span class="sec-en">Errata</span></div>
+  <p class="lede">讲义与真实工程对不上的地方，逐讲整理成了独立文档。动手前先扫一眼，能省掉大半个下午。</p>
+  <div class="errata-grid"><div class="er"><h4><em>01</em>实训 1 · 创建 Vue 项目</h4><ul><li><a href="../实训1_软件安装及创建Vue项目/实验过程_实训1.md">实验过程</a></li><li><a href="../实训1_软件安装及创建Vue项目/构建验证_实训1.md">构建验证</a></li><li><a href="../实训1_软件安装及创建Vue项目/讲义勘误_实训1.md">讲义勘误</a></li></ul></div><div class="er"><h4><em>02</em>实训 2 · Vue 基本语法</h4><ul><li><a href="../实训2_Vue基本语法/实验过程_实训2.md">实验过程</a></li><li><a href="../实训2_Vue基本语法/构建验证_实训2.md">构建验证</a></li><li><a href="../实训2_Vue基本语法/讲义勘误_实训2.md">讲义勘误</a></li></ul></div><div class="er"><h4><em>03</em>实训 3 · Element Plus</h4><ul><li><a href="../实训3_前端ElementPlus框架/实验过程_实训3.md">实验过程</a></li><li><a href="../实训3_前端ElementPlus框架/构建验证_实训3-4.md">构建验证</a></li><li><a href="../实训3_前端ElementPlus框架/讲义勘误_实训3.md">讲义勘误</a></li></ul></div><div class="er"><h4><em>04</em>实训 4 · Element Plus 组件</h4><ul><li><a href="../实训4_Element-Plus组件的使用/实验过程_实训4.md">实验过程</a></li><li><a href="../实训4_Element-Plus组件的使用/工程说明.md">工程说明</a></li><li><a href="../实训4_Element-Plus组件的使用/讲义勘误_实训4.md">讲义勘误</a></li></ul></div><div class="er"><h4><em>05</em>实训 5 · Vue-Router 路由</h4><ul><li><a href="../实训5_Vue-Router实现路由跳转/实验过程_实训5.md">实验过程</a></li><li><a href="../实训5_Vue-Router实现路由跳转/构建验证_实训5.md">构建验证</a></li><li><a href="../实训5_Vue-Router实现路由跳转/讲义勘误_实训5.md">讲义勘误</a></li></ul></div><div class="er"><h4><em>06</em>实训 6 · 后台管理页面</h4><ul><li><a href="../实训6_后台管理页面/构建验证_实训6.md">构建验证</a></li><li><a href="../实训6_后台管理页面/讲义勘误_实训6.md">讲义勘误</a></li></ul></div><div class="er"><h4><em>07</em>实训 7 · SpringBoot 后端</h4><ul><li><a href="../实训7_新建SpringBoot项目/实验过程_实训7.md">实验过程</a></li><li><a href="../实训7_新建SpringBoot项目/构建验证_实训7-前端.md">构建验证</a></li><li><a href="../实训7_新建SpringBoot项目/讲义勘误_实训7.md">讲义勘误</a></li></ul></div></div>
+</section>
+
+<section class="method rv" aria-label="学习方法">
+  <div class="sec-title rv"><span class="bar"></span><span class="sec-no">陆</span><h2>学习方法</h2><span class="sec-en">How to read</span></div>
+  <p class="lede">每个知识点固定七块，七块长得不一样，一眼能认出来——这是刻意的：读到什么形状，就知道该用什么方式读。</p>
+  <div class="legend"><div class="lg"><i>①</i><div><b>讲义要点</b><p>这一讲老师到底要求什么</p></div></div><div class="lg"><i>②</i><div><b>核心讲解</b><p>先弄懂「为什么」，再进代码</p></div></div><div class="lg"><i>③</i><div><b>示例演示</b><p>整段可运行的示例，复制即用</p></div></div><div class="lg"><i>④</i><div><b>代码解读</b><p>逐行拆开，知道每一句在干嘛</p></div></div><div class="lg"><i>⑤</i><div><b>工程对照</b><p>真实文件与行号，对着工程核对</p></div></div><div class="lg"><i>⑥</i><div><b>易错提醒</b><p>最容易踩的坑，先自己踩一遍</p></div></div><div class="lg"><i>⑦</i><div><b>课堂思考</b><p>先独立作答，再点开参考解析</p></div></div></div>
+  <div class="rv">
+  <ul>
+    <li><b>先读「① 讲义要点」</b>——先知道这一讲老师要求什么，再动手。</li>
+    <li><b>「② 核心讲解」建立概念</b>：先弄懂"为什么"，再进入代码。</li>
+    <li><b>「③ 示例演示」与「④ 代码解读」配合看</b>：把示例整体粘贴进对应工程文件，运行一遍，再逐行对照讲解。</li>
+    <li><b>「⑤ 工程对照」给的是真实文件与行号</b>，请打开工程逐个核对。</li>
+    <li><b>「⑥ 易错提醒」建议先自己踩一遍</b>，再对照讲解修正，印象最深。</li>
+    <li><b>「⑦ 课堂思考」答案默认折叠</b>——先独立作答，再点开参考解析；未经思考直接看解析，等于没有学习。</li>
+    <li>学完一个知识点，勾选右上角「学会了」，进度会保存在本机浏览器（顶栏圆环即总进度）。</li>
+    <li>顶栏搜索框可跨讲检索，例如 <code>v-model</code>、<code>跨域</code>、<code>Result</code>。</li>
+  </ul>
+  </div>
+</section>
+</div></main>
+</div>
+<div id="scrim"></div>
+<button class="icon-btn" id="top-btn" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="foot-banner" aria-hidden="true"><img src="assets/art/paintings/band-ink.jpg" alt=""></div>
+<footer><img class="foot-lotus" src="assets/art/motifs/lotus.png" alt="" aria-hidden="true">
+  <div class="in">
+  <p><b>JavaWeb 知识点讲解</b> · 覆盖实训 1~7 共 109 个知识点。每讲按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，供课堂讲授与课后复习使用。</p>
+  <p>全部内容离线可用：不引用任何 CDN 与外部字体。学习进度保存在本机浏览器中，更换设备后不同步。</p>
+  <p>讲解内容依据课程讲义编写，建议配合 <code>实验过程_实训N.md</code>（实验操作步骤）与 <code>讲义勘误_实训N.md</code>（讲义勘误说明）对照学习。</p>
+  </div>
+  <div class="foot-sign" aria-hidden="true">
+    <span class="seal">研学</span>
+    <span>依 讲 义 而 授 · 循 次 第 而 学</span>
+  </div>
+</footer>
+<script src="assets/ids.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
