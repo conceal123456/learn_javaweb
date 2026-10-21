@@ -41,6 +41,9 @@ if (-not (Test-Path $site)) { Write-Host '[FAIL] 没有 deploy-site/，先不带
 Write-Host '=== 2/3 检出 gh-pages 工作树 ===' -ForegroundColor Cyan
 $tmp = Join-Path $env:TEMP ('gh-pages-' + [guid]::NewGuid().ToString('N').Substring(0, 8))
 Push-Location $root
+# 先把本地 gh-pages 对齐到远端，避免 non-fast-forward
+& git fetch origin gh-pages 2>&1 | Out-Null
+if ($LASTEXITCODE -eq 0) { & git branch -f gh-pages FETCH_HEAD 2>&1 | Out-Null }
 & git worktree add --detach $tmp gh-pages 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) {
     Pop-Location
@@ -60,9 +63,11 @@ $msg = if ($Message) { $Message } else { 'deploy: ' + (Get-Date -Format 'yyyy-MM
 $changed = ($LASTEXITCODE -eq 0)
 
 if ($changed) {
-    & git -C $tmp push origin HEAD:gh-pages 2>&1 | Select-Object -Last 1
+    & git -C $tmp push origin HEAD:gh-pages 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) { & git -C $tmp push --force-with-lease origin HEAD:gh-pages 2>&1 | Out-Null }
     if ($LASTEXITCODE -eq 0) { Write-Host '  [OK] 已推送 Gitee' -ForegroundColor Green } else { Write-Host '  [!] Gitee 推送失败（网络或权限）' -ForegroundColor Yellow }
-    & git -C $tmp push github HEAD:gh-pages 2>&1 | Select-Object -Last 1
+    & git -C $tmp push github HEAD:gh-pages 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) { & git -C $tmp push --force-with-lease github HEAD:gh-pages 2>&1 | Out-Null }
     if ($LASTEXITCODE -eq 0) { Write-Host '  [OK] 已推送 GitHub' -ForegroundColor Green } else { Write-Host '  [!] GitHub 推送失败（网络）' -ForegroundColor Yellow }
 } else {
     Write-Host '  内容没有变化，跳过推送' -ForegroundColor DarkGray
