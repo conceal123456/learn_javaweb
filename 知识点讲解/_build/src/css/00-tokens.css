@@ -268,16 +268,21 @@ mark{
 ::selection([data-theme="dark"]){ color:#100d0b; }
 
 /* ==================== 滚动条 ==================== */
-*{ scrollbar-width:thin; scrollbar-color:var(--line) transparent; }
-::-webkit-scrollbar{ width:10px; height:10px; }
-::-webkit-scrollbar-track{ background:transparent; }
-::-webkit-scrollbar-thumb{
-  background:var(--line);
-  border-radius:99px;
-  border:3px solid transparent;
-  background-clip:content-box;
+/* 方角细条：像书口的一条墨线，不做圆胶囊 */
+*{ scrollbar-width:thin; scrollbar-color:var(--line-2) transparent; }
+::-webkit-scrollbar{ width:9px; height:9px; }
+::-webkit-scrollbar-track{
+  background:var(--bg-2);
+  border-left:1px solid var(--line-3);
 }
-::-webkit-scrollbar-thumb:hover{ background:var(--fg-5); background-clip:content-box; }
+::-webkit-scrollbar-thumb{
+  background:var(--line-2);
+  border-radius:0;
+  border-left:2px solid transparent;
+  background-clip:padding-box;
+}
+::-webkit-scrollbar-thumb:hover{ background:var(--cinnabar); background-clip:padding-box; }
+::-webkit-scrollbar-corner{ background:var(--bg-2); }
 
 /* ==================== 焦点 ==================== */
 :focus{ outline:none; }
