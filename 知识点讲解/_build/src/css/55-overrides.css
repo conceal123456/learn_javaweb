@@ -40,6 +40,21 @@
       var(--wash-4) 84%,
       var(--wash-4) 100%);
 }
+/* 天幕下缘的「墨渍」：让化开带不是一条直溜溜的渐变，而是高低不齐的墨边 */
+.cine-hero .cine-veil::after{
+  content:"";
+  position:absolute; left:-4%; right:-4%; bottom:22%;
+  height:clamp(120px, 22vh, 240px);
+  pointer-events:none;
+  background:
+    radial-gradient(52% 120% at 8% 100%, rgba(30,24,19,.50) 0%, rgba(30,24,19,0) 72%),
+    radial-gradient(40% 130% at 30% 100%, rgba(26,21,17,.42) 0%, rgba(26,21,17,0) 74%),
+    radial-gradient(64% 110% at 54% 100%, rgba(32,26,21,.46) 0%, rgba(32,26,21,0) 70%),
+    radial-gradient(38% 130% at 76% 100%, rgba(28,23,18,.38) 0%, rgba(28,23,18,0) 74%),
+    radial-gradient(58% 110% at 96% 100%, rgba(32,26,21,.44) 0%, rgba(32,26,21,0) 72%);
+  filter:blur(8px);
+  opacity:.9;
+}
 /* 墨色区的界行改成浅色描线 */
 .cine-hero::after{
   background:repeating-linear-gradient(90deg, rgba(248,239,221,.055) 0 1px, transparent 1px calc(100% / 12));
@@ -242,5 +257,25 @@
   .cine-hero .cine-inner{
     padding-top:calc(var(--h-top) + clamp(20px, 5vh, 40px));
     padding-bottom:clamp(40px, 7vh, 72px);
+  }
+}
+
+/* ==================== E. 排版微调（2026-10-21） ==================== */
+/* 标题避免最后一行只剩一两个字；正文避免行尾孤字（不支持的浏览器自动忽略） */
+h1, h2, h3, .sec-title h2, .tl-body h3{ text-wrap:balance; }
+p, li, blockquote, .blk-body p{ text-wrap:pretty; }
+
+/* 首页立轴 caption 与画框下缘留一点呼吸 */
+.cine-scroll figcaption{ padding-top:6px; }
+
+/* ==================== F. 禁用 JS 时的兜底（首屏文字直接可见） ==================== */
+@media (scripting: none){
+  .hero-title,.cine-kicker,.cine-sub,.home-stats,.cine-cta,
+  .cine-scroll,.cine-scroll-frame,.cine-seal,
+  .lab-kicker,.lab-hero-sub,.lab-hero .meta{
+    animation:none !important;
+    opacity:1 !important;
+    transform:none !important;
+    clip-path:none !important;
   }
 }

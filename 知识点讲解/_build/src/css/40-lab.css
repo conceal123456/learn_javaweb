@@ -118,8 +118,30 @@
   color:var(--fg-4);
 }
 .lab-hero .meta{
-  display:flex; flex-wrap:wrap; gap:7px;
-  max-width:min(100%, 820px);
+  display:flex; flex-wrap:nowrap; gap:7px;
+  max-width:min(100%, 940px);
+  /* 一行横向排列：讲义原文/工程路径很长，不再折成 3 行把 hero 撑高 */
+  overflow-x:auto; overflow-y:hidden;
+  scrollbar-width:none; -ms-overflow-style:none;
+  padding:2px 0 3px;
+  /* 右缘淡出，暗示"还能往右滑" */
+  -webkit-mask-image:linear-gradient(90deg, #000 0 93%, transparent 100%);
+  mask-image:linear-gradient(90deg, #000 0 93%, transparent 100%);
+}
+.lab-hero .meta::-webkit-scrollbar{ display:none; }
+.lab-hero .meta .chip{
+  flex:0 0 auto;
+  max-width:min(62ch, 72vw);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+/* chip 里的 <code> 默认允许断行（为了正文里的长路径），这里必须改回单行 */
+.lab-hero .meta .chip code{
+  white-space:nowrap;
+  overflow-wrap:normal;
+  word-break:normal;
+  vertical-align:baseline;
 }
 .chip{
   display:inline-flex; align-items:center; gap:.4em;

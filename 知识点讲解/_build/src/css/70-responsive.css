@@ -84,7 +84,7 @@
   .cine-side{ display:none; }
   .cine-hero::before{ display:none; }
 
-  .lab-hero{ height:auto; min-height:clamp(320px, 40vh, 400px); }
+  .lab-hero{ height:auto; min-height:clamp(320px, 40vh, 400px); padding-top:var(--h-top); }
   .lab-hero-no{ font-size:clamp(120px, 26vw, 220px); }
 
   .timeline{ padding:0 var(--pad-x); }
@@ -167,7 +167,7 @@
   .errata-grid{ grid-template-columns:minmax(0,1fr); }
 
   /* 讲解页 */
-  .lab-hero{ min-height:0; padding-top:0; }
+  .lab-hero{ min-height:clamp(300px, 40vh, 380px); }
   .lab-hero-inner{ padding-bottom:clamp(18px, 4vw, 28px); }
   .lab-hero h1{ max-width:100%; }
   .lab-hero-plum{ display:none; }
@@ -238,6 +238,16 @@
 
   .series-row{ gap:4px; }
   .ser-item{ width:32px; height:22px; }
+
+  /* 手机窄屏：浮动上一/下一按钮会压住正文，改用目录抽屉 + 顶部进度环导航 */
+  .kp-nav{ display:none; }
+
+  /* 窄屏 hero 不再固定高度：标题+副标题+meta 比 46vh 高，会顶出可视区被裁 */
+  .lab-hero{ min-height:clamp(320px, 46vh, 440px); }
+  .lab-hero-inner{ padding-top:0; padding-bottom:20px; }
+
+  /* 讲义原文/工程路径这条 meta 在手机上允许横向滑，不折成很多行 */
+  .lab-hero .meta{ max-width:100%; }
 
   .quote-art{ aspect-ratio:4/2.6; }
 

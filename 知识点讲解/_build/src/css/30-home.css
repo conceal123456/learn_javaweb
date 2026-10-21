@@ -57,7 +57,8 @@
 /* ==================== 长卷视差 ==================== */
 .pan{
   position:relative; z-index:1;
-  height:220vh;
+  /* 按画幅宽度给滚动距离：1280 约 190vh、1920 约 240vh，避免大屏"拖太久"、小屏"一下就过" */
+  height:clamp(150vh, calc(100vh + 58vw), 260vh);
   margin:0;
 }
 .pan-sticky{

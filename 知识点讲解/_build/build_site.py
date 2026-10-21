@@ -594,7 +594,12 @@ def build_css():
         "   请勿直接修改本文件：改 src/css/ 下的分片后重新运行生成器。\n"
         "   ========================================================================== */\n"
     )
-    body = "\n\n".join(p.read_text(encoding="utf-8") for p in parts)
+    # utf-8-sig + 去零宽 BOM：分片若被编辑器存成「UTF-8 with BOM」，
+    # 拼接到中间会变成非法字符，浏览器会把紧随其后的整条规则丢掉（踩过一次）。
+    body = "\n\n".join(
+        p.read_text(encoding="utf-8-sig").lstrip("\ufeff") for p in parts
+    )
+    body = body.replace("\ufeff", "")
     text = banner + body
     (ASSETS / "style.css").write_text(text, encoding="utf-8")
     return len(text)
@@ -733,7 +738,9 @@ def write_lab_page(lab, labs):
     meta = []
     for m in lab["meta"]:
         m2 = re.sub(r"\*\*(.+?)\*\*", r"\1", m)
-        meta.append(f'<span class="chip">{inline(m2)}</span>')
+        # 单行 chip 会被 ellipsis 截断，把完整文本放进 title，悬停可看全
+        plain = strip_html(inline(m2))
+        meta.append(f'<span class="chip" title="{html.escape(plain, quote=True)}">{inline(m2)}</span>')
 
     banner = LAB_ART[lab["id"]]
     title = lab["title"].split("：")[-1]
