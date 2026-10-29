@@ -2,6 +2,14 @@
 
 今天实训内容的整理版本：用 Spring Boot 3 + MyBatis + MySQL 完成员工表的查询、新增、修改、删除，并用 `Result` 统一返回结果。
 
+## 配套文档
+
+按老师讲义整理的完整步骤、代码和排错表：
+
+- [实训8_实验步骤与完整代码.md](docs/实训8_实验步骤与完整代码.md)
+- [实训8_实验步骤与完整代码.docx](docs/实训8_实验步骤与完整代码.docx)
+- [实训8_实验步骤与完整代码.pdf](docs/实训8_实验步骤与完整代码.pdf)
+
 ## 技术栈
 
 - Java 21
@@ -31,6 +39,10 @@
 │     └─ resources/
 │        ├─ application.yml
 │        └─ mapper/EmployeeMapper.xml
+├─ docs/
+│  ├─ 实训8_实验步骤与完整代码.md
+│  ├─ 实训8_实验步骤与完整代码.docx
+│  └─ 实训8_实验步骤与完整代码.pdf
 └─ requests.http               # IDEA HTTP Client 测试请求
 ```
 

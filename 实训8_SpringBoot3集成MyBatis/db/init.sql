@@ -8,15 +8,15 @@ USE `xm-pro`;
 
 CREATE TABLE IF NOT EXISTS `employee` (
     `id`          INT         NOT NULL AUTO_INCREMENT COMMENT '主键',
-    `name`        VARCHAR(50)          DEFAULT NULL COMMENT '姓名',
-    `sex`         VARCHAR(10)          DEFAULT NULL COMMENT '性别',
-    `no`          VARCHAR(20)          DEFAULT NULL COMMENT '工号',
+    `name`        VARCHAR(255)         DEFAULT NULL COMMENT '姓名',
+    `sex`         VARCHAR(255)         DEFAULT NULL COMMENT '性别',
+    `no`          VARCHAR(255)         DEFAULT NULL COMMENT '工号',
     `age`         INT                  DEFAULT NULL COMMENT '年龄',
-    `description` TEXT                 DEFAULT NULL COMMENT '描述',
+    `description` LONGTEXT             DEFAULT NULL COMMENT '个人介绍',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci COMMENT ='员工表';
+  COLLATE = utf8mb4_unicode_ci COMMENT ='员工信息表';
 
 -- 只有表为空时才插入示例数据，重复执行不会产生重复记录
 INSERT INTO `employee` (`name`, `sex`, `no`, `age`, `description`)
