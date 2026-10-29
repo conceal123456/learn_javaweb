@@ -1,0 +1,39 @@
+### 查询全部
+GET http://localhost:8080/employee/selectAll
+
+### 按 id 查询（路径参数）
+GET http://localhost:8080/employee/selectById/1
+
+### 按 id 查询（@Select 注解方式）
+GET http://localhost:8080/employee/selectOne?id=1
+
+### 分页查询
+GET http://localhost:8080/employee/selectPage?pageNum=1&pageSize=2
+
+### 新增
+POST http://localhost:8080/employee/insert
+Content-Type: application/json
+
+{
+  "name": "王五",
+  "sex": "男",
+  "no": "100004",
+  "age": 24,
+  "description": "新员工测试"
+}
+
+### 修改（id 必须是已经存在的记录）
+PUT http://localhost:8080/employee/update
+Content-Type: application/json
+
+{
+  "id": 4,
+  "name": "王五",
+  "sex": "男",
+  "no": "100004",
+  "age": 25,
+  "description": "修改后的描述"
+}
+
+### 删除
+DELETE http://localhost:8080/employee/delete/4
