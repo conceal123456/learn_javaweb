@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.EmployeeMapper">
+
+    <!-- 查询全部 -->
+    <select id="selectAll" resultType="com.example.entity.Employee">
+        SELECT id, name, sex, no, age, description
+        FROM employee
+        ORDER BY id
+    </select>
+
+    <!-- 按 id 查询 -->
+    <select id="selectById" resultType="com.example.entity.Employee">
+        SELECT id, name, sex, no, age, description
+        FROM employee
+        WHERE id = #{id}
+    </select>
+
+    <!-- 新增：useGeneratedKeys 把自增主键回填到 employee.id -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO employee (name, sex, no, age, description)
+        VALUES (#{name}, #{sex}, #{no}, #{age}, #{description})
+    </insert>
+
+    <!-- 修改 -->
+    <update id="update">
+        UPDATE employee
+        SET name        = #{name},
+            sex         = #{sex},
+            no          = #{no},
+            age         = #{age},
+            description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="deleteById">
+        DELETE FROM employee WHERE id = #{id}
+    </delete>
+
+</mapper>
