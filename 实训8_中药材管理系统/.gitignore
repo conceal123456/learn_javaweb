@@ -1,0 +1,14 @@
+# 后端构建产物
+springboot/target/
+
+# 前端依赖与构建产物
+vue/node_modules/
+vue/dist/
+
+# 临时文件
+.tmp/
+*.log
+
+# IDE
+.idea/
+*.iml
