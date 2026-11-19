@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""把 知识点讲解/ 打包成可直接部署的静态站点（deploy-site/）。
+"""把 90_学习网站（知识点讲解）/ 打包成可直接部署的静态站点（deploy-site/）。
 
 为什么需要它：
   * 源站的页面文件名是中文（实训1.html … 实训7.html），部署到静态托管后 URL 会变成
@@ -19,7 +19,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "知识点讲解"
+SRC = ROOT / "90_学习网站（知识点讲解）"
 OUT = ROOT / "deploy-site"
 ZIP = ROOT / "deploy-site.zip"
 

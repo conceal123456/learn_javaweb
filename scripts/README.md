@@ -31,13 +31,13 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-stage.ps1 -Stage 3
 
 | Stage | 目录（仓库根相对） | 前端端口 | 人工验收要点 |
 |---|---|---|---|
-| 1 | `实训1_软件安装及创建Vue项目\工程\hello-vue` | 5171 | 页面只有一行欢迎语，无 HelloWorld 残留 |
-| 2 | `实训2_Vue基本语法\工程\vue-syntax` | 5172 | 9 个语法点可交互（改字→插值同步、加分→评级变） |
-| 3 | `实训3_前端ElementPlus框架\工程\element-plus` | 5173 | `/`→`/home`；10 个按钮；图标显示（含 `#6666` 发淡那个） |
+| 1 | `01_实训1_软件安装及创建Vue项目\工程\hello-vue` | 5171 | 页面只有一行欢迎语，无 HelloWorld 残留 |
+| 2 | `02_实训2_Vue基本语法\工程\vue-syntax` | 5172 | 9 个语法点可交互（改字→插值同步、加分→评级变） |
+| 3 | `03_实训3_前端ElementPlus框架\工程\element-plus` | 5173 | `/`→`/home`；10 个按钮；图标显示（含 `#6666` 发淡那个） |
 | 4 | 同上（复用阶段 3 工程） | 5174 | `/comp` 17 节、分页真切片；`/comp-orig` 三个讲义问题 |
-| 5 | `实训5_Vue-Router实现路由跳转\工程\vue-router` | 5175 | `/manage/user` 父子同屏、后退正常、标题随路由变 |
-| 6 | `实训6_后台管理页面\工程\admin-layout` | 5176 | `/manage`→`/manage/detail`；表格 9 行/共 50 条；翻页数据不变（讲义原版） |
-| 7 | `实训7_新建SpringBoot项目\工程\xm-pro\vue` + `...\springboot` | 5177 / 后端 8080 | 前端 `/manage` 渲染首页；后端 5 接口 HTTP 200、code=200/500/200/200/400 |
+| 5 | `05_实训5_Vue-Router实现路由跳转\工程\vue-router` | 5175 | `/manage/user` 父子同屏、后退正常、标题随路由变 |
+| 6 | `06_实训6_后台管理页面\工程\admin-layout` | 5176 | `/manage`→`/manage/detail`；表格 9 行/共 50 条；翻页数据不变（讲义原版） |
+| 7 | `07_实训7_新建SpringBoot项目\工程\xm-pro\vue` + `...\springboot` | 5177 / 后端 8080 | 前端 `/manage` 渲染首页；后端 5 接口 HTTP 200、code=200/500/200/200/400 |
 
 ## 输出与退出码
 

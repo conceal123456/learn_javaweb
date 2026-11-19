@@ -1,6 +1,8 @@
 # JavaWeb 实训学习仓库（Vue3 + SpringBoot3）
 
-> 这是按老师 **7 份讲义**整理的一份**可运行、可照着学**的课程仓库：讲义原件、七个工程、逐知识点精讲、实验过程、运行截图、讲义勘误、离线学习网页全在里面。
+> 这是按老师讲义整理的一份**可运行、可照着学**的课程仓库：讲义原件、七个工程、逐知识点精讲、实验过程、运行截图、讲义勘误、离线学习网页全在里面。
+>
+> 目录已按讲次编号（`01_`～`12_`），完整讲次与每讲位置见 **[`00_讲义总目录.md`](00_讲义总目录.md)**。
 >
 > 写给自己复习，也写给学弟学妹入门——**不只是交作业的代码堆，而是从"照着敲"到"真看懂"的一条路线。**
 >
@@ -25,10 +27,19 @@
 | **构建验证（实跑报告）** | 每讲 `构建验证_实训N.md` | **构建能不能过、页面/接口实测结果、与讲义差在哪**，含原始命令输出与截图路径 |
 | 运行截图 | 每讲 `演示截图/`（部分有 `过程截图/`） | 对照自己的运行结果，检查是否做对 |
 | 讲义勘误 | 每讲 `讲义勘误_实训N.md` | 讲义写错/不生效的地方、旧勘误的裁定与撤回、正确写法（2026-10-20 逐条实测） |
-| 离线学习网页 | `知识点讲解/` | 双击 `index.html`，可搜索、可记进度，覆盖 109 个知识点 |
-| **网页生成器** | `知识点讲解/_build/build_site.py` | 改完精讲 md 后一条命令重建整站（见文末） |
-| 补基础训练营 | `基础补课/补基础训练营.html` | 补 JS 异步、HTTP、前后端联调；故意不给可抄的代码 |
-| 实训4 工程说明 | `实训4_Element-Plus组件的使用/工程说明.md` | 实训4 与实训3 共用同一工程，这里说明从哪跑、看哪个路由 |
+| 离线学习网页 | `90_学习网站（知识点讲解）/` | 双击 `index.html`，可搜索、可记进度，覆盖 109 个知识点 |
+| **网页生成器** | `90_学习网站（知识点讲解）/_build/build_site.py` | 改完精讲 md 后一条命令重建整站（见文末） |
+| 补基础训练营 | `00_基础补课/补基础训练营.html` | 补 JS 异步、HTTP、前后端联调；故意不给可抄的代码 |
+| 实训4 工程说明 | `04_实训4_Element-Plus组件的使用/工程说明.md` | 实训4 与实训3 共用同一工程，这里说明从哪跑、看哪个路由 |
+
+## 实训8 + 中药材管理系统（2026-10 新增）
+
+| 项目 | 目录 | 内容 | 先看这个 |
+|---|---|---|---|
+| 实训8 | `08_实训8_SpringBoot3集成MyBatis/` | 按老师讲义《实训8__SpringBoot3集成Mybatis》做：Spring Boot 3 + MyBatis，员工表 CRUD（Mapper XML、`@Select` 注解、PageHelper 分页） | `docs/实训8_实验步骤与完整代码.md` |
+| 中药材管理系统 | `99_综合项目_中药材管理系统/` | 前后端打通综合项目：Vue3 + Element Plus + Spring Boot + MyBatis + MySQL，含条件查询、分页、增删改、Excel 导入导出、用户管理 | `docs/中药材管理系统_开发文档.md` |
+
+> 老师原版讲义与操作演示已归位到 `08_实训8_SpringBoot3集成MyBatis/`：`讲义/实训8__SpringBoot3集成Mybatis.docx`、`演示视频/实训8操作演示.mp4`。
 
 **知识点精讲的固定七块**：
 `① 讲义怎么说` → `② 一句话讲透` → `③ 可直接运行的示例代码` → `④ 逐行拆解` → `⑤ 在你仓库里的真实文件与行号` → `⑥ 常见坑` → `⑦ 自测（答案默认折叠）`。
@@ -39,14 +50,14 @@
 
 | 讲 | 工程 | 构建 | 实跑结论（一句话） | 报告 |
 |---|---|---|---|---|
-| 实训1 | `hello-vue` | ✅ 1.13s / 24 modules / 无告警 | 首页只剩一行欢迎语，无 HelloWorld 残留；`global.css` 实测生效（margin/padding 归零、14px、#333） | [`构建验证_实训1.md`](实训1_软件安装及创建Vue项目/构建验证_实训1.md) |
-| 实训2 | `vue-syntax` | ✅ 0.91s / 25 modules / 无告警 | 9 个语法点**全部真实可交互**（输入→插值跟随、加 10 分→优秀、方块变蓝、`:src` 换图、`onMounted` 真触发），`v-for` 均带 `:key` | [`构建验证_实训2.md`](实训2_Vue基本语法/构建验证_实训2.md) |
-| 实训3 | `element-plus` | ✅ 5.67s / 1595 modules（⚠️ chunk > 500 kB） | `/home` 图标与中文包均生效；`#6666` 实测 `rgba(102,102,102,0.4)`；全量引入 EP 使主 chunk 达 1.16 MB | [`构建验证_实训3-4.md`](实训3_前端ElementPlus框架/构建验证_实训3-4.md) |
+| 实训1 | `hello-vue` | ✅ 1.13s / 24 modules / 无告警 | 首页只剩一行欢迎语，无 HelloWorld 残留；`global.css` 实测生效（margin/padding 归零、14px、#333） | [`构建验证_实训1.md`](01_实训1_软件安装及创建Vue项目/构建验证_实训1.md) |
+| 实训2 | `vue-syntax` | ✅ 0.91s / 25 modules / 无告警 | 9 个语法点**全部真实可交互**（输入→插值跟随、加 10 分→优秀、方块变蓝、`:src` 换图、`onMounted` 真触发），`v-for` 均带 `:key` | [`构建验证_实训2.md`](02_实训2_Vue基本语法/构建验证_实训2.md) |
+| 实训3 | `element-plus` | ✅ 5.67s / 1595 modules（⚠️ chunk > 500 kB） | `/home` 图标与中文包均生效；`#6666` 实测 `rgba(102,102,102,0.4)`；全量引入 EP 使主 chunk 达 1.16 MB | [`构建验证_实训3-4.md`](03_实训3_前端ElementPlus框架/构建验证_实训3-4.md) |
 | 实训4 | 复用实训3 | ✅ 同上 | `/comp` 17 小节全渲染、分页**真切片**；`/comp-orig` 三个讲义问题全部复现（`:background` 无底色、`interval` 告警、假分页） | 同上 |
-| 实训5 | `vue-router` | ✅ / 1598 modules | `/`→`/home`；push 使 `history.position`+1、replace 不变（后退跳过 /home）；query 两种写法一致；嵌套父子同屏；讲义原版守卫实测标题为字符串 `"undefined"` | [`构建验证_实训5.md`](实训5_Vue-Router实现路由跳转/构建验证_实训5.md) |
-| 实训6 | `admin-layout` | ✅ / 1601 modules | `/manage`→`/manage/detail`，6 个子路由正常；布局实测 60px 头 / 201px 左栏 / 1079px 内容；表格 9 行、共 50 条、分页**翻页数据不变**；三条 `/manage` 菜单会出现**同时高亮并粘住**（EP 2.14.7 竞态） | [`构建验证_实训6.md`](实训6_后台管理页面/构建验证_实训6.md) |
-| 实训7 前端 | `xm-pro/vue` | ✅ / 1620 modules | `/manage` 不重定向；3 个菜单路径无对应路由 → 点击后**整页空白** + `No match found`；工程**无 axios/fetch、无 proxy**，抓包 0 个后端请求 → 本讲前端不联调 | [`构建验证_实训7-前端.md`](实训7_新建SpringBoot项目/构建验证_实训7-前端.md) |
-| 实训7 后端 | `springboot` | ✅ `mvn clean package` 3.97s，fat jar 26.6 MB | `Started SpringbootApplication` 2.67s；5 个接口**实测全部 HTTP 200**，错误码在 body；响应头 `charset=UTF-8`、响应体合法 UTF-8；**MySQL 实际未被连接** | [`构建验证_实训7-后端.md`](实训7_新建SpringBoot项目/构建验证_实训7-后端.md) |
+| 实训5 | `vue-router` | ✅ / 1598 modules | `/`→`/home`；push 使 `history.position`+1、replace 不变（后退跳过 /home）；query 两种写法一致；嵌套父子同屏；讲义原版守卫实测标题为字符串 `"undefined"` | [`构建验证_实训5.md`](05_实训5_Vue-Router实现路由跳转/构建验证_实训5.md) |
+| 实训6 | `admin-layout` | ✅ / 1601 modules | `/manage`→`/manage/detail`，6 个子路由正常；布局实测 60px 头 / 201px 左栏 / 1079px 内容；表格 9 行、共 50 条、分页**翻页数据不变**；三条 `/manage` 菜单会出现**同时高亮并粘住**（EP 2.14.7 竞态） | [`构建验证_实训6.md`](06_实训6_后台管理页面/构建验证_实训6.md) |
+| 实训7 前端 | `xm-pro/vue` | ✅ / 1620 modules | `/manage` 不重定向；3 个菜单路径无对应路由 → 点击后**整页空白** + `No match found`；工程**无 axios/fetch、无 proxy**，抓包 0 个后端请求 → 本讲前端不联调 | [`构建验证_实训7-前端.md`](07_实训7_新建SpringBoot项目/构建验证_实训7-前端.md) |
+| 实训7 后端 | `springboot` | ✅ `mvn clean package` 3.97s，fat jar 26.6 MB | `Started SpringbootApplication` 2.67s；5 个接口**实测全部 HTTP 200**，错误码在 body；响应头 `charset=UTF-8`、响应体合法 UTF-8；**MySQL 实际未被连接** | [`构建验证_实训7-后端.md`](07_实训7_新建SpringBoot项目/构建验证_实训7-后端.md) |
 
 > **一句话总结：七讲的代码都能跑。** 跑不起来的原因基本是环境（Node/Maven/端口/编码），不是代码；而讲义本身确有 71 处需要订正的地方，见文末「讲义勘误速查」。
 
@@ -55,7 +66,7 @@
 **零基础 / 第一次接触前端**：
 
 ```text
-基础补课/补基础训练营.html（L0 → L8）
+00_基础补课/补基础训练营.html（L0 → L8）
         ↓
 实训1 → 实训2 → 实训3 → 实训4 → 实训5 → 实训6 → 实训7
 ```
@@ -104,13 +115,13 @@ npm config set registry https://registry.npmmirror.com
 
 | 讲次 | 学什么 | 工程 | 怎么跑 | 主要产出 |
 |---|---|---|---|---|
-| 实训1 | Node 环境、`npm create vue` 问答、目录骨架、精简 `App.vue`、`global.css` | `实训1_软件安装及创建Vue项目/工程/hello-vue` | `cd 实训1_软件安装及创建Vue项目/工程/hello-vue && npm install && npm run dev` | 最小可跑骨架 + 首页 |
-| 实训2 | 插值、`ref/reactive`、`v-model`、`v-if`、`v-for`、`@click`、`:bind`、`onMounted` | `实训2_Vue基本语法/工程/vue-syntax` | 同上换目录 | 一页演示全部语法 |
-| 实训3 | 安装 Element Plus、中文包、图标全局注册 | `实训3_前端ElementPlus框架/工程/element-plus` | 同上，看 `/home` | 图标正常显示（颜色、大小） |
+| 实训1 | Node 环境、`npm create vue` 问答、目录骨架、精简 `App.vue`、`global.css` | `01_实训1_软件安装及创建Vue项目/工程/hello-vue` | `cd 01_实训1_软件安装及创建Vue项目/工程/hello-vue && npm install && npm run dev` | 最小可跑骨架 + 首页 |
+| 实训2 | 插值、`ref/reactive`、`v-model`、`v-if`、`v-for`、`@click`、`:bind`、`onMounted` | `02_实训2_Vue基本语法/工程/vue-syntax` | 同上换目录 | 一页演示全部语法 |
+| 实训3 | 安装 Element Plus、中文包、图标全局注册 | `03_实训3_前端ElementPlus框架/工程/element-plus` | 同上，看 `/home` | 图标正常显示（颜色、大小） |
 | 实训4 | 8 组组件：输入、选择、单选/多选、图片、轮播、日期、表格、分页、弹窗 | 复用实训3 工程，看 `/comp` | 同上，看 `/comp`、`/comp-orig` | 组件页 + 修正版 |
-| 实训5 | 路由定义、编程式跳转、重定向、query 传参、嵌套路由、全局守卫 | `实训5_Vue-Router实现路由跳转/工程/vue-router` | 同上 | 多页面跳转 + 嵌套 + 标题 |
-| 实训6 | flex 后台布局、`el-menu`、嵌套路由落地、表格分页 | `实训6_后台管理页面/工程/admin-layout` | 同上，看 `/manage/detail` | 后台管理页面 |
-| 实训7 | SpringBoot 工程、Maven/编码/数据源、`Result` 统一返回、全局异常 | `实训7_新建SpringBoot项目/工程/xm-pro/springboot` | 见下面“实训7” | 5 个接口 + 统一 JSON |
+| 实训5 | 路由定义、编程式跳转、重定向、query 传参、嵌套路由、全局守卫 | `05_实训5_Vue-Router实现路由跳转/工程/vue-router` | 同上 | 多页面跳转 + 嵌套 + 标题 |
+| 实训6 | flex 后台布局、`el-menu`、嵌套路由落地、表格分页 | `06_实训6_后台管理页面/工程/admin-layout` | 同上，看 `/manage/detail` | 后台管理页面 |
+| 实训7 | SpringBoot 工程、Maven/编码/数据源、`Result` 统一返回、全局异常 | `07_实训7_新建SpringBoot项目/工程/xm-pro/springboot` | 见下面“实训7” | 5 个接口 + 统一 JSON |
 
 ## 每一讲最容易卡住的地方
 
@@ -156,7 +167,7 @@ npm config set registry https://registry.npmmirror.com
 - vue-router 5 里 `next()` 已废弃（功能仍可用，dev 模式每次导航告警），新代码建议直接 `return`。
 
 **实训7**
-- **IDEA 打开 `实训7_新建SpringBoot项目\工程\xm-pro` 这一层**，才能同时看到 `springboot` 和 `vue`；打开 `springboot` 只能看到后端；
+- **IDEA 打开 `07_实训7_新建SpringBoot项目\工程\xm-pro` 这一层**，才能同时看到 `springboot` 和 `vue`；打开 `springboot` 只能看到后端；
 - Maven 的 `~\.m2\settings.xml` 优先级高于 `<MavenHome>\conf\settings.xml`，只改后者不生效；
 - Maven 3.8.1 起默认拦截 http 仓库，阿里云镜像必须写 https；
 - 命令行验证要 `mvn clean package`：源码没改时 `mvn package` 会 `BUILD SUCCESS` 但**根本不重打 jar**（看着成功，其实空转）；
@@ -168,17 +179,17 @@ npm config set registry https://registry.npmmirror.com
 
 **在 IDEA 里跑**：
 
-1. IDEA 打开 `D:\course\Javaweb\实训7_新建SpringBoot项目\工程\xm-pro`；
+1. IDEA 打开 `D:\course\Javaweb\07_实训7_新建SpringBoot项目\工程\xm-pro`；
 2. 等 Maven 依赖加载完；
 3. 点 `SpringbootApplication` 左侧绿三角（或右键 Run）；
 4. 控制台出现 `Started SpringbootApplication` 后访问 <http://localhost:8080/hello>。
 
-三种启动方式、启动成功的判据、以及踩过的坑，都写在 `实训7_新建SpringBoot项目/实验过程_实训7.md`。
+三种启动方式、启动成功的判据、以及踩过的坑，都写在 `07_实训7_新建SpringBoot项目/实验过程_实训7.md`。
 
 **命令行打包（要 `clean`）**：
 
 ```powershell
-cd "D:\course\Javaweb\实训7_新建SpringBoot项目\工程\xm-pro\springboot"
+cd "D:\course\Javaweb\07_实训7_新建SpringBoot项目\工程\xm-pro\springboot"
 mvn -B -DskipTests clean package     # 实测 3.97s，BUILD SUCCESS，jar 26.6 MB
 java -jar target\springboot-0.0.1-SNAPSHOT.jar
 ```
@@ -186,7 +197,7 @@ java -jar target\springboot-0.0.1-SNAPSHOT.jar
 **一键端到端验证**（自动检查环境 → 打包 → 起服务 → 打 5 个接口并按字节校验中文 → 收尾杀进程）：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "D:\course\Javaweb\实训7_新建SpringBoot项目\_verify_lab7.ps1" -ProjectPath "D:\course\Javaweb\实训7_新建SpringBoot项目\工程\xm-pro\springboot"
+powershell -ExecutionPolicy Bypass -File "D:\course\Javaweb\07_实训7_新建SpringBoot项目\_verify_lab7.ps1" -ProjectPath "D:\course\Javaweb\07_实训7_新建SpringBoot项目\工程\xm-pro\springboot"
 ```
 
 实测 **12 项全部通过**，收尾 `8080 已释放`。
@@ -227,7 +238,7 @@ powershell -ExecutionPolicy Bypass -File "D:\course\Javaweb\实训7_新建Spring
 | 实训6 | 后台布局、菜单、表格分页 | 实训3 的 EP、实训5 的路由 |
 | 实训7 | SpringBoot、Result、全局异常 | 实训6 的前端页面（复制到 `xm-pro/vue`） |
 
-> 实训5 讲义里的跳转按钮是 `<el-button>`，所以**实训5 其实依赖实训3**；`实训5_Vue-Router实现路由跳转/工程/vue-router` 已经装好 Element Plus，别以为是纯 Vue 项目。
+> 实训5 讲义里的跳转按钮是 `<el-button>`，所以**实训5 其实依赖实训3**；`05_实训5_Vue-Router实现路由跳转/工程/vue-router` 已经装好 Element Plus，别以为是纯 Vue 项目。
 >
 > 另外要注意：**实训1、实训7 的前端是 create-vue 3.21.0 代（Vite 7）**，**实训2/3/5/6 是 3.24.0 代（Vite 8）**，两代的 Node 要求不同（见环境准备）。
 
@@ -235,13 +246,13 @@ powershell -ExecutionPolicy Bypass -File "D:\course\Javaweb\实训7_新建Spring
 
 | 讲次 | 实验过程文档 | 构建验证（实跑证据） | 截图目录 |
 |---|---|---|---|
-| 实训1 | `实训1_软件安装及创建Vue项目/实验过程_实训1.md` | `构建验证_实训1.md` | `演示截图/`、`讲义截图/` |
-| 实训2 | `实训2_Vue基本语法/实验过程_实训2.md` | `构建验证_实训2.md` | `演示截图/`、`过程截图/` |
-| 实训3 | `实训3_前端ElementPlus框架/实验过程_实训3.md` | `构建验证_实训3-4.md` | `演示截图/`（`03_*`） |
-| 实训4 | `实训4_Element-Plus组件的使用/实验过程_实训4.md` | 同上（实训3-4 共用） | `演示截图/`（`04_*`） |
-| 实训5 | `实训5_Vue-Router实现路由跳转/实验过程_实训5.md` | `构建验证_实训5.md` | `演示截图/`（`05_*`） |
-| 实训6 | `实训6_后台管理页面/构建验证_实训6.md` + `知识点讲解_实训6.html` 第 5 节 | `构建验证_实训6.md` | `演示截图/`（`06_*`） |
-| 实训7 | `实训7_新建SpringBoot项目/实验过程_实训7.md` | `构建验证_实训7-前端.md`、`构建验证_实训7-后端.md` | 按文档里的截图清单截 |
+| 实训1 | `01_实训1_软件安装及创建Vue项目/实验过程_实训1.md` | `构建验证_实训1.md` | `演示截图/`、`讲义截图/` |
+| 实训2 | `02_实训2_Vue基本语法/实验过程_实训2.md` | `构建验证_实训2.md` | `演示截图/`、`过程截图/` |
+| 实训3 | `03_实训3_前端ElementPlus框架/实验过程_实训3.md` | `构建验证_实训3-4.md` | `演示截图/`（`03_*`） |
+| 实训4 | `04_实训4_Element-Plus组件的使用/实验过程_实训4.md` | 同上（实训3-4 共用） | `演示截图/`（`04_*`） |
+| 实训5 | `05_实训5_Vue-Router实现路由跳转/实验过程_实训5.md` | `构建验证_实训5.md` | `演示截图/`（`05_*`） |
+| 实训6 | `06_实训6_后台管理页面/构建验证_实训6.md` + `知识点讲解_实训6.html` 第 5 节 | `构建验证_实训6.md` | `演示截图/`（`06_*`） |
+| 实训7 | `07_实训7_新建SpringBoot项目/实验过程_实训7.md` | `构建验证_实训7-前端.md`、`构建验证_实训7-后端.md` | 按文档里的截图清单截 |
 
 每份实验过程文档都按作业小点写：环境版本 → 操作步骤与代码 → 观察结果 → 关键命令 → 该配哪张截图 → 遇到的问题及解决。
 
@@ -251,34 +262,34 @@ powershell -ExecutionPolicy Bypass -File "D:\course\Javaweb\实训7_新建Spring
 
 | 讲次 | 精讲文档 | 对应讲义 |
 |---|---|---|
-| 实训1 | [`知识点精讲_实训1.md`](实训1_软件安装及创建Vue项目/知识点精讲_实训1.md) | `实训1_软件安装及创建Vue项目/讲义/实训1_软件安装及创建Vue项目.docx` |
-| 实训2 | [`知识点精讲_实训2.md`](实训2_Vue基本语法/知识点精讲_实训2.md) | `实训2_Vue基本语法/讲义/实训2_Vue基本语法.docx` |
-| 实训3 | [`知识点精讲_实训3.md`](实训3_前端ElementPlus框架/知识点精讲_实训3.md) | `实训3_前端ElementPlus框架/讲义/实训3_前端Element Plus框架.docx` |
-| 实训4 | [`知识点精讲_实训4.md`](实训4_Element-Plus组件的使用/知识点精讲_实训4.md) | `实训4_Element-Plus组件的使用/讲义/实训4__Element-Plus组件的使用.docx` |
-| 实训5 | [`知识点精讲_实训5.md`](实训5_Vue-Router实现路由跳转/知识点精讲_实训5.md) | `实训5_Vue-Router实现路由跳转/讲义/实训5__Vue-Router实现路由跳转.docx` |
-| 实训6 | [`知识点精讲_实训6.md`](实训6_后台管理页面/知识点精讲_实训6.md) | `实训6_后台管理页面/讲义/实训6__后台管理页面.pdf` |
-| 实训7 | [`知识点精讲_实训7.md`](实训7_新建SpringBoot项目/知识点精讲_实训7.md) | `实训7_新建SpringBoot项目/讲义/实训7__新建SpringBoot项目.docx` |
+| 实训1 | [`知识点精讲_实训1.md`](01_实训1_软件安装及创建Vue项目/知识点精讲_实训1.md) | `01_实训1_软件安装及创建Vue项目/讲义/实训1_软件安装及创建Vue项目.docx` |
+| 实训2 | [`知识点精讲_实训2.md`](02_实训2_Vue基本语法/知识点精讲_实训2.md) | `02_实训2_Vue基本语法/讲义/实训2_Vue基本语法.docx` |
+| 实训3 | [`知识点精讲_实训3.md`](03_实训3_前端ElementPlus框架/知识点精讲_实训3.md) | `03_实训3_前端ElementPlus框架/讲义/实训3_前端Element Plus框架.docx` |
+| 实训4 | [`知识点精讲_实训4.md`](04_实训4_Element-Plus组件的使用/知识点精讲_实训4.md) | `04_实训4_Element-Plus组件的使用/讲义/实训4__Element-Plus组件的使用.docx` |
+| 实训5 | [`知识点精讲_实训5.md`](05_实训5_Vue-Router实现路由跳转/知识点精讲_实训5.md) | `05_实训5_Vue-Router实现路由跳转/讲义/实训5__Vue-Router实现路由跳转.docx` |
+| 实训6 | [`知识点精讲_实训6.md`](06_实训6_后台管理页面/知识点精讲_实训6.md) | `06_实训6_后台管理页面/讲义/实训6__后台管理页面.pdf` |
+| 实训7 | [`知识点精讲_实训7.md`](07_实训7_新建SpringBoot项目/知识点精讲_实训7.md) | `07_实训7_新建SpringBoot项目/讲义/实训7__新建SpringBoot项目.docx` |
 
-**网页版**：双击 `知识点讲解/index.html`，七讲 109 个知识点，按“讲义要点 → 核心讲解 → 示例演示 → 代码解读 → 工程对照 → 易错提醒 → 课堂思考”七个环节组织，支持全文搜索（`Ctrl+K` 命令面板）、深浅两套主题、勾选学习进度（存本机浏览器）。**每页的标题入场动画各不相同**（首页墨洇、实训1 卷起、实训2 横披、实训3 晕开、实训4 落印、实训5 翻页、实训6 侧幕、实训7 对焦），并跟随系统的“减弱动态效果”设置自动关闭。页面配馆藏中国画与花竹透明素材（公有领域，见 `知识点讲解/assets/art/说明.md`），**完全离线**：不引用任何 CDN 与外部字体。
+**网页版**：双击 `90_学习网站（知识点讲解）/index.html`，七讲 109 个知识点，按“讲义要点 → 核心讲解 → 示例演示 → 代码解读 → 工程对照 → 易错提醒 → 课堂思考”七个环节组织，支持全文搜索（`Ctrl+K` 命令面板）、深浅两套主题、勾选学习进度（存本机浏览器）。**每页的标题入场动画各不相同**（首页墨洇、实训1 卷起、实训2 横披、实训3 晕开、实训4 落印、实训5 翻页、实训6 侧幕、实训7 对焦），并跟随系统的“减弱动态效果”设置自动关闭。页面配馆藏中国画与花竹透明素材（公有领域，见 `90_学习网站（知识点讲解）/assets/art/说明.md`），**完全离线**：不引用任何 CDN 与外部字体。
 
 **网页版怎么改、怎么重建**（生成器在仓库里，内容源就是上面 7 份精讲 md）：
 
 ```powershell
 # 改完任意一份 知识点精讲_实训N.md 后，一条命令重建全站
 cd D:\course\Javaweb
-python 知识点讲解\_build\build_site.py
+python 90_学习网站（知识点讲解）\_build\build_site.py
 ```
 
-生成器会自检每个知识点是否齐备 7 块，并打印各讲的「知识点 / 代码块 / 折叠问答」数量（当前：7 讲 / 109 个知识点 / 232 个代码块 / 109 道自测）。写法与设计 token 见 [`知识点讲解/_build/README.md`](知识点讲解/_build/README.md)。
+生成器会自检每个知识点是否齐备 7 块，并打印各讲的「知识点 / 代码块 / 折叠问答」数量（当前：7 讲 / 109 个知识点 / 232 个代码块 / 109 道自测）。写法与设计 token 见 [`90_学习网站（知识点讲解）/_build/README.md`](90_学习网站（知识点讲解）/_build/README.md)。
 
-**二、补基础训练营**：[`基础补课/补基础训练营.html`](基础补课/补基础训练营.html)，双击打开，离线可用。
+**二、补基础训练营**：[`00_基础补课/补基础训练营.html`](00_基础补课/补基础训练营.html)，双击打开，离线可用。
 
 - 补的是课程里最缺的两层：**异步（Promise/async）** 和 **HTTP + 前后端联调**；
 - 九张任务卡 L0–L8，每关只给“要做什么 / 怎么算过关”，验收项可勾选；
 - 42 道自测题，答案默认折叠；四块原理全部用本仓库真实文件讲；
-- 五张接口返回是用 `实训7_新建SpringBoot项目/_verify_lab7.ps1` 实跑抄下来的。
+- 五张接口返回是用 `07_实训7_新建SpringBoot项目/_verify_lab7.ps1` 实跑抄下来的。
 
-> **精讲用来“看懂”，训练营用来“写会”。** 看精讲别只看不敲——L7 要把 `实训7_新建SpringBoot项目/工程/xm-pro` 的前后端真正接通。
+> **精讲用来“看懂”，训练营用来“写会”。** 看精讲别只看不敲——L7 要把 `07_实训7_新建SpringBoot项目/工程/xm-pro` 的前后端真正接通。
 
 ## 讲义勘误速查（2026-10-20 逐条实测，共 71 条）
 
@@ -317,45 +328,58 @@ python 知识点讲解\_build\build_site.py
 
 ```text
 Javaweb/
-├─ 实训1_软件安装及创建Vue项目/
-│  ├─ 讲义/            老师讲义 docx + 讲义里的 Home.vue、logo.svg
-│  ├─ 讲义截图/        讲义原图
-│  ├─ 工程/hello-vue/  可运行工程
+├─ 00_讲义总目录.md / .docx     按讲次的总索引（先看这个）
+├─ 00_基础补课/                 补基础训练营 + js练习/
+├─ 01_实训1_软件安装及创建Vue项目/
+│  ├─ 讲义/ 讲义截图/ 工程/hello-vue/
 │  ├─ 演示截图/ 勘误图/
 │  └─ 实验过程 / 知识点精讲 / 讲义勘误 / 构建验证 四份 md
-├─ 实训2_Vue基本语法/
+├─ 02_实训2_Vue基本语法/
 │  ├─ 讲义/（含 7 张动图） 工程/vue-syntax/
 │  ├─ 演示截图/ 勘误图/ 过程截图/
 │  └─ 四份 md
-├─ 实训3_前端ElementPlus框架/
+├─ 03_实训3_前端ElementPlus框架/
 │  ├─ 讲义/（含动图、资源/main.js） 工程/element-plus/  ← 实训3、4 共用
 │  ├─ 演示截图/ 勘误图/
 │  └─ 四份 md
-├─ 实训4_Element-Plus组件的使用/
+├─ 04_实训4_Element-Plus组件的使用/
 │  ├─ 讲义/ 工程说明.md（指向实训3 的工程）
 │  ├─ 演示截图/ 勘误图/
 │  └─ 三份 md
-├─ 实训5_Vue-Router实现路由跳转/
+├─ 05_实训5_Vue-Router实现路由跳转/
 │  ├─ 讲义/（含实验报告模板） 工程/vue-router/
 │  ├─ 演示截图/ 勘误图/ 过程截图/
 │  └─ 四份 md
-├─ 实训6_后台管理页面/
+├─ 06_实训6_后台管理页面/
 │  ├─ 讲义/ 工程/admin-layout/
 │  ├─ 演示截图/ 勘误图/
 │  └─ 构建验证 / 知识点精讲 / 讲义勘误 md + 知识点讲解_实训6.html
-├─ 实训7_新建SpringBoot项目/
+├─ 07_实训7_新建SpringBoot项目/
 │  ├─ 讲义/ 工程/xm-pro/（springboot 后端 + vue 前端）
 │  ├─ _verify_lab7.ps1
 │  └─ 实验过程 / 知识点精讲 / 讲义勘误 / 构建验证（前端+后端） md
-├─ 知识点讲解/         离线网页版精讲（109 个知识点）
+├─ 08_实训8_SpringBoot3集成MyBatis/
+│  ├─ 讲义/（老师 docx） 演示视频/ 演示截图/
+│  ├─ db/init.sql  springboot/  requests.http
+│  └─ docs/ 实验步骤与完整代码（md + docx + pdf）
+├─ 09_实训9_数据的增删改查（CRUD）/
+│  ├─ 讲义/（CRUD 讲义 + SSM 三层架构分析）
+│  └─ 实训9_从0开始学习.md
+├─ 10_实训10_会员登录/
+│  ├─ 讲义/ 素材/（登录背景图、设计稿）
+├─ 12_实训12_账号管理/
+│  └─ 讲义/
+├─ 90_学习网站（知识点讲解）/     离线网页版精讲（109 个知识点）
 │  ├─ index.html + 实训1~7.html + assets/
-│  └─ _build/build_site.py   ← 网页生成器 + 设计 token（见 _build/README.md）
-├─ 基础补课/           补基础训练营 + js练习 目录
-├─ .gitignore
-└─ README.md           （本文件）
+│  └─ _build/build_site.py       网页生成器 + 设计 token（见 _build/README.md）
+├─ 99_综合项目_中药材管理系统/     springboot/ + vue/ + db/ + docs/
+├─ scripts/                      构建、部署、逐阶段自检脚本
+├─ deploy-site/                  网页部署产物（不入库）
+├─ README.md  START-HERE.md  DEPLOY.md
+└─ .gitignore
 ```
 
-**约定**：新增一讲就建 `实训N_讲名/`，里面放 `讲义/`、`工程/`、截图目录和 md 文档；文档里的仓库路径写相对仓库根的完整路径，方便跨讲引用。`node_modules/`、`dist/`、`target/`、`.idea/`、`.vscode/`、`.extract/`、`*.mp4`、`*.exe` 都已在 `.gitignore` 里，不会进仓库（`.extract/` 是验证脚本与临时证据的堆放处，不入库）。
+**约定**：新增一讲就建 `NN_实训N_讲名/`（编号接在现有讲次后面），里面放 `讲义/`、`工程/`、截图目录和 md 文档；文档里的仓库路径写相对仓库根的完整路径，方便跨讲引用。`node_modules/`、`dist/`、`target/`、`.idea/`、`.vscode/`、`.extract/`、`*.mp4`、`*.exe` 都已在 `.gitignore` 里，不会进仓库（`.extract/` 是验证脚本与临时证据的堆放处，不入库）。
 
 ## 常见问题（FAQ）
 
@@ -378,7 +402,7 @@ Javaweb/
 `~\.m2\settings.xml` 优先于 Maven 安装目录的 `conf\settings.xml`；3.8.1 起 http 仓库会被拦，镜像地址必须写 https。
 
 **7. IDEA 打开哪一层？**
-实训1~6 打开**工程目录本身**（如 `实训6_后台管理页面\工程\admin-layout`）；实训7 打开 `实训7_新建SpringBoot项目\工程\xm-pro`，才能同时看到后端和前端。
+实训1~6 打开**工程目录本身**（如 `06_实训6_后台管理页面\工程\admin-layout`）；实训7 打开 `07_实训7_新建SpringBoot项目\工程\xm-pro`，才能同时看到后端和前端。
 
 **8. 为什么讲义和仓库目录名不一样？**
 讲义里工程就叫 `vue`/`xm-pro`；仓库为了按讲整理、方便对照，改成了 `实训N_…/工程/…`，文件内容与讲义一致。
@@ -396,7 +420,7 @@ Javaweb/
 `java -jar` 是两层进程（javapath stub → 真 JVM）。用 `Get-NetTCPConnection -LocalPort 8080 -State Listen` 找真正监听的 PID，再 `taskkill /PID <PID> /T /F` 结束整棵树。
 
 **13. 网页版怎么改内容 / 加了知识点页面没变？**
-网页内容来自 7 份 `知识点精讲_实训N.md`，改完必须重建：`python 知识点讲解\_build\build_site.py`（生成器会自检七块是否齐备）。
+网页内容来自 7 份 `知识点精讲_实训N.md`，改完必须重建：`python 90_学习网站（知识点讲解）\_build\build_site.py`（生成器会自检七块是否齐备）。
 
 ## 给学弟学妹的话
 

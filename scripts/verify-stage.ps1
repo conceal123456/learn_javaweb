@@ -265,7 +265,7 @@ function Invoke-NpmStep {
 $StageMap = @{
     1 = @{
         Title       = '实训1 软件安装及创建 Vue 项目'
-        Project     = '实训1_软件安装及创建Vue项目\工程\hello-vue'
+        Project     = '01_实训1_软件安装及创建Vue项目\工程\hello-vue'
         DefaultPort = 5171
         NodeRule    = 'vite7'
         Routes      = @('/')
@@ -277,7 +277,7 @@ $StageMap = @{
     }
     2 = @{
         Title       = '实训2 Vue 基本语法'
-        Project     = '实训2_Vue基本语法\工程\vue-syntax'
+        Project     = '02_实训2_Vue基本语法\工程\vue-syntax'
         DefaultPort = 5172
         NodeRule    = 'vite8'
         Routes      = @('/')
@@ -289,7 +289,7 @@ $StageMap = @{
     }
     3 = @{
         Title       = '实训3 前端 Element Plus 框架'
-        Project     = '实训3_前端ElementPlus框架\工程\element-plus'
+        Project     = '03_实训3_前端ElementPlus框架\工程\element-plus'
         DefaultPort = 5173
         NodeRule    = 'vite8'
         Routes      = @('/home', '/comp')
@@ -301,7 +301,7 @@ $StageMap = @{
     }
     4 = @{
         Title       = '实训4 Element-Plus 组件的使用'
-        Project     = '实训3_前端ElementPlus框架\工程\element-plus'
+        Project     = '03_实训3_前端ElementPlus框架\工程\element-plus'
         DefaultPort = 5174
         NodeRule    = 'vite8'
         Routes      = @('/comp', '/comp-orig')
@@ -313,7 +313,7 @@ $StageMap = @{
     }
     5 = @{
         Title       = '实训5 Vue-Router 实现路由跳转'
-        Project     = '实训5_Vue-Router实现路由跳转\工程\vue-router'
+        Project     = '05_实训5_Vue-Router实现路由跳转\工程\vue-router'
         DefaultPort = 5175
         NodeRule    = 'vite8'
         Routes      = @('/home', '/test', '/manage/user', '/manage/goods', '/manage/orders')
@@ -325,7 +325,7 @@ $StageMap = @{
     }
     6 = @{
         Title       = '实训6 后台管理页面'
-        Project     = '实训6_后台管理页面\工程\admin-layout'
+        Project     = '06_实训6_后台管理页面\工程\admin-layout'
         DefaultPort = 5176
         NodeRule    = 'vite8'
         Routes      = @('/home', '/manage/detail', '/manage/user', '/manage/orders')
@@ -337,10 +337,10 @@ $StageMap = @{
     }
     7 = @{
         Title       = '实训7 新建 SpringBoot 项目（前端 + 后端）'
-        Project     = '实训7_新建SpringBoot项目\工程\xm-pro\vue'
+        Project     = '07_实训7_新建SpringBoot项目\工程\xm-pro\vue'
         DefaultPort = 5177
         NodeRule    = 'vite7'
-        Backend     = '实训7_新建SpringBoot项目\工程\xm-pro\springboot'
+        Backend     = '07_实训7_新建SpringBoot项目\工程\xm-pro\springboot'
         BackendPort = 8080
         Routes      = @('/home', '/manage', '/manage/detail')
         Checklist   = @(

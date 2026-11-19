@@ -15,13 +15,13 @@
 源站的文件名是中文（`实训1.html`），部署后 URL 会变成 `%E5%AE%9E%E8%AE%AD1.html` 这种长串，分享和收藏都不体面。
 `scripts/build-deploy.py` 会把页面复制成 ASCII 名（`lab1.html` … `lab7.html`）并同步改写 HTML 与搜索索引里的引用，其余资源原样复制。
 
-**源站不受影响**：`知识点讲解/` 仍然是中文文件名、仍然是本地双击可用的版本。
+**源站不受影响**：`90_学习网站（知识点讲解）/` 仍然是中文文件名、仍然是本地双击可用的版本。
 
 ## 部署 / 更新（一条命令）
 
 ```powershell
 # 1) 改完 知识点精讲_实训N.md 后，先重建站点
-python 知识点讲解\_build\build_site.py
+python 90_学习网站（知识点讲解）\_build\build_site.py
 
 # 2) 打包 + 推到 gh-pages（自动 commit & push 到 Gitee 和 GitHub）
 powershell -ExecutionPolicy Bypass -File .\scripts\deploy-pages.ps1
@@ -51,7 +51,7 @@ python -m http.server 8000 -d deploy-site   # 本机 http://127.0.0.1:8000 预�
 
 | 文件 | 作用 |
 |---|---|
-| `scripts/build-deploy.py` | 把 `知识点讲解/` 打成 `deploy-site/`（ASCII 文件名 + `.nojekyll` + `404.html`） |
+| `scripts/build-deploy.py` | 把 `90_学习网站（知识点讲解）/` 打成 `deploy-site/`（ASCII 文件名 + `.nojekyll` + `404.html`） |
 | `scripts/deploy-pages.ps1` | 打包 + 用 git worktree 推到 `gh-pages`（Gitee、GitHub 双推） |
 | `deploy-site/`、`deploy-site.zip` | 生成物，**不入库**（见 `.gitignore`） |
 | `gh-pages` 分支 | 线上站点的内容，**不要手改**，改源站后重新部署 |

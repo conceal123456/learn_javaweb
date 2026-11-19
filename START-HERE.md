@@ -18,7 +18,7 @@ cd learn-web
 
 # 2) 看你在第几讲，按下面 §2 的表格进目录
 #    以第一讲为例：
-cd "实训1_软件安装及创建Vue项目\工程\hello-vue"
+cd "01_实训1_软件安装及创建Vue项目\工程\hello-vue"
 npm ci
 npm run dev
 ```
@@ -36,12 +36,12 @@ npm run dev
 老师讲义是**同一个工程一路改下来的**，但本仓库为了让你"学到哪一讲就能单独跑哪一讲"，把七个阶段拆成了独立工程：
 
 ```text
-实训1_软件安装及创建Vue项目/工程/hello-vue      ← 阶段 1
-实训2_Vue基本语法/工程/vue-syntax                ← 阶段 2
-实训3_前端ElementPlus框架/工程/element-plus      ← 阶段 3 和阶段 4 共用
-实训5_Vue-Router实现路由跳转/工程/vue-router     ← 阶段 5
-实训6_后台管理页面/工程/admin-layout             ← 阶段 6
-实训7_新建SpringBoot项目/工程/xm-pro/
+01_实训1_软件安装及创建Vue项目/工程/hello-vue      ← 阶段 1
+02_实训2_Vue基本语法/工程/vue-syntax                ← 阶段 2
+03_实训3_前端ElementPlus框架/工程/element-plus      ← 阶段 3 和阶段 4 共用
+05_实训5_Vue-Router实现路由跳转/工程/vue-router     ← 阶段 5
+06_实训6_后台管理页面/工程/admin-layout             ← 阶段 6
+07_实训7_新建SpringBoot项目/工程/xm-pro/
         ├─ vue/          ← 阶段 7 前端
         └─ springboot/   ← 阶段 7 后端
 ```
@@ -56,13 +56,13 @@ npm run dev
 
 | 阶段 | 对应讲义 | 目录（仓库根相对） | 端口 | 跑起来先看这一句 |
 |---|---|---|---|---|
-| 1 | 实训1 软件安装及创建 Vue 项目 | `实训1_软件安装及创建Vue项目\工程\hello-vue` | 5173 | 页面只有一行欢迎语 |
-| 2 | 实训2 Vue 基本语法 | `实训2_Vue基本语法\工程\vue-syntax` | 5173 | 一页 9 个语法演示 |
-| 3 | 实训3 前端 ElementPlus 框架 | `实训3_前端ElementPlus框架\工程\element-plus` | 5173 | `/home` 一排按钮 + 图标 |
+| 1 | 实训1 软件安装及创建 Vue 项目 | `01_实训1_软件安装及创建Vue项目\工程\hello-vue` | 5173 | 页面只有一行欢迎语 |
+| 2 | 实训2 Vue 基本语法 | `02_实训2_Vue基本语法\工程\vue-syntax` | 5173 | 一页 9 个语法演示 |
+| 3 | 实训3 前端 ElementPlus 框架 | `03_实训3_前端ElementPlus框架\工程\element-plus` | 5173 | `/home` 一排按钮 + 图标 |
 | 4 | 实训4 Element-Plus 组件的使用 | 同上（复用阶段3 工程） | 5173 | `/comp` 17 个小节 |
-| 5 | 实训5 Vue-Router 实现路由跳转 | `实训5_Vue-Router实现路由跳转\工程\vue-router` | 5173 | 点按钮能换页面 |
-| 6 | 实训6 后台管理页面 | `实训6_后台管理页面\工程\admin-layout` | 5173 | 左菜单 + 右侧表格 |
-| 7 | 实训7 新建 SpringBoot 项目 | `实训7_新建SpringBoot项目\工程\xm-pro\vue`（前端）<br>`...\xm-pro\springboot`（后端） | 前端 5173 / 后端 8080 | 前端页面同阶段6；后端 `/hello` 返回中文 |
+| 5 | 实训5 Vue-Router 实现路由跳转 | `05_实训5_Vue-Router实现路由跳转\工程\vue-router` | 5173 | 点按钮能换页面 |
+| 6 | 实训6 后台管理页面 | `06_实训6_后台管理页面\工程\admin-layout` | 5173 | 左菜单 + 右侧表格 |
+| 7 | 实训7 新建 SpringBoot 项目 | `07_实训7_新建SpringBoot项目\工程\xm-pro\vue`（前端）<br>`...\xm-pro\springboot`（后端） | 前端 5173 / 后端 8080 | 前端页面同阶段6；后端 `/hello` 返回中文 |
 
 > 七个前端都用 Vite 默认端口 5173——**因为一次只跑一个阶段**。如果你想同时开两个，用 `npm run dev -- --port 5174 --strictPort`。
 
@@ -83,7 +83,7 @@ java -version    # 阶段 7 后端需要 21
 mvn -v           # 阶段 7 后端需要 3.8.1+
 ```
 
-**Node 版本低会怎样？** `npm ci` 会打印 `EBADENGINE` 警告（不是报错），`npm run dev` 有时仍能跑，但 Vite 8 可能直接报错退出。看到 `EBADENGINE` 就升 Node，别硬扛——实训1 讲义里写的 20.15.1 本来就低于要求（见 `实训1_软件安装及创建Vue项目/讲义勘误_实训1.md`）。
+**Node 版本低会怎样？** `npm ci` 会打印 `EBADENGINE` 警告（不是报错），`npm run dev` 有时仍能跑，但 Vite 8 可能直接报错退出。看到 `EBADENGINE` 就升 Node，别硬扛——实训1 讲义里写的 20.15.1 本来就低于要求（见 `01_实训1_软件安装及创建Vue项目/讲义勘误_实训1.md`）。
 
 **npm 镜像**（国内建议）：
 ```powershell
@@ -100,7 +100,7 @@ npm config set registry https://registry.npmmirror.com
 ### 阶段 1 · 创建 Vue 项目
 
 ```powershell
-cd "实训1_软件安装及创建Vue项目\工程\hello-vue"
+cd "01_实训1_软件安装及创建Vue项目\工程\hello-vue"
 npm ci
 npm run dev
 ```
@@ -117,7 +117,7 @@ npm run dev
 ### 阶段 2 · Vue 基本语法
 
 ```powershell
-cd "实训2_Vue基本语法\工程\vue-syntax"
+cd "02_实训2_Vue基本语法\工程\vue-syntax"
 npm ci
 npm run dev
 ```
@@ -136,7 +136,7 @@ npm run dev
 ### 阶段 3 · 装 Element Plus
 
 ```powershell
-cd "实训3_前端ElementPlus框架\工程\element-plus"
+cd "03_实训3_前端ElementPlus框架\工程\element-plus"
 npm ci
 npm run dev
 ```
@@ -153,7 +153,7 @@ npm run dev
 
 ```powershell
 # 还是阶段3 的目录，不用重新装依赖
-cd "实训3_前端ElementPlus框架\工程\element-plus"
+cd "03_实训3_前端ElementPlus框架\工程\element-plus"
 npm run dev
 ```
 
@@ -164,12 +164,12 @@ npm run dev
 
 > 对比着看 `/comp` 和 `/comp-orig`，就是这一讲最有价值的部分：**讲义哪里写错了，修好之后是什么样。**
 
-对应：`实训4_Element-Plus组件的使用/工程说明.md`、`讲义勘误_实训4.md`
+对应：`04_实训4_Element-Plus组件的使用/工程说明.md`、`讲义勘误_实训4.md`
 
 ### 阶段 5 · Vue-Router
 
 ```powershell
-cd "实训5_Vue-Router实现路由跳转\工程\vue-router"
+cd "05_实训5_Vue-Router实现路由跳转\工程\vue-router"
 npm ci
 npm run dev
 ```
@@ -186,7 +186,7 @@ npm run dev
 ### 阶段 6 · 后台管理页面
 
 ```powershell
-cd "实训6_后台管理页面\工程\admin-layout"
+cd "06_实训6_后台管理页面\工程\admin-layout"
 npm ci
 npm run dev
 ```
@@ -207,7 +207,7 @@ npm run dev
 **前端**（和阶段 6 很像）：
 
 ```powershell
-cd "实训7_新建SpringBoot项目\工程\xm-pro\vue"
+cd "07_实训7_新建SpringBoot项目\工程\xm-pro\vue"
 npm ci
 npm run dev
 ```
@@ -219,7 +219,7 @@ npm run dev
 **后端**（另开一个终端）：
 
 ```powershell
-cd "实训7_新建SpringBoot项目\工程\xm-pro\springboot"
+cd "07_实训7_新建SpringBoot项目\工程\xm-pro\springboot"
 mvn -B -DskipTests clean package
 java -jar target\springboot-0.0.1-SNAPSHOT.jar
 ```

@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-    把 知识点讲解/ 打包并发布到 gh-pages（GitHub Pages / Gitee Pages 共用同一分支）。
+    把 90_学习网站（知识点讲解）/ 打包并发布到 gh-pages（GitHub Pages / Gitee Pages 共用同一分支）。
 
 .DESCRIPTION
     流程：build-deploy.py 生成 deploy-site/ → 用 git worktree 检出 gh-pages →
