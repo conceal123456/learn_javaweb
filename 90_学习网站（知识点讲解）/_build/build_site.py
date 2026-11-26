@@ -957,6 +957,10 @@ def write_index(labs):
         ("肆", "把页面连起来", "Vue-Router 跳转、传参、嵌套与守卫", ["05"]),
         ("伍", "做出一套后台", "flex 布局、菜单与嵌套路由落地", ["06"]),
         ("陆", "接上后端", "SpringBoot 建工程、连库、统一返回与异常", ["07"]),
+        ("柒", "把数据落库", "实体、Mapper、XML 与分页插件", ["08"]),
+        ("捌", "做完增删改查", "列表、分页、新增、修改、删除整条链路", ["09"]),
+        ("玖", "把登录接上", "登录接口、登录态与路由守卫", ["10"]),
+        ("拾", "补齐业务页面", "新闻系统与账号管理", ["11", "12"]),
     ]
     by_id = {l["id"]: l for l in labs}
     path_items = []
@@ -1073,7 +1077,7 @@ def write_index(labs):
 
 <section class="path rv" aria-label="学习路径">
   {sec_title("学习路径", "肆", "How to go")}
-  <p class="lede">六站走完，就是一整条 JavaWeb 前后端链路：从装 Node 到 SpringBoot 跑通接口。每一站都标了要过的知识点数量，走不动就回头补。</p>
+  <p class="lede">十站走完，就是一整条 JavaWeb 前后端链路：从装 Node 到把一整套后台跑通。每一站都标了要过的知识点数量，走不动就回头补。</p>
   <ol class="path-row">{''.join(path_items)}</ol>
 </section>
 
