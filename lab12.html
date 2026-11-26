@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>实训12 账号管理 · 知识点讲解</title>
+<meta name="description" content="JavaWeb 实训 1~12 知识点精讲：160 个知识点、286 段代码、160 道课堂自测，完全离线可用。">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#14110f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='11' fill='%23b23a2f'/%3E%3Ctext x='32' y='45' font-size='36' text-anchor='middle' fill='%23f8efdd' font-family='Songti SC,STSong,SimSun,serif'%3E%E8%AE%B2%3C/text%3E%3C/svg%3E">
+<!-- 分享卡片：微信/QQ/Twitter 抓取这三条 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JavaWeb 知识点讲解">
+<meta property="og:title" content="实训12 账号管理 · 知识点讲解">
+<meta property="og:description" content="JavaWeb 实训 1~12 知识点精讲：160 个知识点、286 段代码、160 道课堂自测，完全离线可用。">
+<meta property="og:image" content="https://conceal123456.github.io/learn_javaweb/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="assets/art/paintings/front-3.jpg" fetchpriority="high">
+<link rel="stylesheet" href="assets/style.css">
+<noscript><style>
+/* 禁 JS / app.js 加载失败时：正文必须可见，纯 JS 组件隐藏 */
+.rv{opacity:1 !important; translate:none !important; transform:none !important}
+.kp-nav,.read-bar,#top-btn,.toast,.cmdk{display:none !important}
+</style></noscript>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="page-in" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="scroll-rail" aria-hidden="true"><i></i></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#9d3a2e"/><stop offset="1" stop-color="#c9a227"/>
+</linearGradient></defs></svg>
+
+<header class="top">
+  <div class="top-in">
+    <button class="icon-btn menu-btn" id="menu-btn" title="目录" aria-label="目录">☰</button>
+    <a class="logo" href="index.html">
+      <span class="dot"></span><b>知识点讲解</b><span class="txt">· JavaWeb</span>
+    </a>
+    <div class="search"><input id="search" type="search" placeholder="搜知识点，如 v-model、跨域、Result　(Ctrl+K)" aria-label="搜索知识点"></div>
+    <div class="spacer"></div>
+    <div class="prog" title="学习进度">
+      <svg class="ring" viewBox="0 0 30 30" aria-hidden="true">
+        <circle class="bg" cx="15" cy="15" r="12"></circle>
+        <circle class="fg" cx="15" cy="15" r="12"></circle>
+      </svg>
+      <span id="prog-txt">0/0</span>
+    </div>
+    <button class="icon-btn" id="theme-btn" title="切换主题" aria-label="切换主题">☀</button>
+  </div>
+</header>
+<header class="lab-hero rv" id="top"><div class="lab-hero-bg"><img src="assets/art/paintings/front-3.jpg" alt="馆藏中国画"></div><div class="lab-hero-veil"></div><div class="lab-hero-no" aria-hidden="true">12</div><div class="lab-hero-inner"><p class="lab-kicker">实训 12 · 知识点讲解 · 后端 · 账号</p><h1>账号管理</h1><p class="lab-hero-sub">依讲义讲授 · 逐知识点过关</p><div class="meta"><span class="chip" title="成品工程：D:\my-project\xm-pro（IDEA 打开后运行 SpringbootApplication / npm run dev）">成品工程：<code>D:\my-project\xm-pro</code>（IDEA 打开后运行 SpringbootApplication / npm run dev）</span><span class="chip" title="相关文档：实验过程_实训12.md">相关文档：<code>实验过程_实训12.md</code></span><span class="chip"><b>8</b> 个知识点</span><span class="chip"><b>8</b> 段代码</span><span class="chip"><b>8</b> 道自测</span></div></div><img class="lab-hero-plum" src="assets/art/motifs/plum.png" alt="" aria-hidden="true"><div class="lab-poem" aria-hidden="true">依 讲 义 · 授 此 讲</div><p class="lab-hero-cap">馆藏中国画 · 克利夫兰艺术博物馆（公有领域）</p></header>
+<div class="shell">
+  <aside class="side" id="side">
+    <div class="side-top">
+      <span class="st-seal">拾贰</span>
+      <span class="st-txt"><b>实训 12 · 账号管理</b><span>8 个知识点 · 8 段代码 · 约 41 分钟</span></span>
+    </div>
+    <h4>十二讲</h4>
+    <nav class="nav-lab"><a class="" href="lab1.html"><span class="k">1</span><span>创建 Vue 项目</span><span class="n">22</span></a><a class="" href="lab2.html"><span class="k">2</span><span>Vue 基本语法</span><span class="n">10</span></a><a class="" href="lab3.html"><span class="k">3</span><span>Element Plus</span><span class="n">6</span></a><a class="" href="lab4.html"><span class="k">4</span><span>Element Plus 组件</span><span class="n">11</span></a><a class="" href="lab5.html"><span class="k">5</span><span>Vue-Router 路由</span><span class="n">13</span></a><a class="" href="lab6.html"><span class="k">6</span><span>后台管理页面</span><span class="n">21</span></a><a class="" href="lab7.html"><span class="k">7</span><span>SpringBoot 后端</span><span class="n">26</span></a><a class="" href="lab8.html"><span class="k">8</span><span>MyBatis 集成</span><span class="n">12</span></a><a class="" href="lab9.html"><span class="k">9</span><span>增删改查 CRUD</span><span class="n">10</span></a><a class="" href="lab10.html"><span class="k">10</span><span>会员登录</span><span class="n">10</span></a><a class="" href="lab11.html"><span class="k">11</span><span>新闻系统</span><span class="n">11</span></a><a class="on" href="lab12.html"><span class="k">12</span><span>账号管理</span><span class="n">8</span></a></nav>
+<h4>本讲知识点</h4><nav class="toc"><a href="#kp-12-1"><span class="num">2.1</span>四层分工：Controller / Service / Mapper 接口 / Mapper.xml</a><a href="#kp-12-2"><span class="num">2.2</span>管理员列表</a><a href="#kp-12-3"><span class="num">2.3</span>新增判重</a><a href="#kp-12-4"><span class="num">2.4</span>修改密码</a><a href="#kp-12-5"><span class="num">2.5</span>删除管理员</a><a href="#kp-12-6"><span class="num">2.6</span>UserManage.vue 页面结构</a><a href="#kp-12-7"><span class="num">2.7</span>路由与菜单</a><a href="#kp-12-8"><span class="num">2.8</span>Result 业务码</a></nav><div class="side-tools"><button class="tool-btn" id="qa-open" type="button">展开全部自测答案</button><button class="tool-btn" id="qa-close" type="button">收起全部答案</button></div>
+  </aside>
+  <main id="main"><div id="hits"></div><div class="lab-glance rv"><span class="gl-k">本讲</span><span class="gl-i"><b>8</b> 个知识点</span><span class="gl-i"><b>8</b> 段代码</span><span class="gl-i"><b>8</b> 道自测</span><span class="gl-i">约 <b>41</b> 分钟通读</span></div><div class="sec-title rv"><span class="bar"></span><h2>0. 这一讲在整门课里的位置</h2></div><div class="rv"><p>第 7 讲把工程立起来、把 <code>Result</code> 和全局异常装好，第 8 讲接上数据库，第 9 讲把「一张表怎么查、怎么加、怎么改、怎么删」讲成了模板，第 10 讲又用 <code>user</code> 表做出了登录。到这一讲，前面散着练的动作要第一次合到一个页面里：管理员列表、新增、改密码、删除，四件事共用一张 <code>user</code> 表、一套 <code>Result</code>、一个 <code>UserManage.vue</code>。</p><p>这一讲的分量在于「闭环」：后端从 Controller 一路写到 <code>UserMapper.xml</code>，前端从路由、菜单一路写到弹窗和表格，中间没有哪一环是老师替大家写好的。以前写的接口一次只演示一个动作，这次一个页面里四个按钮各自对应一条完整链路，任何一环断了页面都会有反应——这正是最好的调试训练。</p><p>再往后看，这一讲的写法会被反复复制：商品管理、订单管理、员工管理，都是「列表 + 弹窗 + 增删改」这同一个骨架；<code>Result</code> 的 <code>code</code> 约定会成为全站接口的契约；子路由加菜单项这一对写法，是后台每一个新页面的入口。所以这一讲不是多学一个注解，而是学会一套可以照着搬的页面模板。</p></div><div class="sec-title rv"><span class="bar"></span><h2>1. 知识点清单</h2></div><div class="rv"><div class="tw"><table><thead><tr><th>#</th><th>知识点</th><th>讲义出处</th><th>重要度</th><th>一句话说明</th></tr></thead><tbody><tr><td>1</td><td>四层分工：Controller / Service / Mapper 接口 / Mapper.xml</td><td>一、后端代码</td><td>★★★</td><td>谁接请求、谁定规则、谁写 SQL，四层各管一段</td></tr><tr><td>2</td><td>管理员列表 <code>/user/list</code></td><td>功能说明 2、一、后端代码</td><td>★★★</td><td><code>select * from user</code> 查全表，包成 Result 交给 el-table</td></tr><tr><td>3</td><td>新增判重 <code>/user/add</code></td><td>功能说明 1</td><td>★★★</td><td>先按 username 查，查到返回 400，查不到才 insert</td></tr><tr><td>4</td><td>修改密码 <code>/user/updatePassword</code></td><td>功能说明 2</td><td>★★★</td><td>id 查人、比对旧密码、一致才 update，三态返回</td></tr><tr><td>5</td><td>删除管理员 <code>/user/delete/{id}</code></td><td>功能说明 3</td><td>★★★</td><td>前端确认、路径传 id、物理删除、删完刷新</td></tr><tr><td>6</td><td>UserManage.vue 页面结构</td><td>二、1</td><td>★★★</td><td>一张表格 + 两个弹窗 + 一组方法</td></tr><tr><td>7</td><td>路由与菜单</td><td>二、2、3</td><td>★★★</td><td>children 里加子路由，菜单 index 写全路径</td></tr><tr><td>8</td><td>Result 业务码</td><td>功能说明 2</td><td>★★★</td><td>HTTP 200 是传输成功，code=400 是业务拒绝</td></tr></tbody></table></div><hr></div><div class="sec-title rv"><span class="bar"></span><h2>2. 知识点精讲</h2></div><article class="kp rv" id="kp-12-1" data-id="12:2.1">
+  <div class="kp-head">
+    <span class="kp-num">2.1</span>
+    <h3>四层分工：Controller / Service / Mapper 接口 / Mapper.xml</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"一、后端代码"只给了四个文件名：<code>Mapper/UserMapper.java</code>、<code>Mapper/UserMapper.xml</code>、<code>service/UserService.java</code>、<code>controller/UserController.java</code>；功能说明里则把要求写成了业务话："后端先判断 username 是否重复"、"后端根据 id 查询数据库，对比旧密码"、"根据管理员唯一 ID 执行删除"。讲义没有解释这四个文件为什么必须分开。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>把一次请求想成去医院看病：<code>UserController</code> 是挂号窗口，只管收资料、看单子齐不齐、把结果告诉病人；<code>UserService</code> 是医生，懂业务规则——账号重不重、数据存不存在、这条能不能删；<code>UserMapper</code> 接口是那张化验单，只写"要查什么"，不写"怎么查"；<code>UserMapper.xml</code> 才是化验室里真正操作的仪器，一行行 SQL 由它执行。四层分开的好处是：换数据库只动 XML，改规则只动 Service，加接口只在 Controller 加一个方法，谁也不牵连谁。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="18"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">18 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18</div><pre><code><span class="tk-k">public</span> <span class="tk-k">interface</span> UserMapper {                       <span class="tk-c">// 只有方法签名，没有实现</span>
+
+    User <span class="tk-f">selectByUsernameAndPassword</span>(@<span class="tk-f">Param</span>(<span class="tk-s">"username"</span>) <span class="tk-k">String</span> username,
+                                     @<span class="tk-f">Param</span>(<span class="tk-s">"password"</span>) <span class="tk-k">String</span> password);  <span class="tk-c">// 登录</span>
+
+    List&lt;User&gt; <span class="tk-f">selectAll</span>();                          <span class="tk-c">// 查全部管理员</span>
+
+    User <span class="tk-f">selectByUsername</span>(@<span class="tk-f">Param</span>(<span class="tk-s">"username"</span>) <span class="tk-k">String</span> username);
+
+    User <span class="tk-f">selectById</span>(@<span class="tk-f">Param</span>(<span class="tk-s">"id"</span>) Integer id);
+
+    <span class="tk-k">int</span> <span class="tk-f">insert</span>(User user);                           <span class="tk-c">// 返回影响行数</span>
+
+    <span class="tk-k">int</span> <span class="tk-f">updatePassword</span>(@<span class="tk-f">Param</span>(<span class="tk-s">"id"</span>) Integer id,
+                       @<span class="tk-f">Param</span>(<span class="tk-s">"newPwd"</span>) <span class="tk-k">String</span> newPwd);
+
+    <span class="tk-k">int</span> <span class="tk-f">deleteById</span>(@<span class="tk-f">Param</span>(<span class="tk-s">"id"</span>) Integer id);
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>public interface UserMapper</code> 没有实现类也能注入：启动类第 8 行 <code>@MapperScan("com.example.mapper")</code> 让 MyBatis 扫描这个包，为每个接口生成 JDK 动态代理对象并注册成 Spring Bean。大家 <code>@Resource private UserMapper userMapper;</code> 拿到的是代理，不是接口本身。</li><li>代理怎么知道该执行哪条 SQL：拿"接口全限定名"去匹配 XML 的 <code>namespace</code>，拿"方法名"去匹配标签的 <code>id</code>。<code>UserMapper.java</code> 第 14 行的 <code>selectAll</code> 对应 <code>UserMapper.xml</code> 第 13 行 <code>&lt;select id="selectAll"&gt;</code>，两边差一个字母就报 <code>Invalid bound statement</code>。</li><li><code>@Param("username")</code> 是给 <code>#{username}</code> 这个名字下定义。只有一个参数时 MyBatis 还能猜，两个以上不写就会报 <code>Parameter 'id' not found. Available parameters are [arg0, arg1, param1, param2]</code>。</li><li>返回 <code>int</code> 的方法拿的是<strong>影响行数</strong>：插入 1 行返回 1，更新 0 行返回 0。Service 就是靠这个数字判断"到底有没有动到数据"。</li><li><code>List&lt;User&gt;</code> 与 <code>User</code> 的差别只是结果条数；<code>resultType</code> 写全限定类名，列名到属性名的对应靠 <code>application.yml</code> 第 18 行的 <code>map-underscore-to-camel-case: true</code>。</li><li><code>UserController</code> 里看不到一句 SQL，<code>UserMapper.xml</code> 里看不到一句 Java 判断——这就是分层的目的：让每一层只回答一个问题。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><ul><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\mapper\UserMapper.java</code> 第 8~31 行，七个方法签名就是本讲全部数据操作的清单。</li><li><code>D:\my-project\xm-pro\springboot\src\main\resources\mapper\UserMapper.xml</code> 第 5 行是 <code>namespace</code>，第 8~40 行是七条 SQL。</li><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\service\UserService.java</code> 第 18~65 行：登录、列表、新增、改密、删除的业务判断都在这里。</li><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\SpringbootApplication.java</code> 第 8 行的 <code>@MapperScan</code> 是整条链的起点。</li></ul></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 启动报 <code>Invalid bound statement (not found): com.example.mapper.UserMapper.selectAll</code> → XML 没被扫到（不在 <code>resources/mapper/</code> 下、<code>mapper-locations</code> 没配）或 <code>namespace</code>/<code>id</code> 拼错 → 先看 <code>application.yml</code> 第 14 行，再逐个核对 namespace 与方法名。② 多参数方法报 <code>Parameter 'id' not found</code> → 参数没加 <code>@Param</code> → 每个参数都写 <code>@Param("同名")</code>，XML 用同名占位。③ 新增成功但返回的 <code>id</code> 是 <code>null</code> → <code>&lt;insert&gt;</code> 少了 <code>useGeneratedKeys="true" keyProperty="id"</code> → 补上这两个属性，自增主键才会回写到对象。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p><code>UserMapper</code> 只是一个接口，没有实现类，为什么 <code>@Resource</code> 注入后能直接调？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>因为注入的不是接口本身，而是 MyBatis 启动时生成的<strong>动态代理对象</strong>。<code>@MapperScan</code> 扫描到接口后，代理会按「接口全限定名 = namespace、方法名 = 标签 id」去 XML 里找 SQL，找到就替大家执行，并把结果集映射成 <code>User</code>。所以接口和 XML 必须成对出现，缺一个都会在启动或第一次调用时报错。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-12-2" data-id="12:2.2">
+  <div class="kp-head">
+    <span class="kp-num">2.2</span>
+    <h3>管理员列表</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>讲义没有单独列"列表"这一条，但功能说明第 2 条写的是"<strong>选中表格中某管理员</strong>，弹出弹窗"，第 3 条写"删除成功后，<strong>页面自动刷新表格数据</strong>"——表格里的数据从哪来，讲义默认大家已经会了。后端文件清单里的 <code>UserController</code> 就是承载这个查询接口的地方。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>列表接口干的事，是把冰箱里的东西全摆到桌上：<code>select * from user</code> 一次把整张表捞出来，Service 原样转发，Controller 用 <code>Result.success(list)</code> 装进信封，前端 <code>created()</code> 里发一次 GET，把 <code>res.data</code> 交给 <code>el-table</code> 的 <code>:data</code>。这条链上任何一环改名，表格就空——所以排查"表格没数据"永远先看 F12 里 <code>/user/list</code> 的响应，而不是盯着页面改样式。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="11"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">11 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11</div><pre><code><span class="tk-c">// UserController.java 第 34~38 行</span>
+@<span class="tk-f">GetMapping</span>(<span class="tk-s">"/list"</span>)
+<span class="tk-k">public</span> Result <span class="tk-f">list</span>() {
+    List&lt;User&gt; list = userService.<span class="tk-f">selectAll</span>();
+    <span class="tk-k">return</span> Result.<span class="tk-f">success</span>(list);          <span class="tk-c">// data 里装的是一个数组</span>
+}
+
+<span class="tk-c">// UserService.java 第 25~27 行</span>
+<span class="tk-k">public</span> List&lt;User&gt; <span class="tk-f">selectAll</span>() {
+    <span class="tk-k">return</span> userMapper.<span class="tk-f">selectAll</span>();        <span class="tk-c">// 没有业务判断，直接转发</span>
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>@GetMapping("/list")</code> 与类上的 <code>@RequestMapping("/user")</code> 拼起来才是完整地址 <code>/user/list</code>；只在方法上写 <code>/list</code>，浏览器访问 <code>/list</code> 会 404。</li><li><code>List&lt;User&gt;</code> 是泛型，编译后擦除，但 Jackson 序列化时按对象的 getter 输出：<code>id</code>、<code>username</code>、<code>password</code>、<code>name</code> 四个字段都会出现。也就是说列表接口把密码也返回给前端了，这是本课程的简化，真实项目要 <code>@JsonIgnore</code> 或单独建一个不含密码的 VO。</li><li><code>Result.success(list)</code> 走的是 <code>success(Object data)</code> 这个重载，<code>code</code> 固定 <code>"200"</code>、<code>msg</code> 固定 <code>"请求成功"</code>，<code>data</code> 就是数组。</li><li><code>UserMapper.xml</code> 第 13~15 行的 <code>select * from user</code>：<code>*</code> 依赖表结构和实体字段一一对应；表里多一个字段、实体没有，MyBatis 默认忽略，不报错，但大家会疑惑"为什么查出来少了"。</li><li>前端 <code>loadData()</code> 放在 <code>created()</code> 里调，此时 DOM 还没渲染，但请求回来给 <code>tableData</code> 赋值会触发响应式更新，表格自然出现。</li><li>每次增删改成功后都再调一次 <code>loadData()</code>，这叫"重新拉取"而不是"本地删一行"——数据以数据库为准，永远不会出现页面和库里不一致。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><ul><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\controller\UserController.java</code> 第 34~38 行 <code>list()</code> 方法。</li><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\service\UserService.java</code> 第 25~27 行 <code>selectAll()</code>。</li><li><code>D:\my-project\xm-pro\springboot\src\main\resources\mapper\UserMapper.xml</code> 第 13~15 行 <code>&lt;select id="selectAll"&gt;</code>。</li><li><code>D:\my-project\xm-pro\vue\src\views\UserManage.vue</code> 第 88~91 行 <code>created()</code>、第 94~102 行 <code>loadData()</code>。</li></ul></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 表格空白 → <code>/user/list</code> 返回的 <code>data</code> 是 <code>null</code>（表里没数据，或连错了库）→ 先在浏览器直接访问 <code>http://localhost:8080/user/list</code> 看原始 JSON。② 有数据但不显示 → <code>el-table-column</code> 的 <code>prop</code> 写成 <code>userName</code>，与后端 <code>username</code> 大小写不一致 → 照 <code>User.java</code> 第 5 行改回小写。③ 控制台报跨域 → 前端 5173 直接请求 8080，后端跨域没生效 → 确认 <code>CorsConfig</code> 已加载，或按实训 6 配 Vite 代理。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>列表页每次新增、删除后都重新请求一次 <code>/user/list</code>，为什么不直接在 <code>tableData</code> 里 <code>push</code>、<code>splice</code>？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>因为数据库才是唯一事实来源。本地改数组看起来更快，但一旦后端有默认值、排序规则，或者别的页面也在改同一张表，本地数组就会和库里不一致。重新拉一次最省心，本讲的数据量完全感觉不到慢，也顺便避免了"删除后下标错位"这类问题。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-12-3" data-id="12:2.3">
+  <div class="kp-head">
+    <span class="kp-num">2.3</span>
+    <h3>新增判重</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>功能说明第 1 条："前端填写账号、密码、姓名，弹窗提交；<strong>后端先判断 username 是否重复，重复返回 400 提示；不重复插入 user 表</strong>。"</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>判重像办会员卡：柜员先翻名册看这个名字有没有登记过，有就摇头说"这个名字有人用了"，没有才往上写。顺序必须是"先查后插"，查的字段也必须是 <code>username</code> 本身，不是 id、不是密码。还要知道它只防"正常情况下"的重复：两个人同一瞬间提交同一个账号，可能都查到"没有"、都去插入。真正兜底的是数据库给 <code>username</code> 加唯一索引，课程数据量小，先查一次够用，但心里要有这根弦。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="8"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">8 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8</div><pre><code><span class="tk-c">// UserService.java 第 32~38 行</span>
+<span class="tk-k">public</span> <span class="tk-k">int</span> <span class="tk-f">insert</span>(User user) {
+    User u = userMapper.<span class="tk-f">selectByUsername</span>(user.<span class="tk-f">getUsername</span>());  <span class="tk-c">// 1. 按账号查</span>
+    <span class="tk-k">if</span> (u != <span class="tk-k">null</span>) {
+        <span class="tk-k">return</span> <span class="tk-n">0</span>;                                              <span class="tk-c">// 2. 查到了：已存在</span>
+    }
+    <span class="tk-k">return</span> userMapper.<span class="tk-f">insert</span>(user);                            <span class="tk-c">// 3. 没查到：真插入</span>
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>selectByUsername</code> 返回 <code>User</code> 而不是 <code>int</code>：只要不是 <code>null</code> 就说明有记录，比 <code>count(*)</code> 更直观，将来想顺手取昵称也方便。</li><li><code>return 0</code> 是这一讲的"暗号"：Service 不抛异常、不返回布尔，用 0 表示"业务上没插入"。Controller 拿 0 去换 <code>Result.error("400", "账号已存在，新增失败")</code>，前端只认 <code>code</code>。</li><li><code>userMapper.insert(user)</code> 的返回值是影响行数，正常是 1。若它返回 0 却没走判重，说明 SQL 有别的问题（字段没对上、表名错），Controller 照样提示"账号已存在"——这是这套约定的小坑，提示语会误导人。</li><li>XML 第 18~20 行 <code>useGeneratedKeys="true" keyProperty="id"</code>：插入后 MySQL 生成的自增 id 会被写回 <code>user.id</code>，所以 Controller 第 50 行能 <code>return Result.success(user)</code>，前端立刻拿到新记录。</li><li>Controller 用 <code>@RequestBody User user</code> 接 JSON，要求请求头是 <code>Content-Type: application/json</code>——<code>request.js</code> 第 11 行已经统一加好了。</li><li>前端 <code>handleAdd()</code> 先做非空判断再发请求，这只是体验优化，不能替代后端判重：绕过页面直接调接口，一样能提交空账号。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><ul><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\service\UserService.java</code> 第 32~38 行 <code>insert()</code>，判重就这三行。</li><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\controller\UserController.java</code> 第 43~51 行 <code>add()</code>，0 换 400 的写法在这里。</li><li><code>D:\my-project\xm-pro\springboot\src\main\resources\mapper\UserMapper.xml</code> 第 18~25 行 <code>&lt;insert&gt;</code> 和 <code>selectByUsername</code>。</li><li><code>D:\my-project\xm-pro\vue\src\views\UserManage.vue</code> 第 111~128 行 <code>handleAdd()</code>。</li></ul></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 重复账号还能新增成功 → 判重写在了 <code>insert</code> 之后，或者查询条件用错字段 → 把 <code>selectByUsername</code> 挪到 <code>insert</code> 之前，确认传的是 <code>user.getUsername()</code>。② 新增成功但返回的 <code>id</code> 是 <code>null</code> → XML 的 <code>&lt;insert&gt;</code> 没写 <code>useGeneratedKeys</code>/<code>keyProperty</code> → 补上；换成没有自增的表还要用 <code>&lt;selectKey&gt;</code>。③ 报 <code>Duplicate entry 'admin' for key 'user.username'</code>，页面却是 500 → 库里已有唯一索引，判重没拦住首尾空格或大小写 → 前端 <code>trim()</code>、后端统一去空格，或捕获 <code>DuplicateKeyException</code> 转成 400。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>判重为什么放在 Service，不放在 Controller？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>Controller 的职责是"收参数、调服务、包结果"，不该懂业务规则；判重是业务规则，将来批量导入、注册接口也要用，放 Service 才能复用。放 Controller 会让每个入口都抄一遍，抄漏一个就出脏数据。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-12-4" data-id="12:2.4">
+  <div class="kp-head">
+    <span class="kp-num">2.4</span>
+    <h3>修改密码</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>功能说明第 2 条："选中表格中某管理员，弹出弹窗；传入 <strong>id、旧密码、新密码</strong>；后端根据 id 查询数据库，<strong>对比旧密码，旧密码一致才执行 update 更新密码</strong>。返回格式全部复用项目自带 Result 统一返回类，成功 code=200，业务错误 code=400，前端用 ElMessage 弹窗提示。"</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>改密码像在银行改预留密码：先报账号（id）把档案调出来，再报旧密码，柜员在柜台里核对，一致才让你设新密码。关键有两点：一是<strong>比对必须发生在服务端</strong>，旧密码不能发给前端去比，因为前端代码用户想怎么改就怎么改；二是<strong>更新只写新密码</strong>，旧密码只用来校验，不参与 SQL。整个动作就是"查人 → 比旧密码 → 更新"三步，任何一步失败都要给出不同的提示，用户才知道该改哪里。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="11"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">11 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11</div><pre><code><span class="tk-c">// UserService.java 第 45~57 行</span>
+<span class="tk-k">public</span> <span class="tk-k">int</span> <span class="tk-f">updatePassword</span>(Integer id, <span class="tk-k">String</span> oldPwd, <span class="tk-k">String</span> newPwd) {
+    User user = userMapper.<span class="tk-f">selectById</span>(id);          <span class="tk-c">// 1. 按 id 查人</span>
+    <span class="tk-k">if</span> (user == <span class="tk-k">null</span>) {
+        <span class="tk-k">return</span> -<span class="tk-n">1</span>;                                   <span class="tk-c">// -1：人不存在</span>
+    }
+    <span class="tk-k">if</span> (!user.<span class="tk-f">getPassword</span>().<span class="tk-f">equals</span>(oldPwd)) {
+        <span class="tk-k">return</span> <span class="tk-n">0</span>;                                    <span class="tk-c">// 0：旧密码不对</span>
+    }
+    <span class="tk-k">return</span> userMapper.<span class="tk-f">updatePassword</span>(id, newPwd);    <span class="tk-c">// 1：改成功</span>
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>selectById(id)</code> 而不是 <code>selectByUsernameAndPassword</code>：这里还没有新密码，不能拿"账号+密码"去查；先按主键定位人，再单独比密码。</li><li><code>return -1</code>、<code>return 0</code>、影响行数：三种结果分别对应"人没了""密码错""改成功"，Controller 第 81~87 行据此返回两条不同的 400 和一条 200。</li><li><code>user.getPassword().equals(oldPwd)</code> 依赖库里密码非空。更稳的写法是把常量放前面：<code>oldPwd.equals(user.getPassword())</code>，这样即使查出 <code>null</code> 也只返回 <code>false</code>，不会抛空指针。</li><li><code>updatePassword(id, newPwd)</code> 的 XML 只有 <code>set password = #{newPwd} where id = #{id}</code>，所以 <code>@Param("newPwd")</code> 的名字必须和 <code>#{newPwd}</code> 一字不差。</li><li>Controller 用 <code>Map&lt;String, Object&gt;</code> 接参，是因为前端提交的是 <code>{id, oldPwd, newPwd}</code> 三个异构字段，没有对应的实体；用 Map 就得自己做类型转换和空值判断，第 64~74 行就是在补这层防护，避免 <code>null.toString()</code> 变成 500。</li><li>成功后返回 <code>Result.success()</code>，没有 <code>data</code>；前端只需要知道 <code>code</code> 是 200，然后关弹窗、提示成功。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><ul><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\controller\UserController.java</code> 第 57~88 行 <code>updatePassword()</code>，含空值与 id 格式校验。</li><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\service\UserService.java</code> 第 45~57 行，三态返回在这里。</li><li><code>D:\my-project\xm-pro\springboot\src\main\resources\mapper\UserMapper.xml</code> 第 28~35 行 <code>selectById</code> 与 <code>updatePassword</code>。</li><li><code>D:\my-project\xm-pro\vue\src\views\UserManage.vue</code> 第 131~134 行 <code>openPwdDialog()</code>、第 137~152 行 <code>handleUpdatePassword()</code>。</li></ul></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 点"确定"报 500，控制台是 <code>NullPointerException</code> → 前端字段名和 <code>params.get("oldPwd")</code> 对不上，取到 <code>null</code> 又调 <code>toString()</code> → 对齐字段名；后端保留第 64~67 行的空值判断。② 旧密码明明正确却提示"旧密码错误" → 输入框带了首尾空格，或库里存的密码本身带空格 → 提交前 <code>trim()</code>，新增时也不要把空格存进去。③ 改完密码新密码登录不上 → XML 的 <code>where id = #{id}</code> 漏写，整表密码被改成同一个值 → 先 <code>select</code> 看影响行数，确认 <code>update</code> 带了主键条件。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>为什么不能让前端把旧密码和列表里的 <code>password</code> 比一比，再把结果告诉后端？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>因为前端代码在用户手里，改一行 <code>if</code> 就能绕过；而且列表接口本来就不该把密码发给前端（本课程为了简化才没做脱敏）。校验必须在服务端、在数据库里的真实密码上做，前端只负责收集输入和展示提示。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-12-5" data-id="12:2.5">
+  <div class="kp-head">
+    <span class="kp-num">2.5</span>
+    <h3>删除管理员</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>功能说明第 3 条："<strong>删除操作前弹出确认弹窗，防止误删</strong>；根据管理员唯一 ID 执行删除；删除成功后，<strong>页面自动刷新表格数据</strong>，给出绿色成功提示；<strong>不支持恢复（物理删除）</strong>。"</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>删除是从名册上把这一页撕掉，不是打个叉：<code>delete from user where id = ?</code> 一执行，这行数据就真没了，没有回收站。所以三道保险缺一不可：前端先弹确认框（防手滑）、后端按主键删（防一次删一片）、删完重新拉列表（防页面还显示已经不存在的人）。id 从当前行的 <code>row.id</code> 来，拼在 URL 路径上，后端用 <code>@PathVariable</code> 接——这也顺便解释了为什么删除不用 <code>@RequestBody</code>。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="9"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">9 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9</div><pre><code><span class="tk-c">// UserController.java 第 93~100 行</span>
+@<span class="tk-f">DeleteMapping</span>(<span class="tk-s">"/delete/{id}"</span>)
+<span class="tk-k">public</span> Result <span class="tk-f">delete</span>(@PathVariable Integer id) {
+    <span class="tk-k">int</span> row = userService.<span class="tk-f">deleteById</span>(id);       <span class="tk-c">// 影响行数</span>
+    <span class="tk-k">if</span> (row &lt;= <span class="tk-n">0</span>) {
+        <span class="tk-k">return</span> Result.<span class="tk-f">error</span>(<span class="tk-s">"400"</span>, <span class="tk-s">"管理员不存在，删除失败"</span>);
+    }
+    <span class="tk-k">return</span> Result.<span class="tk-f">success</span>();
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>@DeleteMapping</code> 对应 HTTP 的 DELETE 方法，前端必须用 <code>request.delete(...)</code>；用 <code>request.post</code> 调会得到 405。</li><li><code>{id}</code> 是路径变量占位符，<code>@PathVariable Integer id</code> 按名字取值，并把字符串 <code>"3"</code> 自动转成数字 <code>3</code>；名字不一致时要写 <code>@PathVariable("id")</code>。</li><li><code>row &lt;= 0</code> 而不是 <code>== 0</code>：影响行数不可能是负数，<code>&lt;=</code> 是防御写法；真删掉 1 行返回 1，id 不存在返回 0。</li><li>物理删除之后没有任何地方能找回数据，所以前端 <code>$confirm</code> 的"取消"必须真的能取消——<code>this.$confirm(...).then(...)</code> 只有点"确定"才进 then。</li><li><code>deleteById</code> 的 SQL 只有一句 <code>delete from user where id = #{id}</code>；<code>where</code> 是命门，漏掉就是清空整张表。</li><li>删除成功后 <code>loadData()</code> 重新请求，而不是 <code>tableData.splice(index, 1)</code>；后者在分页、排序场景下会错位。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><ul><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\controller\UserController.java</code> 第 93~100 行 <code>delete()</code>。</li><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\service\UserService.java</code> 第 62~65 行 <code>deleteById()</code>。</li><li><code>D:\my-project\xm-pro\springboot\src\main\resources\mapper\UserMapper.xml</code> 第 38~40 行 <code>&lt;delete id="deleteById"&gt;</code>。</li><li><code>D:\my-project\xm-pro\vue\src\views\UserManage.vue</code> 第 155~171 行 <code>handleDelete()</code>，<code>$confirm</code> 与 <code>.catch(() =&gt; {})</code> 都在这里。</li></ul></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 点"删除"控制台报 <code>Uncaught (in promise) cancel</code> → <code>$confirm</code> 点取消会 reject，没有 catch → 末尾加 <code>.catch(() =&gt; {})</code>，仓库第 170 行就是这么写的。② 浏览器报 405 Method Not Allowed → 前端用了 GET，或后端写成了 <code>@PostMapping</code> → 前后端统一成 DELETE 加 <code>/delete/{id}</code>。③ 提示"删除成功"但表格里还有 → 成功分支忘了调 <code>loadData()</code>，或请求还没回来就关了弹窗 → 把刷新放进 <code>then</code> 里 <code>code</code> 判断之后。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>讲义为什么强调"物理删除、不支持恢复"？如果要做"可恢复"，该怎么改？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>物理删除是 <code>delete</code> 真删行；要做可恢复，就改成逻辑删除——表里加 <code>deleted</code> 或 <code>status</code> 字段，删除时只 <code>update</code> 标记，所有查询都带 <code>where deleted = 0</code>。这样"删除"只是隐藏，管理员还能在回收站里恢复。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-12-6" data-id="12:2.6">
+  <div class="kp-head">
+    <span class="kp-num">2.6</span>
+    <h3>UserManage.vue 页面结构</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"二、前端实现 1. 新建 <code>views/UserManage.vue</code>【管理员信息页面】"；功能说明里三次提到交互："<strong>弹窗提交</strong>"、"选中表格中某管理员，<strong>弹出弹窗</strong>"、"删除操作前<strong>弹出确认弹窗</strong>"。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>这个页面拆开看就是"一张表 + 两个弹窗 + 一组方法"：表格负责把数据显示出来，弹窗负责收集输入，方法负责把按钮和接口接上。写这类页面的顺序建议是：先在 <code>data()</code> 里想清楚有哪几份状态（列表数据、新增表单、改密表单、两个显示开关），再在 <code>created()</code> 里把列表拉一次，最后给每个按钮配一个方法。弹窗用布尔值控制显隐，表单对象单独存，打开时重置——否则第二次打开会看到上次的残留。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="vue" data-lines="15"><div class="code-bar"><span class="code-lang">vue</span><span class="code-count">15 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15</div><pre><code><span class="tk-p">&lt;</span><span class="tk-t">el-card</span> <span class="tk-a">header</span>=<span class="tk-s">"管理员信息管理"</span><span class="tk-p">&gt;</span>
+  <span class="tk-p">&lt;</span><span class="tk-t">el-button</span> <span class="tk-a">type</span>=<span class="tk-s">"primary"</span> <span class="tk-a">@click</span>=<span class="tk-s">"openAddDialog"</span><span class="tk-p">&gt;</span>新增管理员<span class="tk-p">&lt;/</span><span class="tk-t">el-button</span><span class="tk-p">&gt;</span>
+
+  <span class="tk-p">&lt;</span><span class="tk-t">el-table</span> <span class="tk-a">:data</span>=<span class="tk-s">"tableData"</span> <span class="tk-a">style</span>=<span class="tk-s">"width: 100%"</span><span class="tk-p">&gt;</span>
+    <span class="tk-p">&lt;</span><span class="tk-t">el-table-column</span> <span class="tk-a">prop</span>=<span class="tk-s">"id"</span> <span class="tk-a">label</span>=<span class="tk-s">"ID"</span> <span class="tk-a">width</span>=<span class="tk-s">"80"</span> <span class="tk-p">/</span><span class="tk-p">&gt;</span>
+    <span class="tk-p">&lt;</span><span class="tk-t">el-table-column</span> <span class="tk-a">prop</span>=<span class="tk-s">"username"</span> <span class="tk-a">label</span>=<span class="tk-s">"登录账号"</span> <span class="tk-p">/</span><span class="tk-p">&gt;</span>
+    <span class="tk-p">&lt;</span><span class="tk-t">el-table-column</span> <span class="tk-a">prop</span>=<span class="tk-s">"name"</span> <span class="tk-a">label</span>=<span class="tk-s">"管理员姓名"</span> <span class="tk-p">/</span><span class="tk-p">&gt;</span>
+    <span class="tk-p">&lt;</span><span class="tk-t">el-table-column</span> <span class="tk-a">label</span>=<span class="tk-s">"操作"</span> <span class="tk-a">width</span>=<span class="tk-s">"200"</span><span class="tk-p">&gt;</span>
+      <span class="tk-p">&lt;</span><span class="tk-t">template</span> <span class="tk-a">#default</span>=<span class="tk-s">"scope"</span><span class="tk-p">&gt;</span>
+        <span class="tk-p">&lt;</span><span class="tk-t">el-button</span> <span class="tk-a">size</span>=<span class="tk-s">"small"</span> <span class="tk-a">type</span>=<span class="tk-s">"warning"</span> <span class="tk-a">@click</span>=<span class="tk-s">"openPwdDialog(scope.row)"</span><span class="tk-p">&gt;</span>修改密码<span class="tk-p">&lt;/</span><span class="tk-t">el-button</span><span class="tk-p">&gt;</span>
+        <span class="tk-p">&lt;</span><span class="tk-t">el-button</span> <span class="tk-a">size</span>=<span class="tk-s">"small"</span> <span class="tk-a">type</span>=<span class="tk-s">"danger"</span> <span class="tk-a">@click</span>=<span class="tk-s">"handleDelete(scope.row)"</span><span class="tk-p">&gt;</span>删除<span class="tk-p">&lt;/</span><span class="tk-t">el-button</span><span class="tk-p">&gt;</span>
+      <span class="tk-p">&lt;/</span><span class="tk-t">template</span><span class="tk-p">&gt;</span>
+    <span class="tk-p">&lt;/</span><span class="tk-t">el-table-column</span><span class="tk-p">&gt;</span>
+  <span class="tk-p">&lt;/</span><span class="tk-t">el-table</span><span class="tk-p">&gt;</span>
+<span class="tk-p">&lt;/</span><span class="tk-t">el-card</span><span class="tk-p">&gt;</span></code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>&lt;el-card header="管理员信息管理"&gt;</code> 只是给页面套个带标题的卡片，不影响逻辑；真正的内容都在卡片里面。</li><li><code>:data="tableData"</code> 的冒号表示绑定的是表达式而不是字符串；<code>tableData</code> 一变，表格自动重绘，这就是 Vue 的响应式。</li><li><code>prop="username"</code> 必须和 <code>User</code> 实体序列化出来的字段名逐字一致，写错不会报错，只会显示空白列。</li><li><code>#default="scope"</code> 是作用域插槽，<code>scope.row</code> 就是当前这一行的对象；<code>@click="openPwdDialog(scope.row)"</code> 把整行传进去，方法里再取 <code>row.id</code>。</li><li><code>data()</code> 里三份状态各管一件事：<code>tableData</code> 只读接口、<code>addForm</code> 只给新增弹窗、<code>pwdForm</code> 只给改密弹窗；混着用就会出现"取消后数据还在"。</li><li><code>openAddDialog()</code> 每次都重新赋值 <code>{username:'', password:'', name:''}</code>，等于手动清空表单；<code>openPwdDialog(row)</code> 则把 <code>row.id</code> 写进 <code>pwdForm</code>，因为提交时已经拿不到 <code>row</code> 了。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><ul><li><code>D:\my-project\xm-pro\vue\src\views\UserManage.vue</code> 第 1~20 行是卡片、按钮和表格，第 23~39 行新增弹窗，第 42~55 行改密弹窗。</li><li><code>D:\my-project\xm-pro\vue\src\views\UserManage.vue</code> 第 66~87 行 <code>data()</code>，第 88~91 行 <code>created()</code>，第 92~172 行全部 <code>methods</code>。</li><li><code>D:\my-project\xm-pro\vue\src\utils\request.js</code> 第 4~7 行 <code>baseURL</code> 指向 <code>http://localhost:8080</code>，第 19~27 行响应拦截器直接返回 <code>response.data</code>。</li></ul></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 表格空白但接口有数据 → <code>tableData</code> 没赋上值，或 <code>prop</code> 与字段名不一致 → F12 看 <code>/user/list</code> 的 <code>data</code>，再对 <code>User.java</code> 的字段名。② 新增弹窗第二次打开还留着上次内容 → 只写了 <code>addDialogVisible = true</code>，没重置 <code>addForm</code> → 按 <code>openAddDialog()</code> 的写法先赋值再打开。③ 控制台 <code>this.$message is not a function</code> → 把页面改成了 <code>&lt;script setup&gt;</code>，<code>this</code> 不存在了 → 要么保持 Options API（仓库写法），要么 <code>import { ElMessage } from 'element-plus'</code> 并改用 <code>ElMessage.success(...)</code>。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p><code>openPwdDialog(row)</code> 为什么要把 <code>row.id</code> 存进 <code>pwdForm</code>，而不是等点"确定"时再用 <code>row.id</code>？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>因为点"确定"执行的是 <code>handleUpdatePassword()</code>，它和 <code>openPwdDialog()</code> 是两个函数，<code>row</code> 是表格插槽里的局部变量，出了那个作用域就没了。组件的 <code>data</code> 才是跨方法共享的状态，所以打开弹窗时先把 id 存下来。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-12-7" data-id="12:2.7">
+  <div class="kp-head">
+    <span class="kp-num">2.7</span>
+    <h3>路由与菜单</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"2. 修改路由 <code>router/index.js</code>，把管理员信息加入后台子路由"，并给出在 <code>path: '/manage'</code> 的 <code>children</code> 数组里加 <code>{ path: 'userManage', name:'userManage', meta:{title:"管理员信息"}, component: ()=&gt;import('@/views/UserManage.vue') }</code>；"3. 在 <code>Manage.vue</code> 左侧菜单栏，增加菜单项，跳转到 <code>/manage/userManage</code>"，代码是 <code>&lt;el-menu-item index="/manage/userManage"&gt;管理员信息&lt;/el-menu-item&gt;</code>。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>路由是"地址 → 组件"的对照表，菜单是照着这张表做的一份目录。子路由写在 <code>/manage</code> 的 <code>children</code> 里，<code>path</code> 不带斜杠，最终地址 = 父路径 + 子路径，也就是 <code>/manage/userManage</code>；菜单项的 <code>index</code> 要写这个完整地址，<code>el-menu</code> 加上 <code>router</code> 属性后，点菜单等价于 <code>router.push(index)</code>。两处字符串必须一模一样：路由写错，页面 404；菜单写错，点了地址变了内容却不换。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="js" data-lines="14"><div class="code-bar"><span class="code-lang">js</span><span class="code-count">14 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14</div><pre><code>{
+  path: <span class="tk-s">'/manage'</span>,
+  name: <span class="tk-s">'manage'</span>,
+  component: () =&gt; <span class="tk-k">import</span>(<span class="tk-s">'@/views/Manage.vue'</span>),
+  children: [
+    {
+      path: <span class="tk-s">'userManage'</span>,
+      name: <span class="tk-s">'userManage'</span>,
+      meta: { title: <span class="tk-s">'管理员信息'</span> },
+      component: () =&gt; <span class="tk-k">import</span>(<span class="tk-s">'@/views/UserManage.vue'</span>)
+    }
+    <span class="tk-c">// ... 其他子路由：dashboard、herb、article 等</span>
+  ]
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>children</code> 里的 <code>path: 'userManage'</code> 不能写成 <code>/userManage</code>：带斜杠会被当成从根开始的绝对路径，父组件 <code>Manage.vue</code> 的 <code>&lt;router-view /&gt;</code> 就不会渲染它。</li><li><code>name: 'userManage'</code> 在全局必须唯一，<code>router.push({ name: 'userManage' })</code> 靠它跳转；重名时路由表里会出现两个同名记录，按名字跳转会命中哪一个很难排查。</li><li><code>meta: { title: '管理员信息' }</code> 被 <code>router/index.js</code> 第 39~41 行的全局守卫读取，写进浏览器标签页标题；不写就显示默认的"系统登录"。</li><li><code>component: () =&gt; import('@/views/UserManage.vue')</code> 是懒加载：只有访问这个地址才下载这个页面的代码，首屏更快。<code>@</code> 是 Vite 配的 <code>src</code> 别名。</li><li>父路由 <code>/manage</code> 的组件里必须有 <code>&lt;router-view /&gt;</code>（<code>Manage.vue</code> 第 87 行），否则子路由匹配成功也没地方显示。</li><li>菜单 <code>&lt;el-menu router :default-active="route.path"&gt;</code>：<code>router</code> 让 <code>index</code> 当路径用，<code>:default-active</code> 绑定当前路径，刷新后还能高亮正确的菜单项。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><ul><li><code>D:\my-project\xm-pro\vue\src\router\index.js</code> 第 10~35 行是 <code>/manage</code> 与它的 <code>children</code>，第 26 行就是 <code>userManage</code> 子路由，第 39~48 行是全局守卫。</li><li><code>D:\my-project\xm-pro\vue\src\views\Manage.vue</code> 第 60~68 行"用户管理"子菜单，第 87 行 <code>&lt;router-view /&gt;</code>。</li><li><code>D:\my-project\xm-pro\vue\src\views\Manage.vue</code> 第 18~23 行 <code>el-menu</code> 的 <code>router</code> 与 <code>:default-active</code> 两个属性。</li></ul></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 访问 <code>/manage/userManage</code> 白屏，控制台 <code>No match found for location</code> → 子路由 <code>path</code> 写成 <code>/userManage</code>，或压根没加进 <code>children</code> → 改成不带斜杠的相对路径。② 地址对了但右侧还是首页 → <code>Manage.vue</code> 的内容区没有 <code>&lt;router-view /&gt;</code> → 在 <code>.content</code> 里补上。③ 点菜单没反应 → <code>el-menu</code> 少了 <code>router</code> 属性，或 <code>index</code> 写的是 <code>userManage</code> 而不是 <code>/manage/userManage</code> → 补 <code>router</code>，<code>index</code> 写完整路径。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>子路由 <code>path</code> 写 <code>userManage</code> 和 <code>/userManage</code>，最终地址分别是什么？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>不带斜杠是相对父路径，得到 <code>/manage/userManage</code>，会渲染在 <code>Manage.vue</code> 的 <code>&lt;router-view /&gt;</code> 里；带斜杠是绝对路径，直接就是 <code>/userManage</code>，不再受 <code>/manage</code> 约束，父组件的出口不会渲染它，通常表现为白屏或 404。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-12-8" data-id="12:2.8">
+  <div class="kp-head">
+    <span class="kp-num">2.8</span>
+    <h3>Result 业务码</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>功能说明第 2 条："返回格式全部复用项目自带 Result 统一返回类，<strong>成功 code=200，业务错误 code=400</strong>，前端用 <strong>ElMessage</strong> 弹窗提示。"</p></div></section><section class="blk" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p><code>Result</code> 是一个统一信封：不管里面装的是列表、一个对象，还是什么都没有，信封上都印着三个格子 <code>code</code>、<code>msg</code>、<code>data</code>。要分清两套"状态"：HTTP 状态码说的是"这封信有没有送到"，业务 <code>code</code> 说的是"信里说的事办成没有"。服务器正常收到请求、正常查库、正常告诉你"账号已存在"，这一趟 HTTP 就是 200，只是业务上拒绝，所以 <code>code</code> 给 400。前端不看 HTTP，只看 <code>code</code> 决定弹绿字还是红字——这就是为什么 F12 里状态列全是 200，页面却一直报错。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="13"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">13 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13</div><pre><code><span class="tk-k">public</span> <span class="tk-k">static</span> Result <span class="tk-f">success</span>() {
+    Result result = <span class="tk-k">new</span> <span class="tk-f">Result</span>();
+    result.<span class="tk-f">setCode</span>(<span class="tk-s">"200"</span>);
+    result.<span class="tk-f">setMsg</span>(<span class="tk-s">"请求成功"</span>);
+    <span class="tk-k">return</span> result;
+}
+
+<span class="tk-k">public</span> <span class="tk-k">static</span> Result <span class="tk-f">error</span>(<span class="tk-k">String</span> code, <span class="tk-k">String</span> msg) {
+    Result result = <span class="tk-k">new</span> <span class="tk-f">Result</span>();
+    result.<span class="tk-f">setCode</span>(code);
+    result.<span class="tk-f">setMsg</span>(msg);
+    <span class="tk-k">return</span> result;
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>private String code</code>：注意是字符串，不是 <code>int</code>。所以前端写 <code>res.code === 200</code> 永远不成立；仓库里写成 <code>res.code === '200' || res.code === 200</code>，是为了兼容两种后端写法。</li><li><code>private String msg</code>：讲义正文写的是 <code>message</code>，但代码和所有实测响应里都是 <code>msg</code>，前端取 <code>res.msg</code>；照讲义文字写 <code>message</code>，弹窗会显示 <code>undefined</code>。</li><li><code>private Object data</code>：用 <code>Object</code> 才能同时装 <code>List&lt;User&gt;</code>、<code>User</code>、<code>String</code>，也能什么都不装。</li><li><code>success()</code> 不传参：只置 <code>code</code> 和 <code>msg</code>，<code>data</code> 留空；<code>success(Object data)</code> 先调 <code>success()</code> 再塞数据——两个重载省得调用方每次自己 <code>new</code>。</li><li><code>error(String code, String msg)</code>：业务错误统一传 <code>"400"</code>，<code>msg</code> 写人话，比如"旧密码错误，修改失败"，这句话会原样弹到用户眼前。</li><li>Jackson 按 getter 输出字段，字段名就是 <code>code/msg/data</code>；三个 getter 少一个，响应里就少一个字段。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><ul><li><code>D:\my-project\xm-pro\springboot\src\main\java\com\example\common\Result.java</code> 第 6~8 行三个字段，第 10~35 行四个工厂方法。</li><li><code>D:\my-project\xm-pro\vue\src\views\UserManage.vue</code> 第 96、119、144、163 行，四处 <code>res.code === '200' || res.code === 200</code> 的判断。</li><li><code>D:\my-project\xm-pro\vue\src\views\Login.vue</code> 第 36~44 行，登录也靠同一套 <code>code</code> 与 <code>msg</code>。</li><li><code>D:\my-project\xm-pro\vue\src\utils\request.js</code> 第 19~27 行，拦截器把响应体直接交给页面，所以页面拿到的就是 <code>Result</code> 对象。</li></ul></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 前端 <code>if (res.code === 200)</code> 永远进 else → 后端 <code>code</code> 是字符串 <code>"200"</code> → 改成 <code>=== '200'</code>，或像仓库一样两种都判。② 弹窗显示 <code>undefined</code> → 后端字段叫 <code>msg</code>，前端读了 <code>res.message</code> → 统一用 <code>res.msg</code>，见 <code>Result.java</code> 第 45 行。③ 业务错误却弹"系统错误" → Controller 里直接 <code>throw new RuntimeException(...)</code>，被全局异常处理器兜成 500 → 可预期的业务失败用 <code>Result.error("400", ...)</code> 返回，别抛异常。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>接口返回 HTTP 200，页面却弹出红色"账号已存在"，这是 bug 吗？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>不是。HTTP 200 只说明请求被服务器正常处理并返回了响应；<code>code=400</code> 是业务层的拒绝。前端按 <code>res.code</code> 判断并 <code>ElMessage.error(res.msg)</code>，这正是统一返回设计的目的——把"传输成功"和"业务成功"分开。</p></div></details></div></section></div>
+</article><section class="lab-end rv" aria-label="本讲结束"><p class="end-line">本讲完 · 实训 12 · 账号管理　8 个知识点，8 段代码，8 道自测 —— 全部读完。</p><a class="end-next" href="index.html"><span class="en-k">十二讲已毕</span><span class="en-t">返回研学总目</span><span class="en-n">12 讲 · 160 个知识点</span><span class="en-arrow">→</span></a></section></main>
+</div>
+<div id="scrim"></div>
+<button class="icon-btn" id="top-btn" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="foot-banner" aria-hidden="true"><img src="assets/art/paintings/band-ink.jpg" alt="" loading="lazy" decoding="async"></div>
+<footer><img class="foot-lotus" src="assets/art/motifs/lotus.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  <div class="in">
+  <p><b>JavaWeb 知识点讲解</b> · 覆盖实训 1~12 共 {total} 个知识点。每讲按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，供课堂讲授与课后复习使用。</p>
+  <p>全部内容离线可用：不引用任何 CDN 与外部字体。学习进度保存在本机浏览器中，更换设备后不同步。</p>
+  <p>讲解内容依据课程讲义编写，建议配合 <code>实验过程_实训N.md</code>（实验操作步骤）与 <code>讲义勘误_实训N.md</code>（讲义勘误说明）对照学习。</p>
+  </div>
+  <div class="foot-sign" aria-hidden="true">
+    <span>依 讲 义 而 授 · 循 次 第 而 学</span>
+  </div>
+</footer>
+<script src="assets/ids.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
