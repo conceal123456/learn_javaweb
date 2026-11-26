@@ -730,7 +730,7 @@ def render_foot():
 <div class="foot-banner" aria-hidden="true"><img src="assets/art/paintings/band-ink.jpg" alt="" loading="lazy" decoding="async"></div>
 <footer><img class="foot-lotus" src="assets/art/motifs/lotus.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
   <div class="in">
-  <p><b>JavaWeb 知识点讲解</b> · 覆盖实训 1~12 共 {total} 个知识点。每讲按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，供课堂讲授与课后复习使用。</p>
+  <p><b>JavaWeb 知识点讲解</b> · 覆盖实训 1~12 共 160 个知识点。每讲按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，供课堂讲授与课后复习使用。</p>
   <p>全部内容离线可用：不引用任何 CDN 与外部字体。学习进度保存在本机浏览器中，更换设备后不同步。</p>
   <p>讲解内容依据课程讲义编写，建议配合 <code>实验过程_实训N.md</code>（实验操作步骤）与 <code>讲义勘误_实训N.md</code>（讲义勘误说明）对照学习。</p>
   </div>
