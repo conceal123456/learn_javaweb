@@ -41,6 +41,11 @@ SOURCES = [
     ("05", r"05_实训5_Vue-Router实现路由跳转\知识点精讲_实训5.md", "Vue-Router 路由", "跳转、传参、嵌套、守卫"),
     ("06", r"06_实训6_后台管理页面\知识点精讲_实训6.md", "后台管理页面", "flex 布局、菜单、嵌套路由落地"),
     ("07", r"07_实训7_新建SpringBoot项目\知识点精讲_实训7.md", "SpringBoot 后端", "建工程、连库、统一返回、全局异常"),
+    ("08", r"08_实训8_SpringBoot3集成MyBatis\知识点精讲_实训8.md", "MyBatis 集成", "实体、Mapper、XML、分页"),
+    ("09", r"09_实训9_数据的增删改查（CRUD）\知识点精讲_实训9.md", "增删改查 CRUD", "查询、分页、新增、修改、删除"),
+    ("10", r"10_实训10_会员登录\知识点精讲_实训10.md", "会员登录", "登录接口、登录态、路由守卫"),
+    ("11", r"11_实训11_新闻系统\知识点精讲_实训11.md", "新闻系统", "富文本、封面上传、文章 CRUD"),
+    ("12", r"12_实训12_账号管理\知识点精讲_实训12.md", "账号管理", "判重、改密、删除、菜单"),
 ]
 LAB_DIR = {
     "01": r"01_实训1_软件安装及创建Vue项目",
@@ -50,10 +55,21 @@ LAB_DIR = {
     "05": r"05_实训5_Vue-Router实现路由跳转",
     "06": r"06_实训6_后台管理页面",
     "07": r"07_实训7_新建SpringBoot项目",
+    "08": r"08_实训8_SpringBoot3集成MyBatis",
+    "09": r"09_实训9_数据的增删改查（CRUD）",
+    "10": r"10_实训10_会员登录",
+    "11": r"11_实训11_新闻系统",
+    "12": r"12_实训12_账号管理",
 }
-LAB_CN = {"01": "壹", "02": "贰", "03": "叁", "04": "肆", "05": "伍", "06": "陆", "07": "柒"}
+LAB_CN = {"01": "壹", "02": "贰", "03": "叁", "04": "肆", "05": "伍", "06": "陆", "07": "柒",
+          "08": "捌", "09": "玖", "10": "拾", "11": "拾壹", "12": "拾贰"}
 LAB_STAGE = {"01": "前端 · 环境", "02": "前端 · 语法", "03": "前端 · 组件库", "04": "前端 · 组件",
-             "05": "前端 · 路由", "06": "前端 · 综合", "07": "后端 · SpringBoot"}
+             "05": "前端 · 路由", "06": "前端 · 综合", "07": "后端 · SpringBoot",
+             "08": "后端 · MyBatis", "09": "后端 · CRUD", "10": "后端 · 登录",
+             "11": "后端 · 新闻", "12": "后端 · 账号"}
+
+# 全站数量口径（重建后按实际值更新）
+EXPECT = (160, 286, 160)
 
 BLOCK_KEYS = "①②③④⑤⑥⑦"
 BLOCK_NAMES = "讲义怎么说|一句话讲透|示例代码|逐行拆解|在你仓库里|常见坑|自测"
@@ -65,6 +81,8 @@ NAME2KEY = {"讲义怎么说": "①", "一句话讲透": "②", "示例代码": 
 LAB_ART = {
     "01": "front-1.jpg", "02": "front-2.jpg", "03": "front-3.jpg", "04": "front-4.jpg",
     "05": "front-5.jpg", "06": "front-6.jpg", "07": "back-1.jpg",
+    "08": "back-2.jpg", "09": "back-3.jpg", "10": "front-1.jpg",
+    "11": "front-2.jpg", "12": "front-3.jpg",
 }
 ART_CAPTION = "馆藏中国画 · 克利夫兰艺术博物馆（公有领域）"
 FRONT_SET = ["front-1.jpg", "front-2.jpg", "front-3.jpg", "front-4.jpg", "front-5.jpg", "front-6.jpg"]
@@ -625,7 +643,7 @@ def render_top(active_lab, labs, page_title, hero=""):
         preload_img = "assets/art/paintings/" + LAB_ART[cur["id"]]
     else:
         st_seal, st_main = "七", "JavaWeb 知识点讲解"
-        st_sub = f'7 讲 · {total} 个知识点 · {total_code} 段代码'
+        st_sub = f'{len(labs)} 讲 · {total} 个知识点 · {total_code} 段代码'
         preload_img = "assets/art/paintings/hero-bg.jpg"
 
     # 站点图标：一枚朱砂印章里的「讲」字（内联 SVG，不额外请求）
@@ -636,7 +654,7 @@ def render_top(active_lab, labs, page_title, hero=""):
         "%3Ctext x='32' y='45' font-size='36' text-anchor='middle' fill='%23f8efdd' "
         "font-family='Songti SC,STSong,SimSun,serif'%3E%E8%AE%B2%3C/text%3E%3C/svg%3E"
     )
-    desc = f"JavaWeb 实训 1~7 知识点精讲：{total} 个知识点、{total_code} 段代码、{total_qa} 道课堂自测，完全离线可用。"
+    desc = f"JavaWeb 实训 1~12 知识点精讲：{total} 个知识点、{total_code} 段代码、{total_qa} 道课堂自测，完全离线可用。"
 
     return f"""<!DOCTYPE html>
 <html lang="zh-CN" data-theme="light">
@@ -700,7 +718,7 @@ def render_top(active_lab, labs, page_title, hero=""):
       <span class="st-seal">{st_seal}</span>
       <span class="st-txt"><b>{st_main}</b><span>{st_sub}</span></span>
     </div>
-    <h4>七讲</h4>
+    <h4>十二讲</h4>
     <nav class="nav-lab">{''.join(nav)}</nav>
 """
 
@@ -712,7 +730,7 @@ def render_foot():
 <div class="foot-banner" aria-hidden="true"><img src="assets/art/paintings/band-ink.jpg" alt="" loading="lazy" decoding="async"></div>
 <footer><img class="foot-lotus" src="assets/art/motifs/lotus.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
   <div class="in">
-  <p><b>JavaWeb 知识点讲解</b> · 覆盖实训 1~7 共 109 个知识点。每讲按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，供课堂讲授与课后复习使用。</p>
+  <p><b>JavaWeb 知识点讲解</b> · 覆盖实训 1~12 共 {total} 个知识点。每讲按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，供课堂讲授与课后复习使用。</p>
   <p>全部内容离线可用：不引用任何 CDN 与外部字体。学习进度保存在本机浏览器中，更换设备后不同步。</p>
   <p>讲解内容依据课程讲义编写，建议配合 <code>实验过程_实训N.md</code>（实验操作步骤）与 <code>讲义勘误_实训N.md</code>（讲义勘误说明）对照学习。</p>
   </div>
@@ -834,9 +852,9 @@ def write_lab_page(lab, labs):
                      f'<span class="en-arrow">→</span></a>')
     else:
         next_html = (f'<a class="end-next" href="index.html">'
-                     f'<span class="en-k">七讲已毕</span>'
+                     f'<span class="en-k">十二讲已毕</span>'
                      f'<span class="en-t">返回研学总目</span>'
-                     f'<span class="en-n">7 讲 · {sum(l["count"] for l in labs)} 个知识点</span>'
+                     f'<span class="en-n">{len(labs)} 讲 · {sum(l["count"] for l in labs)} 个知识点</span>'
                      f'<span class="en-arrow">→</span></a>')
     body.append(
         f'<section class="lab-end rv" aria-label="本讲结束">'
@@ -894,7 +912,7 @@ def write_index(labs):
     # ---- 组图巡览
     mq_items = []
     for i, l in enumerate(labs):
-        img = "back-1.jpg" if l["id"] == "07" else f"front-{i + 1}.jpg"
+        img = LAB_ART[l["id"]]
         mq_items.append(
             f'<a class="mq-item" href="{l["file"]}">'
             f'<img src="assets/art/paintings/{img}" alt="实训 {l["id"].lstrip("0")}" loading="lazy" decoding="async">'
@@ -985,9 +1003,9 @@ def write_index(labs):
   <div class="cine-veil"></div>
   <div class="cine-inner">
     <div class="cine-copy">
-      <p class="cine-kicker">JAVA WEB · 实训一至七</p>
+      <p class="cine-kicker">JAVA WEB · 实训一至十二</p>
       <h1 class="hero-title">把每个知识点<br><em>看明白</em></h1>
-      <p class="cine-sub">依 讲 义 · 授 七 讲 · 研 学 相 长</p>
+      <p class="cine-sub">依 讲 义 · 授 十 二 讲 · 研 学 相 长</p>
       <div class="home-stats">
         <div class="s"><b>{len(labs)}</b><small>讲</small></div>
         <div class="s"><b>{total}</b><small>个知识点</small></div>
@@ -1001,7 +1019,7 @@ def write_index(labs):
         <i class="cine-axle top" aria-hidden="true"></i>
         <div class="cine-scroll-frame"><img src="assets/art/paintings/hero-vscroll.jpg" alt="巨碑式山水"></div>
         <i class="cine-axle bot" aria-hidden="true"></i>
-        <span class="cine-seal" aria-hidden="true">研学<br>七讲</span>
+        <span class="cine-seal" aria-hidden="true">研学<br>十二讲</span>
       </div>
       <figcaption>馆藏中国画 · 克利夫兰艺术博物馆（公有领域）</figcaption>
     </figure>
@@ -1025,7 +1043,7 @@ def write_index(labs):
   <blockquote class="quote-text">
     <p class="quote-line">「学而时习之，不亦说乎」</p>
     <cite>——《论语·学而》</cite>
-    <p class="quote-note">七讲实训，依讲义为纲：先读懂，再动手，后复盘。</p>
+    <p class="quote-note">十二讲实训，依讲义为纲：先读懂，再动手，后复盘。</p>
   </blockquote>
 </section>"""
 
@@ -1034,22 +1052,22 @@ def write_index(labs):
 
 {sec_title("一图看全站", "壹", "At a glance")}
 <section class="stats-band rv" aria-label="全站数据总览">
-  <p class="lede">七讲实训，{total} 个知识点逐条拆开：每一讲都按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，配 {total_code} 段可运行代码与 {total_qa} 道折叠自测。</p>
+  <p class="lede">十二讲实训，{total} 个知识点逐条拆开：每一讲都按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，配 {total_code} 段可运行代码与 {total_qa} 道折叠自测。</p>
   <div class="stat-grid">{stat_html}</div>
   <div class="dist-head"><span>知识点分布</span><span>共 {total} 个</span></div>
   <div class="dist" aria-label="各讲知识点数量">{dist_rows}</div>
 </section>
 
-<section class="marquee" aria-label="七讲组图巡览">
+<section class="marquee" aria-label="十二讲组图巡览">
   <div class="marquee-track">{marquee}</div>
 </section>
 
-<div class="sec-title rv" id="labs"><span class="bar"></span><span class="sec-no">贰</span><h2>七讲</h2><span class="sec-en">Seven Lectures</span></div>
-<p class="labs-lede rv">七讲按课上次序排开。点开任意一讲，左侧会出现「讲义目录 + 本讲知识点」，每个知识点的「学会了」会自动汇进右上角的进度圆环。</p>
+<div class="sec-title rv" id="labs"><span class="bar"></span><span class="sec-no">贰</span><h2>十二讲</h2><span class="sec-en">Twelve Lectures</span></div>
+<p class="labs-lede rv">十二讲按课上次序排开。点开任意一讲，左侧会出现「讲义目录 + 本讲知识点」，每个知识点的「学会了」会自动汇进右上角的进度圆环。</p>
 <div class="labs">{''.join(cards)}</div>
 
-<section class="timeline rv" aria-label="七讲时间轴">
-  {sec_title("七讲时间轴", "叁", "In order")}
+<section class="timeline rv" aria-label="十二讲时间轴">
+  {sec_title("十二讲时间轴", "叁", "In order")}
   <ol class="tl">{tl_items}</ol>
 </section>
 
@@ -1085,7 +1103,7 @@ def write_index(labs):
 </div>"""
 
     page = (
-        render_top("", labs, "JavaWeb 知识点讲解 · 实训 1~7", hero)
+        render_top("", labs, "JavaWeb 知识点讲解 · 实训 1~12", hero)
         + "\n  </aside>\n  <main id=\"main\">"
         + body
         + "</main>\n"
@@ -1158,10 +1176,11 @@ def main():
     print(f"搜索索引：{n_idx} 条")
     print(f"页面总大小：{sum(sizes) / 1024:.0f} KB")
 
-    assert total == 109, f"知识点数量异常：{total}"
-    assert gc == 232, f"代码块数量异常：{gc}"
-    assert gq == 109, f"折叠问答数量异常：{gq}"
-    print("\n[OK] 数量校验：109 知识点 / 232 代码块 / 109 问答")
+    EXPECT_POINTS, EXPECT_CODE, EXPECT_QA = EXPECT
+    assert total == EXPECT_POINTS, f"知识点数量异常：{total}（期望 {EXPECT_POINTS}）"
+    assert gc == EXPECT_CODE, f"代码块数量异常：{gc}（期望 {EXPECT_CODE}）"
+    assert gq == EXPECT_QA, f"折叠问答数量异常：{gq}（期望 {EXPECT_QA}）"
+    print(f"\n[OK] 数量校验：{total} 知识点 / {gc} 代码块 / {gq} 问答")
 
 
 if __name__ == "__main__":

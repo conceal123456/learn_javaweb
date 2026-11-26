@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>实训10 会员登录 · 知识点讲解</title>
+<meta name="description" content="JavaWeb 实训 1~12 知识点精讲：160 个知识点、286 段代码、160 道课堂自测，完全离线可用。">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#14110f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='11' fill='%23b23a2f'/%3E%3Ctext x='32' y='45' font-size='36' text-anchor='middle' fill='%23f8efdd' font-family='Songti SC,STSong,SimSun,serif'%3E%E8%AE%B2%3C/text%3E%3C/svg%3E">
+<!-- 分享卡片：微信/QQ/Twitter 抓取这三条 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JavaWeb 知识点讲解">
+<meta property="og:title" content="实训10 会员登录 · 知识点讲解">
+<meta property="og:description" content="JavaWeb 实训 1~12 知识点精讲：160 个知识点、286 段代码、160 道课堂自测，完全离线可用。">
+<meta property="og:image" content="https://conceal123456.github.io/learn_javaweb/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="assets/art/paintings/front-1.jpg" fetchpriority="high">
+<link rel="stylesheet" href="assets/style.css">
+<noscript><style>
+/* 禁 JS / app.js 加载失败时：正文必须可见，纯 JS 组件隐藏 */
+.rv{opacity:1 !important; translate:none !important; transform:none !important}
+.kp-nav,.read-bar,#top-btn,.toast,.cmdk{display:none !important}
+</style></noscript>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="page-in" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="scroll-rail" aria-hidden="true"><i></i></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#9d3a2e"/><stop offset="1" stop-color="#c9a227"/>
+</linearGradient></defs></svg>
+
+<header class="top">
+  <div class="top-in">
+    <button class="icon-btn menu-btn" id="menu-btn" title="目录" aria-label="目录">☰</button>
+    <a class="logo" href="index.html">
+      <span class="dot"></span><b>知识点讲解</b><span class="txt">· JavaWeb</span>
+    </a>
+    <div class="search"><input id="search" type="search" placeholder="搜知识点，如 v-model、跨域、Result　(Ctrl+K)" aria-label="搜索知识点"></div>
+    <div class="spacer"></div>
+    <div class="prog" title="学习进度">
+      <svg class="ring" viewBox="0 0 30 30" aria-hidden="true">
+        <circle class="bg" cx="15" cy="15" r="12"></circle>
+        <circle class="fg" cx="15" cy="15" r="12"></circle>
+      </svg>
+      <span id="prog-txt">0/0</span>
+    </div>
+    <button class="icon-btn" id="theme-btn" title="切换主题" aria-label="切换主题">☀</button>
+  </div>
+</header>
+<header class="lab-hero rv" id="top"><div class="lab-hero-bg"><img src="assets/art/paintings/front-1.jpg" alt="馆藏中国画"></div><div class="lab-hero-veil"></div><div class="lab-hero-no" aria-hidden="true">10</div><div class="lab-hero-inner"><p class="lab-kicker">实训 10 · 知识点讲解 · 后端 · 登录</p><h1>会员登录</h1><p class="lab-hero-sub">依讲义讲授 · 逐知识点过关</p><div class="meta"><span class="chip" title="成品工程：D:\my-project\xm-pro（IDEA 打开后运行 SpringbootApplication / npm run dev）">成品工程：<code>D:\my-project\xm-pro</code>（IDEA 打开后运行 SpringbootApplication / npm run dev）</span><span class="chip" title="相关文档：实验过程_实训10.md">相关文档：<code>实验过程_实训10.md</code></span><span class="chip"><b>10</b> 个知识点</span><span class="chip"><b>11</b> 段代码</span><span class="chip"><b>10</b> 道自测</span></div></div><img class="lab-hero-plum" src="assets/art/motifs/plum.png" alt="" aria-hidden="true"><div class="lab-poem" aria-hidden="true">依 讲 义 · 授 此 讲</div><p class="lab-hero-cap">馆藏中国画 · 克利夫兰艺术博物馆（公有领域）</p></header>
+<div class="shell">
+  <aside class="side" id="side">
+    <div class="side-top">
+      <span class="st-seal">拾</span>
+      <span class="st-txt"><b>实训 10 · 会员登录</b><span>10 个知识点 · 11 段代码 · 约 53 分钟</span></span>
+    </div>
+    <h4>十二讲</h4>
+    <nav class="nav-lab"><a class="" href="实训1.html"><span class="k">1</span><span>创建 Vue 项目</span><span class="n">22</span></a><a class="" href="实训2.html"><span class="k">2</span><span>Vue 基本语法</span><span class="n">10</span></a><a class="" href="实训3.html"><span class="k">3</span><span>Element Plus</span><span class="n">6</span></a><a class="" href="实训4.html"><span class="k">4</span><span>Element Plus 组件</span><span class="n">11</span></a><a class="" href="实训5.html"><span class="k">5</span><span>Vue-Router 路由</span><span class="n">13</span></a><a class="" href="实训6.html"><span class="k">6</span><span>后台管理页面</span><span class="n">21</span></a><a class="" href="实训7.html"><span class="k">7</span><span>SpringBoot 后端</span><span class="n">26</span></a><a class="" href="实训8.html"><span class="k">8</span><span>MyBatis 集成</span><span class="n">12</span></a><a class="" href="实训9.html"><span class="k">9</span><span>增删改查 CRUD</span><span class="n">10</span></a><a class="on" href="实训10.html"><span class="k">10</span><span>会员登录</span><span class="n">10</span></a><a class="" href="实训11.html"><span class="k">11</span><span>新闻系统</span><span class="n">11</span></a><a class="" href="实训12.html"><span class="k">12</span><span>账号管理</span><span class="n">8</span></a></nav>
+<h4>本讲知识点</h4><nav class="toc"><a href="#kp-10-1"><span class="num">2.1</span>user 表：账号密码单独一张表</a><a href="#kp-10-2"><span class="num">2.2</span>登录接口：Controller-Service-Mapper 一条线</a><a href="#kp-10-3"><span class="num">2.3</span>@RequestBody：JSON 怎么变成 User</a><a href="#kp-10-4"><span class="num">2.4</span>Result 返回：成功 200、失败 400＋msg</a><a href="#kp-10-5"><span class="num">2.5</span>Login.vue：一个表单、一个函数</a><a href="#kp-10-6"><span class="num">2.6</span>localStorage：把登录人存成一张便签</a><a href="#kp-10-7"><span class="num">2.7</span>路由守卫：/manage 的门禁</a><a href="#kp-10-8"><span class="num">2.8</span>退出登录：撕掉便签、送回门口</a><a href="#kp-10-9"><span class="num">2.9</span>登录态的本质：HTTP 没有记忆</a><a href="#kp-10-10"><span class="num">2.10</span>登录失败为什么不用抛异常</a></nav><div class="side-tools"><button class="tool-btn" id="qa-open" type="button">展开全部自测答案</button><button class="tool-btn" id="qa-close" type="button">收起全部答案</button></div>
+  </aside>
+  <main id="main"><div id="hits"></div><div class="lab-glance rv"><span class="gl-k">本讲</span><span class="gl-i"><b>10</b> 个知识点</span><span class="gl-i"><b>11</b> 段代码</span><span class="gl-i"><b>10</b> 道自测</span><span class="gl-i">约 <b>53</b> 分钟通读</span></div><div class="sec-title rv"><span class="bar"></span><h2>0. 这一讲在整门课里的位置</h2></div><div class="rv"><p>第 9 讲把员工表的增删改查跑通之后，后台已经能查、能加、能改、能删了——但它有一个致命问题：<strong>谁都能进</strong>。打开 <code>http://localhost:5173</code> 直接就是管理页面，后端接口也没有任何门。这一讲给整个系统装一扇门：先建一张 <code>user</code> 表存账号密码，再写一个登录接口，最后让前端拿着"登录过"的标记，才肯放人进 <code>/manage</code>。</p><p>技术上是三条线合流。后端第一次把 <strong>Controller → Service → Mapper → XML</strong> 四层完整地串在一个真实功能里（第 8 讲只是把 MyBatis 接上，第 9 讲是把增删改查重复了四遍，这一讲是一条最短、但每一层都不缺的业务链）；前端第一次把 <strong>表单 + 请求 + 本地存储 + 路由守卫</strong> 四样东西连起来用。前六讲学的 <code>v-model</code>、<code>el-form</code>、<code>router.push</code>，第 5 讲学的 <code>beforeEach</code>，到这一讲才真正"为了一个业务目标"被组装起来。</p><p>更重要的是一个观念：<strong>登录是前端体验与后端数据的配合，不是某一处代码里的开关</strong>。这一讲做完，大家会得到一个能登进去的账号（<code>admin/123456</code>），也会第一次撞见"前端拦得住手、拦不住 curl"这件事——这是第 12 讲账号管理、以及后面所有需要权限的功能的地基。</p></div><div class="sec-title rv"><span class="bar"></span><h2>1. 知识点清单</h2></div><div class="rv"><div class="tw"><table><thead><tr><th>#</th><th>知识点</th><th>讲义出处</th><th>重要度</th><th>一句话说明</th></tr></thead><tbody><tr><td>1</td><td>user 表：账号密码单独一张表</td><td>一、；功能说明 1</td><td>★★★</td><td>四列：id、username（唯一）、password、name；和员工表彻底分开</td></tr><tr><td>2</td><td>登录接口：Controller-Service-Mapper 一条线</td><td>二、1~5；功能说明 2、6</td><td>★★★</td><td><code>POST /user/login</code>，查不到返回 null，Controller 把它翻成 400</td></tr><tr><td>3</td><td>@RequestBody：JSON 怎么变成 User</td><td>二、5（登录接口代码）</td><td>★★★</td><td>读请求体不读 URL，靠 Content-Type 选转换器，按字段名 set 值</td></tr><tr><td>4</td><td>Result 返回：成功 200、失败 400＋msg</td><td>功能说明 3；二、5</td><td>★★★</td><td>三个字段 code/msg/data；code 是字符串 <code>"200"</code></td></tr><tr><td>5</td><td>Login.vue：一个表单、一个函数</td><td>三、1</td><td>★★★</td><td>v-model 收值、request.post 提交、code 判断分流</td></tr><tr><td>6</td><td>localStorage：把登录人存成一张便签</td><td>功能说明 5；三、1</td><td>★★★</td><td>只存字符串，键名 <code>loginUser</code>，写入/读取/删除共七处</td></tr><tr><td>7</td><td>路由守卫：/manage 的门禁</td><td>三、2；功能说明 5</td><td>★★★</td><td><code>beforeEach</code> 里查 <code>to.path</code> 前缀和 <code>loginUser</code>，没有就 <code>next('/login')</code></td></tr><tr><td>8</td><td>退出登录：撕掉便签、送回门口</td><td>功能说明 7；三、3</td><td>★★</td><td>先 removeItem 再 push，顺序反了就退不出去</td></tr><tr><td>9</td><td>登录态的本质：HTTP 没有记忆</td><td>功能说明 5（延伸）</td><td>★★★</td><td>localStorage 只是前端自证，后端并不认识你；安全要靠 token/session</td></tr><tr><td>10</td><td>登录失败为什么不用抛异常</td><td>功能说明 4</td><td>★★</td><td>业务错误 return Result.error，系统故障才 throw 给全局处理器</td></tr></tbody></table></div><hr></div><div class="sec-title rv"><span class="bar"></span><h2>2. 知识点精讲</h2></div><article class="kp rv" id="kp-10-1" data-id="10:2.1">
+  <div class="kp-head">
+    <span class="kp-num">2.1</span>
+    <h3>user 表：账号密码单独一张表</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"一、在数据库中，新增管理员表 <code>user</code>"，给出的建表语句是 <code>id / username / password / name</code> 四列，<code>username</code> 上加 <code>UNIQUE</code>，并插入一条测试账号 <code>('admin','123456','系统管理员')</code>。功能说明第 1 条强调：<strong>"数据表独立：账号密码单独存在 <code>user</code> 表，和员工表完全分离"</strong>。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>把数据库想成一栋楼：<code>employee</code> 是人事档案室，<code>user</code> 是门卫室那张登记簿。两件事得分开记——员工不一定有后台账号（只录资料的实习生），管理员也不一定是员工（外包运维）。合成一张表，每加一个能登录的人就得往人事档案里塞一条假员工；员工离职删档案，登录权限也跟着没了。分开后各自瘦身：登录只关心"你是谁、口令对不对"，一条 <code>where username = ? and password = ?</code> 命中唯一索引就返回，不联表、不扫全表。四列，正说明它只放登录必需的东西。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="sql" data-lines="10"><div class="code-bar"><span class="code-lang">sql</span><span class="code-count">10 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10</div><pre><code>CREATE TABLE <span class="tk-s">`user`</span> (
+  id       INT PRIMARY KEY AUTO_INCREMENT COMMENT <span class="tk-s">'主键id'</span>,
+  username <span class="tk-f">VARCHAR</span>(<span class="tk-n">50</span>) NOT NULL UNIQUE     COMMENT <span class="tk-s">'登录账号'</span>,
+  password <span class="tk-f">VARCHAR</span>(<span class="tk-n">50</span>) NOT NULL            COMMENT <span class="tk-s">'登录密码'</span>,
+  name     <span class="tk-f">VARCHAR</span>(<span class="tk-n">50</span>) DEFAULT <span class="tk-s">''</span>          COMMENT <span class="tk-s">'管理员姓名'</span>
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO <span class="tk-s">`user`</span>(username, password, name) <span class="tk-f">VALUES</span> (<span class="tk-s">'admin'</span>, <span class="tk-s">'123456'</span>, <span class="tk-s">'系统管理员'</span>);
+
+SELECT id, username, name FROM <span class="tk-s">`user`</span>;   <span class="tk-c">-- 查的时候别把 password 带出来</span></code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>id INT PRIMARY KEY AUTO_INCREMENT</code>：主键自增。前端拿到的 <code>id</code> 就是这一列，第 12 讲改密码、删管理员都靠它定位人。<strong>不要用 username 当主键</strong>——账号是可以改的，改一次所有引用它的地方都得跟着改。</li><li><code>username VARCHAR(50) NOT NULL UNIQUE</code>：<code>NOT NULL</code> 保证不会有"空账号"；<code>UNIQUE</code> 在数据库层建唯一索引，同时干两件事——<strong>判重</strong>（第 12 讲新增管理员插重复账号会直接报错）和<strong>加速</strong>（登录的等值查询走索引，几万行也是毫秒级）。</li><li><code>password VARCHAR(50) NOT NULL</code>：讲义这里是<strong>明文</strong>存的，长度 50 够放 <code>123456</code>，也够放 32 位 MD5。真实项目必须存哈希（见 2.9 的坑），这一讲先按讲义跑通。</li><li><code>name VARCHAR(50) DEFAULT ''</code>：显示用的姓名，登录后右上角那个"系统管理员"就是它。给默认空串而不允许 <code>NULL</code>，是为了前端 <code>name || username</code> 取值时少判一种情况。</li><li><code>ENGINE=InnoDB DEFAULT CHARSET=utf8mb4</code>：InnoDB 支持事务和行锁；<code>utf8mb4</code> 才是"真 UTF-8"（<code>utf8</code> 只占 3 字节，存不下 emoji）。</li><li><code>INSERT</code> 不写 <code>id</code>：自增列交给数据库；<code>('admin','123456','系统管理员')</code> 就是本讲的测试账号，<strong>用户名和密码的大小写要和登录页敲的完全一致</strong>。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>实体类在 <code>D:\my-project\xm-pro\springboot\src\main\java\com\example\entity\User.java</code> 第 4~7 行，四个字段与四列一一对应（<code>id/username/password/name</code>，顺序都一样）；查询语句在 <code>D:\my-project\xm-pro\springboot\src\main\resources\mapper\UserMapper.xml</code> 第 8~10 行：<code>select * from user where username = #{username} and password = #{password}</code>；库名在 <code>D:\my-project\xm-pro\springboot\src\main\resources\application.yml</code> 第 3 行的 <code>jdbc:mysql://localhost:3306/xm-pro</code>。仓库里没有单独的 <code>user.sql</code>（<code>springboot/sql/</code> 下只有 <code>article.sql</code>），这张表要按讲义在 Navicat 里手工建——<strong>建表这一步没有代码可抄，必须自己执行一次</strong>。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 报 <code>Table 'xm-pro.user' doesn't exist</code> → 表建在了另一个库（比如 <code>xm_pro</code>），或者 <code>application.yml</code> 第 3 行的库名与建表时选的库不是同一个 → 在 Navicat 里点开对应库执行 <code>show tables</code>，两边库名逐字对齐。② 第二次执行 <code>INSERT</code> 报 <code>Duplicate entry 'admin' for key 'user.username'</code> → <code>UNIQUE</code> 生效了，这是正常现象 → 先 <code>delete from user where username='admin'</code>，或改用 <code>INSERT IGNORE</code>。③ 用 <code>admin</code> 能登、用 <code>Admin</code> 也能登 → MySQL 默认排序规则 <code>utf8mb4_general_ci</code> <strong>大小写不敏感</strong> → 业务若要求区分，建表时给 <code>username</code> 指定 <code>COLLATE utf8mb4_bin</code>。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>登录查询为什么用 <code>username + password</code> 两个条件，而不是先按 username 查出来、再在 Java 里比对密码？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>两种写法都能跑，但一条 SQL 少一次"查出来再传回来"的往返，而且把比对交给数据库，Java 侧只判断"有没有结果"。更关键的是：先 <code>selectByUsername</code> 再比密码，<code>User</code> 对象会在 Java 里完整存在一段时间，日志、异常栈都可能带出密码；一条 SQL 查不到就返回 <code>null</code>，泄露面更小。仓库 <code>UserService.java</code> 第 18~20 行选的正是前者。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-10-2" data-id="10:2.2">
+  <div class="kp-head">
+    <span class="kp-num">2.2</span>
+    <h3>登录接口：Controller-Service-Mapper 一条线</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"二、后端设计"列了五个文件：<code>entity/User.java</code>、<code>mapper/UserMapper.java</code>、<code>mapper/UserMapper.xml</code>、<code>service/UserService.java</code>、<code>controller/UserController.java 登录接口</code>。功能说明第 2 条：<strong>"登录接口接收账号密码，直接去数据库匹配，查不到则返回 <code>400</code> 错误"</strong>；第 6 条要求后端保持 <strong>"三层架构（Controller-Service-Mapper）、MyBatis XML、@Resource 注入、REST POST 登录接口"</strong> 的风格。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>三层架构像去银行办事：Controller 是<strong>大堂经理</strong>，只接住你递的材料、把结果原样告诉你，不碰钱；Service 是<strong>柜员</strong>，判断"这人能不能办、该走哪条流程"；Mapper 是<strong>金库的门</strong>，只认一句"给我账号密码，我把那行记录递出来"。登录这条链特别短：Controller 把账号密码交给 Service，Service 一行代码转手给 Mapper，XML 里就是一条查询。<strong>没有业务规则时 Service 也不该跳过</strong>——它是以后加"账号被锁、登录次数、验证码"的地方，位置要先留。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="16"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">16 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16</div><pre><code>@RestController
+@<span class="tk-f">RequestMapping</span>(<span class="tk-s">"/user"</span>)
+<span class="tk-k">public</span> <span class="tk-k">class</span> UserController {
+
+    @Resource
+    <span class="tk-k">private</span> UserService userService;
+
+    @<span class="tk-f">PostMapping</span>(<span class="tk-s">"/login"</span>)
+    <span class="tk-k">public</span> Result <span class="tk-f">login</span>(@RequestBody User user) {
+        User loginUser = userService.<span class="tk-f">login</span>(user.<span class="tk-f">getUsername</span>(), user.<span class="tk-f">getPassword</span>());
+        <span class="tk-k">if</span> (loginUser == <span class="tk-k">null</span>) {
+            <span class="tk-k">return</span> Result.<span class="tk-f">error</span>(<span class="tk-s">"400"</span>, <span class="tk-s">"账号或密码错误"</span>);
+        }
+        <span class="tk-k">return</span> Result.<span class="tk-f">success</span>(loginUser);
+    }
+}</code></pre></div></div><div class="code" data-lang="xml" data-lines="3"><div class="code-bar"><span class="code-lang">xml</span><span class="code-count">3 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3</div><pre><code><span class="tk-p">&lt;</span><span class="tk-t">select</span> <span class="tk-a">id</span>=<span class="tk-s">"selectByUsernameAndPassword"</span> <span class="tk-a">resultType</span>=<span class="tk-s">"com.example.entity.User"</span><span class="tk-p">&gt;</span>
+    select * from user where username = #{username} and password = #{password}
+<span class="tk-p">&lt;/</span><span class="tk-t">select</span><span class="tk-p">&gt;</span></code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>@RestController</code> = <code>@Controller</code> + <code>@ResponseBody</code>：方法返回的 <code>Result</code> 由 Jackson 直接写成 JSON，而不是去找一个叫 <code>Result</code> 的页面。</li><li><code>@RequestMapping("/user")</code> 是<strong>类级别前缀</strong>，方法上的 <code>@PostMapping("/login")</code> 拼起来才是 <code>/user/login</code>；前端 <code>request.post("/user/login", ...)</code> 的路径必须和这两段拼出来的一致，少一段就是 404。</li><li><code>@Resource private UserService userService;</code>：把 Service 注入进来。<code>@Resource</code> 按<strong>名字</strong>找（默认取字段名 <code>userService</code>），<code>@Autowired</code> 按<strong>类型</strong>找——本课程统一用 <code>@Resource</code>，和第 8、9 讲保持一致。</li><li><code>@PostMapping</code> 而不是 <code>@GetMapping</code>：登录要传密码，<strong>密码不能出现在 URL 里</strong>（URL 会进浏览器历史、Nginx 日志、Referer）。POST 把数据放在请求体里。</li><li><code>user.getUsername(), user.getPassword()</code>：Service 只收两个 <code>String</code>，不收整个 <code>User</code>——这样 Service 不依赖"前端多传了哪个字段"，将来加验证码只改参数列表。</li><li><code>if (loginUser == null)</code>：MyBatis 查不到时返回 <code>null</code>（不是空对象，也不抛异常），这是"账号或密码不对"的<strong>唯一判据</strong>。</li><li><code>Result.error("400", ...)</code> 与 <code>Result.success(loginUser)</code>：两个分支都返回 <code>Result</code>，前端只认 <code>code</code>，见 2.4。</li><li>XML 里的 <code>#{}</code>：预编译占位符，等于 JDBC 的 <code>?</code>，值不会被当成 SQL 片段——这也是防注入的关键，详见 2.9。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>Controller 在 <code>D:\my-project\xm-pro\springboot\src\main\java\com\example\controller\UserController.java</code> 第 22~29 行（<code>@PostMapping("/login")</code> 在第 22 行，判空在第 25~27 行）；Service 在 <code>...\service\UserService.java</code> 第 18~20 行，方法体只有一行 <code>return userMapper.selectByUsernameAndPassword(username, password);</code>；Mapper 接口在 <code>...\mapper\UserMapper.java</code> 第 11 行，两个参数都加了 <code>@Param</code>；SQL 在 <code>...\resources\mapper\UserMapper.xml</code> 第 8~10 行。这四份文件缺一份，启动时就会报 <code>Invalid bound statement (not found)</code>。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 启动报 <code>Invalid bound statement (not found): com.example.mapper.UserMapper.selectByUsernameAndPassword</code> → XML 的 <code>namespace</code> 或 <code>&lt;select id&gt;</code> 与接口对不上，或者 XML 不在 <code>mapper-locations</code> 覆盖的目录里 → 核对 <code>UserMapper.xml</code> 第 5 行的 <code>namespace</code>、第 8 行的 <code>id</code>，以及 <code>application.yml</code> 第 14 行 <code>classpath:mapper/*.xml</code>。② 接口 404 → 类上写了 <code>/user</code>、方法上又写成 <code>/user/login</code>，实际路径变成 <code>/user/user/login</code> → 方法上只写 <code>/login</code>。③ 前端提示"账号或密码错误"但数据库里明明有这条记录 → 传上去的 <code>username</code> 是 <code>null</code>（见 2.3）→ 在 Controller 里 <code>System.out.println(user.getUsername())</code> 打一下，再看 Network 的 Payload。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>如果把 <code>@PostMapping</code> 改成 <code>@GetMapping</code>，前端 <code>request.post</code> 一行不改，会发生什么？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>405 Method Not Allowed。Spring 按"路径 + 方法"匹配处理器：<code>/user/login</code> 这个路径存在，但只接受 GET，POST 会被拒绝。前端 <code>request.js</code> 的错误分支里 <code>error.response.status</code> 是 405，走 <code>console.error</code>，页面上只看到按钮点了没反应。<strong>路径对不代表方法对</strong>，这是 404 与 405 的区别。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-10-3" data-id="10:2.3">
+  <div class="kp-head">
+    <span class="kp-num">2.3</span>
+    <h3>@RequestBody：JSON 怎么变成 User</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>讲义正文只写了"登录接口接收账号密码"，没有单独解释这个注解，但"二、5 controller/UserController.java 登录接口"给的代码第一行就是 <code>public Result login(@RequestBody User user)</code>；功能说明第 6 条把接口定性为 <strong>"REST POST 登录接口"</strong>——REST 的 POST 用请求体传数据，这就是 <code>@RequestBody</code> 存在的理由。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>把 HTTP 请求想成快递包裹：URL 是收件地址，请求头是面单（写着里面是什么、什么格式），<strong>请求体才是箱子里的货</strong>。前端提交时，axios 把表单对象序列化成 JSON 塞进箱子，面单上写 <code>application/json</code>。Spring 收到后，<code>@RequestBody</code> 等于说"把箱子打开、按面单拆"：它找到处理 JSON 的转换器，把文本<strong>反序列化</strong>成 <code>User</code> 对象再递进来。所以它读 body 不读 URL；前端一改 <code>Content-Type</code>，后端立刻 415。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="10"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">10 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10</div><pre><code><span class="tk-c">// 前端实际发出的请求体（Content-Type: application/json）</span>
+<span class="tk-c">// {"username":"admin","password":"123456"}</span>
+
+@<span class="tk-f">PostMapping</span>(<span class="tk-s">"/login"</span>)
+<span class="tk-k">public</span> Result <span class="tk-f">login</span>(@RequestBody User user) {
+    <span class="tk-c">// Jackson 按字段名赋值：username → setUsername()，password → setPassword()</span>
+    System.out.<span class="tk-f">println</span>(<span class="tk-s">"收到："</span> + user.<span class="tk-f">getUsername</span>() + <span class="tk-s">" / "</span> + user.<span class="tk-f">getPassword</span>());
+    User loginUser = userService.<span class="tk-f">login</span>(user.<span class="tk-f">getUsername</span>(), user.<span class="tk-f">getPassword</span>());
+    <span class="tk-k">return</span> loginUser == <span class="tk-k">null</span> ? Result.<span class="tk-f">error</span>(<span class="tk-s">"400"</span>, <span class="tk-s">"账号或密码错误"</span>) : Result.<span class="tk-f">success</span>(loginUser);
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>@RequestBody</code> 只能挂在<strong>请求体</strong>上。GET 请求通常没有 body，所以它几乎总和 POST/PUT 一起出现。</li><li>反序列化的依据是<strong>字段名</strong>：JSON 里的 <code>username</code> 去找 <code>setUsername()</code>，<code>password</code> 去找 <code>setPassword()</code>；名字对不上就是 <code>null</code>，<strong>并且不报错</strong>（Jackson 默认忽略不认识的字段）。</li><li>一个方法最多一个 <code>@RequestBody</code>：请求体只有一个，拆不出两份来。</li><li>必须带 <code>Content-Type: application/json</code>；缺了会 415，写成 <code>application/x-www-form-urlencoded</code> 会 415 或参数全空。</li><li><code>User</code> 必须有<strong>无参构造 + setter</strong>：Jackson 先 <code>new User()</code> 再逐个 set。只写全参构造、不给无参构造，反序列化就会失败。</li><li>和 <code>@RequestParam</code>（取 URL 里 <code>?a=1</code> 的值）、<code>@PathVariable</code>（取路径里 <code>/delete/{id}</code> 的值）是三套不同的取数位置，别混着用。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>注解用在 <code>D:\my-project\xm-pro\springboot\src\main\java\com\example\controller\UserController.java</code> 第 23 行，紧接着第 24 行就取字段；<code>Content-Type</code> 是 <code>D:\my-project\xm-pro\vue\src\utils\request.js</code> 第 11 行统一设的 <code>config.headers['Content-Type'] = 'application/json;charset=utf-8'</code>；真正把对象送出去的是 <code>...\views\Login.vue</code> 第 36 行 <code>request.post("/user/login", data.form)</code>（第二个参数就是 body）；能被反序列化的前提是 <code>...\entity\User.java</code> 第 4~7 行的字段名和第 9~39 行的 getter/setter。同文件第 94 行的 <code>@PathVariable Integer id</code> 正好拿来对比。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 后端报 <code>Required request body is missing</code> 或 <code>HttpMessageNotReadableException</code> → 前端写成 <code>request.post(url, null, { params: data.form })</code>，数据跑到 URL 上、body 是空的 → 第二个参数直接传对象。② 415 Unsupported Media Type → <code>Content-Type</code> 不是 <code>application/json</code>（被手动覆盖成了表单格式）→ 保留 <code>request.js</code> 第 11 行的统一设置，别在单个请求里改。③ 后端 <code>user.getUsername()</code> 是 <code>null</code>，可 Network 里明明有值 → JSON 的 key 和实体字段名不一致（<code>userName</code> vs <code>username</code>）→ 以 <code>User.java</code> 的字段名为准改前端。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p><code>@RequestBody</code> 和 <code>@RequestParam</code> 分别从请求的哪个位置取值？把登录接口改成 <code>@RequestParam String username, String password</code>，前端要怎么改？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p><code>@RequestBody</code> 读请求体（body），<code>@RequestParam</code> 读 URL 查询串或表单参数（<code>?username=admin&amp;password=123456</code>）。改了之后前端必须把参数放进 URL：<code>request.post("/user/login", null, { params: data.form })</code>，或者干脆改成 <code>request.get</code>。这也说明为什么登录不能用 GET——密码会明晃晃地留在 URL、历史记录和服务器访问日志里。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-10-4" data-id="10:2.4">
+  <div class="kp-head">
+    <span class="kp-num">2.4</span>
+    <h3>Result 返回：成功 200、失败 400＋msg</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>功能说明第 3 条："<strong>统一返回格式：复用 <code>Result</code> 类，成功 200、错误自定义 code+msg</strong>"；第 4 条："<strong>全局异常兼容：密码错误直接返回 <code>Result.error</code>，不需要抛自定义异常也能正常弹窗</strong>"。第 7 讲已经把 <code>Result</code> 建好放在 <code>common/Result.java</code>，这一讲是它第一次在真实业务里派上用场。</p></div></section><section class="blk" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p><code>Result</code> 像快递的统一纸箱：里面装的东西千差万别（一个 <code>User</code>、一个列表、什么都没有），但箱子外形、面单位置完全一样，收件人（前端）不用每次猜"这回送来的是箱子还是麻袋"。三个字段分工明确：<code>code</code> 是结论，<code>msg</code> 是给人看的话，<code>data</code> 是货。好处很实在：前端那句判断可以写一万遍不用改；出错时 HTTP 仍是 200，控制台不会一片红；所有接口结构一致。代价是<strong>两层状态码</strong>——HTTP 200 只代表"服务器答复了"，业务成没成要看 <code>code</code>。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="5"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">5 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5</div><pre><code><span class="tk-c">// UserController.java 第 25~28 行</span>
+<span class="tk-k">if</span> (loginUser == <span class="tk-k">null</span>) {
+    <span class="tk-k">return</span> Result.<span class="tk-f">error</span>(<span class="tk-s">"400"</span>, <span class="tk-s">"账号或密码错误"</span>);   <span class="tk-c">// code="400"，msg 给前端弹窗</span>
+}
+<span class="tk-k">return</span> Result.<span class="tk-f">success</span>(loginUser);                   <span class="tk-c">// code="200"，data=User</span></code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>Result.success(loginUser)</code> 调的是 <code>success(Object data)</code> 重载（<code>Result.java</code> 第 17~21 行）：先调无参 <code>success()</code> 拿到 <code>code="200"</code>、<code>msg="请求成功"</code>，再 <code>setData</code>。</li><li><code>Result.error("400", "账号或密码错误")</code> 调的是两参工厂（第 30~35 行），<strong>code 和 msg 都是自己传的</strong>；无参的 <code>Result.error()</code>（第 23~28 行）给的是 <code>"500" / "系统错误"</code>，两个别混用。</li><li><code>code</code> 是 <code>String</code> 不是 <code>int</code>：所以前端必须写 <code>res.code === "200"</code>，写 <code>=== 200</code> 永远不成立（第 7 讲踩过，这一讲还会有人踩）。</li><li>登录失败<strong>依然是 HTTP 200</strong>：<code>Result.error</code> 只是把 code 写进响应体，没有动 HTTP 状态码。浏览器 Network 里那条请求是绿的，页面上的红字来自前端 <code>ElMessage.error(res.msg)</code>。</li><li><code>data</code> 里装的是整个 <code>User</code>，<strong>连 <code>password</code> 一起</strong>序列化回了浏览器——这是本讲代码的真实行为，第 12 讲做账号管理时要收口，见 2.9 的坑。</li><li>前端 <code>then(res =&gt; ...)</code> 里的 <code>res</code> 已经是 <code>Result</code> 对象：<code>request.js</code> 第 19~27 行的响应拦截器 <code>return res</code>（<code>response.data</code>），不是 axios 原生响应。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>三字段定义在 <code>D:\my-project\xm-pro\springboot\src\main\java\com\example\common\Result.java</code> 第 6~8 行，两个 <code>success</code> 在第 10~21 行，两个 <code>error</code> 在第 23~35 行；两个分支在 <code>...\controller\UserController.java</code> 第 25~28 行；前端读 code 在 <code>...\views\Login.vue</code> 第 37~43 行；<code>request.js</code> 第 19~27 行的响应拦截器决定了 <code>res</code> 就是 <code>Result</code>。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 前端 <code>if (res.code === 200)</code> 永远进 else，明明登录成功却提示"账号或密码错误" → <code>code</code> 是字符串 <code>"200"</code> → 写 <code>"200"</code>，或 <code>Number(res.code) === 200</code>。② 某个接口直接 <code>return "ok"</code>，前端 <code>res.code</code> 是 <code>undefined</code> → 没走统一返回 → 一律 <code>return Result.xxx(...)</code>。③ 想让失败也返回 HTTP 400，于是加 <code>@ResponseStatus</code> 或改成 <code>ResponseEntity</code>，结果前端拦截器把它当网络错误、拿不到 <code>res</code> → 本课程约定：<strong>HTTP 永远 200，业务状态放 code</strong>，别混两套。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>登录失败时，浏览器 Network 里这条请求的 HTTP 状态码是多少？页面上的红色提示又是谁弹的？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>HTTP 状态码是 <strong>200</strong>。<code>Result.error("400", ...)</code> 只改了响应体里的 <code>code</code>，没有改 HTTP 状态行；请求本身"成功地被处理并答复了"。红色提示是前端 <code>Login.vue</code> 第 42 行 <code>ElMessage.error(res.msg)</code> 弹的，<code>msg</code> 来自后端。<strong>结论</strong>：HTTP 状态码看"这次通信成没成"，响应体 <code>code</code> 看"这件业务成没成"。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-10-5" data-id="10:2.5">
+  <div class="kp-head">
+    <span class="kp-num">2.5</span>
+    <h3>Login.vue：一个表单、一个函数</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"三、前端设计 1. 新增登录页面 Login.vue"给了完整代码：<code>el-card header="系统登录"</code> 里套 <code>el-form</code>，两个 <code>el-input</code> 分别绑 <code>data.form.username</code> 与 <code>data.form.password</code>，按钮 <code>@click="login"</code>；<code>script setup</code> 里用 <code>reactive</code> 定义表单、<code>request.post("/user/login", data.form)</code> 提交、<code>res.code === "200"</code> 时存 <code>localStorage</code> 并 <code>router.push("/manage")</code>，否则 <code>ElMessage.error(res.msg)</code>。功能说明第 6 条要求前端保持 <strong>"<code>script setup</code> + reactive、Element 表单弹窗、request 统一请求封装"</strong> 的风格。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>这个页面只干三件事，像去银行柜台：<strong>填单</strong>（两个输入框用 <code>v-model</code> 把值实时写进表单对象）、<strong>递单</strong>（<code>request.post</code> 把整个表单当请求体发出去）、<strong>听结果</strong>（<code>code</code> 是 <code>"200"</code> 就存凭证进后台，否则把后端的话原样弹出来）。它<strong>不校验密码长度、不判断账号格式</strong>——那些是表单校验，讲义这版故意留白；它也<strong>不负责"记住我"</strong>，因为凭证已经写进 <code>localStorage</code>，关掉浏览器照样在。二十来行就够，是因为脏活都被 <code>request.js</code> 和守卫接走了。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="vue" data-lines="21"><div class="code-bar"><span class="code-lang">vue</span><span class="code-count">21 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</div><pre><code><span class="tk-p">&lt;</span><span class="tk-t">script</span> <span class="tk-a">setup</span><span class="tk-p">&gt;</span>
+<span class="tk-k">import</span> { reactive } <span class="tk-k">from</span> <span class="tk-s">"vue"</span>;
+<span class="tk-k">import</span> request <span class="tk-k">from</span> <span class="tk-s">"@/utils/request.js"</span>;
+<span class="tk-k">import</span> { ElMessage } <span class="tk-k">from</span> <span class="tk-s">"element-plus"</span>;
+<span class="tk-k">import</span> { useRouter } <span class="tk-k">from</span> <span class="tk-s">"vue-router"</span>;
+
+<span class="tk-k">const</span> router = <span class="tk-f">useRouter</span>();
+<span class="tk-k">const</span> data = <span class="tk-f">reactive</span>({ form: { username: <span class="tk-s">""</span>, password: <span class="tk-s">""</span> } });
+
+<span class="tk-k">const</span> login = () =&gt; {
+  request.<span class="tk-f">post</span>(<span class="tk-s">"/user/login"</span>, data.form).<span class="tk-f">then</span>(res =&gt; {
+    <span class="tk-k">if</span> (res.code === <span class="tk-s">"200"</span>) {
+      ElMessage.<span class="tk-f">success</span>(<span class="tk-s">"登录成功"</span>);
+      localStorage.<span class="tk-f">setItem</span>(<span class="tk-s">"loginUser"</span>, JSON.<span class="tk-f">stringify</span>(res.data));
+      router.<span class="tk-f">push</span>(<span class="tk-s">"/manage"</span>);
+    } <span class="tk-k">else</span> {
+      ElMessage.<span class="tk-f">error</span>(res.msg);
+    }
+  });
+};
+<span class="tk-p">&lt;/</span><span class="tk-t">script</span><span class="tk-p">&gt;</span></code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>reactive({ form: { ... } })</code>：外面包一层 <code>form</code>，是为了<strong>整体传给后端</strong>（<code>data.form</code> 正好是 <code>{username, password}</code>）；以后加"验证码""记住我"只往 <code>form</code> 里加字段，<code>request.post</code> 那行不用改。</li><li><code>v-model="data.form.username"</code>：双向绑定，输入即改值，不需要 <code>@input</code> 手动取；<code>show-password</code> 只是把明文换成小眼睛，值本身没有加密。</li><li><code>@click="login"</code>：<code>el-button</code> 不是原生 <code>submit</code>，在输入框里敲回车不会自动提交，所以点击事件必须显式绑。</li><li><code>request.post("/user/login", data.form)</code>：第一个参数是路径（拼在 <code>baseURL</code> 后面），第二个参数是<strong>请求体</strong>，第三个参数才是配置对象（<code>params</code>、<code>headers</code> 之类）。</li><li><code>.then(res =&gt; ...)</code>：响应拦截器已经 <code>return res</code>（<code>response.data</code>），所以这里的 <code>res</code> 就是 <code>Result</code> 对象，不用再写 <code>res.data.code</code>。</li><li><code>res.code === "200"</code>：字符串比较，理由见 2.4。</li><li><code>localStorage.setItem("loginUser", JSON.stringify(res.data))</code>：存的是 <code>User</code> 序列化后的字符串，键名 <code>loginUser</code> 是全局约定，见 2.6。</li><li><code>router.push("/manage")</code>：编程式导航，压一条历史记录；用户点浏览器"后退"会回到登录页。</li><li><code>ElMessage.error(res.msg)</code>：把后端的话直接展示，<strong>不要自己写死"密码错误"</strong>，否则后端改了提示、前端就对不上。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p><code>D:\my-project\xm-pro\vue\src\views\Login.vue</code> 第 5~15 行是表单结构，第 28~33 行是 <code>reactive</code>，第 35~45 行是 <code>login</code> 函数；登录路由注册在 <code>...\src\router\index.js</code> 第 6 行（<code>path: '/login'</code>，懒加载 <code>../views/Login.vue</code>）；请求前缀在 <code>...\src\utils\request.js</code> 第 4~7 行 <code>baseURL: 'http://localhost:8080'</code>；背景图文件是 <code>D:\my-project\xm-pro\vue\public\login_bg.png</code>，对应 <code>Login.vue</code> 第 60 行的 <code>url('/login_bg.png')</code>。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 页面背景一片白 → 代码里写的是 <code>/login_bg.png</code>，而大家从素材里拷的是 <code>login_bg.jpg</code> → 图片放进 <code>vue/public/</code> 并把文件名改成与代码一致（<code>public</code> 下的文件用 <code>/</code> 开头直接访问）。② 点登录没反应，控制台报 <code>Cannot read properties of undefined (reading 'form')</code> → <code>reactive</code> 写成了 <code>ref</code> 却忘了 <code>.value</code>，或者把 <code>data</code> 整个传给了 <code>post</code> → 统一用 <code>reactive</code>，传 <code>data.form</code>。③ 登录成功却还停在登录页 → <code>router.push</code> 被守卫拦回来了，多半是 <code>localStorage</code> 键名和守卫里读的不一致（<code>loginUser</code> vs <code>loginuser</code>）→ 三处（写入、守卫、顶栏）用同一个字符串。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p><code>request.post(...).then(res =&gt; ...)</code> 里的 <code>res</code> 为什么不是 axios 原生的 <code>response</code>？如果拦截器里没有 <code>return res</code>，这里要怎么写？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>因为 <code>request.js</code> 第 19~27 行的响应拦截器把 <code>response</code> 换成了 <code>response.data</code> 并 <code>return</code>，所以下游 <code>then</code> 拿到的是<strong>响应体</strong>（也就是 <code>Result</code> 对象）。如果没有这行 <code>return</code>，<code>res</code> 会是 axios 的完整响应，得写 <code>res.data.code</code>、<code>res.data.msg</code>、<code>res.data.data</code>——三层 <code>.data</code> 极易写错。这也解释了为什么要做"统一请求封装"：把这一层差异一次性吃掉。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-10-6" data-id="10:2.6">
+  <div class="kp-head">
+    <span class="kp-num">2.6</span>
+    <h3>localStorage：把登录人存成一张便签</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>功能说明第 5 条："<strong>前端权限控制：用 <code>localStorage</code> 存登录标识，未访问 <code>/manage</code> 后台路由自动跳登录页</strong>"；登录代码里是 <code>localStorage.setItem("loginUser", JSON.stringify(res.data))</code>，退出时是 <code>localStorage.removeItem("loginUser")</code>。功能说明第 7 条又要求退出时"<strong>清空本地存储返回登录页</strong>"。</p></div></section><section class="blk" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p><code>localStorage</code> 是浏览器按<strong>域名</strong>发给每个网站的一个抽屉：同一个源下所有页面共用，关掉浏览器再打开还在，除非代码删掉或用户清缓存。它只认<strong>字符串</strong>——对象要先 <code>JSON.stringify</code> 塞进去，取出来再 <code>JSON.parse</code>。和 <code>sessionStorage</code> 的区别是"关标签页就没了"；和 cookie 的区别是"不会自动跟着每个请求发给后端"（这正是 2.9 要讲的）。把它想成贴在显示器边上的<strong>便签</strong>：写着"我是 admin"，自己看着方便，但谁都能撕下来换一张。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="js" data-lines="14"><div class="code-bar"><span class="code-lang">js</span><span class="code-count">14 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14</div><pre><code><span class="tk-c">// 存：登录成功后（Login.vue 第 39 行）</span>
+localStorage.<span class="tk-f">setItem</span>(<span class="tk-s">"loginUser"</span>, JSON.<span class="tk-f">stringify</span>(res.data));
+
+<span class="tk-c">// 取：守卫、顶栏、首页、个人中心都要用，统一加兜底</span>
+<span class="tk-k">const</span> readLoginUser = () =&gt; {
+  <span class="tk-k">try</span> {
+    <span class="tk-k">return</span> JSON.<span class="tk-f">parse</span>(localStorage.<span class="tk-f">getItem</span>(<span class="tk-s">"loginUser"</span>) || <span class="tk-s">"{}"</span>) || {};
+  } <span class="tk-k">catch</span> (e) {
+    <span class="tk-k">return</span> {};
+  }
+};
+
+<span class="tk-c">// 删：退出登录（Manage.vue 第 113 行）</span>
+localStorage.<span class="tk-f">removeItem</span>(<span class="tk-s">"loginUser"</span>);</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>setItem(key, value)</code>：key 是字符串，value <strong>必须是字符串</strong>；直接传对象不会报错，而是静默存成 <code>"[object Object]"</code>——最阴的一个坑。</li><li><code>JSON.stringify(res.data)</code>：<code>res.data</code> 是后端返回的 <code>User</code>（<code>id/username/password/name</code>），序列化后形如 <code>{"id":1,"username":"admin","name":"系统管理员"}</code>。</li><li><code>getItem("loginUser") || "{}"</code>：没登录时 <code>getItem</code> 返回 <code>null</code>，<code>JSON.parse(null)</code> 得到 <code>null</code>，后面 <code>user.name</code> 立刻报错；给个 <code>"{}"</code> 兜底。</li><li><code>try / catch</code>：用户手改过 localStorage、或存进去的是 <code>[object Object]</code>，<code>JSON.parse</code> 会抛 <code>SyntaxError</code>，一个坏字符串能让整个页面白屏。</li><li><code>removeItem(key)</code>：只删这一个键；<code>localStorage.clear()</code> 会把同域名下所有键清空，别乱用。</li><li>生命周期：<strong>永久</strong>——除非代码删、用户清。所以"关浏览器就退出登录"这种需求它天然满足不了，要么用 <code>sessionStorage</code>，要么退出时手动清。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>写入在 <code>D:\my-project\xm-pro\vue\src\views\Login.vue</code> 第 39 行；读取分别在 <code>...\src\router\index.js</code> 第 41 行（守卫）、<code>...\src\views\Manage.vue</code> 第 101~110 行（顶栏用户名）、<code>...\src\views\Index.vue</code> 第 80~87 行（首页问候）、<code>...\src\views\Profile.vue</code> 第 36~44 行（改密时取 <code>id</code>）；删除在 <code>Manage.vue</code> 第 113 行。<strong>五处读、一处写、一处删，键名必须完全一致</strong>。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 刷新后右上角变成"系统管理员"而不是登录人 → 存的时候漏了 <code>JSON.stringify</code>，<code>JSON.parse("[object Object]")</code> 抛错被 catch 成 <code>{}</code> → F12 的 Application → Local Storage 看 <code>loginUser</code> 的值是不是以 <code>{</code> 开头。② 登录成功立刻被弹回登录页 → 键名不一致，或 <code>setItem</code> 写在 <code>router.push</code> 之后 → 先存再跳。③ 无痕/隐私模式下 <code>setItem</code> 抛 <code>QuotaExceededError</code> → 浏览器禁用了存储 → 用 <code>try/catch</code> 包住，失败时退化成内存变量，至少本次会话能用。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>为什么不能把登录用户存成 <code>&lt;script setup&gt;</code> 里的一个普通变量，或者 Pinia 的 state？刷新一下会怎样？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>普通变量和 Pinia 的 state 都活在<strong>当前页面的 JS 内存</strong>里，按 F5 刷新，Vue 应用整体重建，内存清空，登录人信息和"登录过"的事实一起消失——守卫立刻判定未登录，把你踢回 <code>/login</code>。<code>localStorage</code> 存在浏览器的持久化存储里，刷新、关标签、重启浏览器都还在，所以它能承担"跨页面、跨会话记住登录人"的职责。代价是它只在浏览器里，后端看不见，见 2.9。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-10-7" data-id="10:2.7">
+  <div class="kp-head">
+    <span class="kp-num">2.7</span>
+    <h3>路由守卫：/manage 的门禁</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"三、2. 修改路由 router/index.js"：<strong>"新增登录路由 + 简单登录拦截（未登录禁止进入后台）"</strong>。功能说明第 5 条把效果说清楚了：<strong>"未访问 <code>/manage</code> 后台路由自动跳登录页"</strong>。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>路由守卫就是小区门口的<strong>门卫</strong>：每次路由要切换（点菜单、敲地址、<code>router.push</code>），页面真正渲染之前，<code>beforeEach</code> 先被调用一次，门卫手里有三个东西——<code>to</code>（去哪）、<code>from</code>（从哪来）、<code>next</code>（放不放行）。讲义这版只问两句："你要去的是不是 <code>/manage</code> 开头？""你身上有没有 <code>loginUser</code> 这张条？"都满足就 <code>next()</code>，否则 <code>next('/login')</code>。它守的是<strong>前端路由</strong>，不是接口——挡得住手滑，挡不住 curl。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="js" data-lines="10"><div class="code-bar"><span class="code-lang">js</span><span class="code-count">10 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10</div><pre><code>router.<span class="tk-f">beforeEach</span>((to, <span class="tk-k">from</span>, next) =&gt; {
+  document.title = to.meta.title || <span class="tk-s">'系统登录'</span>;
+  <span class="tk-k">const</span> user = localStorage.<span class="tk-f">getItem</span>(<span class="tk-s">'loginUser'</span>);
+
+  <span class="tk-k">if</span> (to.path.<span class="tk-f">startsWith</span>(<span class="tk-s">'/manage'</span>) &amp;&amp; !user) {
+    <span class="tk-f">next</span>(<span class="tk-s">'/login'</span>);
+  } <span class="tk-k">else</span> {
+    <span class="tk-f">next</span>();
+  }
+});</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>router.beforeEach</code>：全局前置守卫，注册一次、对所有路由生效；<code>router/index.js</code> 在模块顶层执行，<code>main.js</code> 第 10 行才 <code>app.use(router)</code>，所以它天然先于任何一次导航。</li><li><code>to</code> / <code>from</code> 是 Route 对象：<code>to.path</code> 是完整路径（如 <code>/manage/herb</code>），<code>to.meta</code> 就是路由配置里那个 <code>meta: { title: '中药材管理' }</code>。</li><li><code>document.title = to.meta.title || '系统登录'</code>：顺手把标签页标题改掉；<code>||</code> 是兜底——没配 <code>meta.title</code> 的路由显示"系统登录"。</li><li><code>localStorage.getItem('loginUser')</code>：只判断<strong>有没有</strong>，不判断内容对不对；取不到是 <code>null</code>，也就算"没有"。</li><li><code>to.path.startsWith('/manage')</code>：覆盖 <code>/manage</code>、<code>/manage/herb</code>、<code>/manage/dashboard</code> 全部子路由；写成 <code>=== '/manage'</code> 就只挡首页。</li><li><code>next('/login')</code>：中断当前导航，改去登录页；<code>next()</code> 是放行。<strong>每个分支必须且只能调用一次</strong>。</li><li>为什么不写在 <code>Login.vue</code> 或 <code>Manage.vue</code> 里：守卫是"所有入口的统一关口"，手敲地址、收藏夹、<code>router.push</code> 都经过它；写在页面里只能管"从页面点进去"这一种。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>守卫在 <code>D:\my-project\xm-pro\vue\src\router\index.js</code> 第 39~48 行；登录路由在第 6 行，根路径重定向在第 7 行（<code>{ path: '/', redirect: '/login' }</code>，所以打开 <code>http://localhost:5173</code> 直接就是登录页）；后台父路由在第 10~35 行，各子路由的 <code>meta.title</code> 决定标签页文字；登录成功后的跳转在 <code>...\views\Login.vue</code> 第 40 行。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 页面白屏、控制台警告 <code>next() called multiple times</code> 或导航卡住 → 某个分支忘了 <code>next()</code>，或 <code>if/else</code> 两边都调了 → 保证每条路径恰好一次。② 手敲 <code>/manage/herb</code> 能直接进 → 判断写成了 <code>to.path === '/manage'</code> → 改成 <code>startsWith</code>。③ 登录成功又被踢回登录页 → <code>setItem</code> 在 <code>router.push</code> 之后执行，守卫先跑、看到没凭证就拦了 → 先存再跳（<code>Login.vue</code> 第 39、40 行的顺序不能换）。④ 死循环：<code>/login</code> 也被拦 → 条件只对 <code>/manage</code> 生效，且 <code>next('/login')</code> 的目标本身不能再触发拦截。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>把 <code>startsWith('/manage')</code> 换成 <code>to.meta.requiresAuth</code> 的写法，路由配置里要加什么？两种写法各适合什么场景？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>要给每个需要保护的路由加 <code>meta: { requiresAuth: true }</code>，守卫里改成 <code>if (to.meta.requiresAuth &amp;&amp; !user)</code>。<strong>前缀写法</strong>胜在短、适合"整个 <code>/manage</code> 都要保护"；<strong>meta 写法</strong>更精确、适合"同一个父路由下有的页面要登录、有的不要"（比如 <code>/manage/detail</code> 是公开文章详情）。仓库用的是前缀写法，和讲义一致；两种不能混着写一半，否则会出现"这个页面忘了加 meta 就漏了"。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-10-8" data-id="10:2.8">
+  <div class="kp-head">
+    <span class="kp-num">2.8</span>
+    <h3>退出登录：撕掉便签、送回门口</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>功能说明第 7 条："<strong>配套退出功能：后台顶部增加退出按钮，清空本地存储返回登录页</strong>"；"三、3. Manage.vue 新增退出登录按钮"给的代码顺序是：<code>localStorage.removeItem("loginUser")</code> → <code>ElMessage.success("已退出登录")</code> → <code>router.push("/login")</code>。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>退出登录就是<strong>把便签撕掉，再把人送回门口</strong>。顺序不能反：先 <code>removeItem</code> 再 <code>push</code>，守卫放行时看不到凭证，才会把人挡在 <code>/login</code>；如果先 <code>push</code> 再删，跳转那一刻守卫还能读到 <code>loginUser</code>，会以为"你还登录着"，直接放你进 <code>/manage</code>。另外它只是"前台"的退出——本讲后端没有会话，所以没有任何东西需要通知服务器；真实系统里还要调一个 <code>/logout</code> 让 token 失效，否则别人捡到旧 token 照样能用。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="js" data-lines="6"><div class="code-bar"><span class="code-lang">js</span><span class="code-count">6 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6</div><pre><code><span class="tk-c">// Manage.vue 第 112~116 行</span>
+<span class="tk-k">const</span> logout = () =&gt; {
+  localStorage.<span class="tk-f">removeItem</span>(<span class="tk-s">'loginUser'</span>)   <span class="tk-c">// 1. 先撕便签</span>
+  ElMessage.<span class="tk-f">success</span>(<span class="tk-s">'已退出登录'</span>)          <span class="tk-c">// 2. 给个反馈</span>
+  router.<span class="tk-f">push</span>(<span class="tk-s">'/login'</span>)                  <span class="tk-c">// 3. 再送回登录页</span>
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>removeItem('loginUser')</code>：只删这一个键，主题、草稿这些其它缓存不受影响。</li><li>顺序：<strong>删 → 提示 → 跳</strong>。删必须在跳之前，这是整个退出功能唯一容易写反的地方。</li><li><code>ElMessage.success</code>：退出不是错误，别用 <code>error</code>；提示条会跟着页面切换保留一两秒，用户能看到。</li><li><code>router.push('/login')</code>：留一条历史记录，用户点"后退"能回到 <code>/manage</code>——但守卫会立刻把他弹回登录页，所以<strong>功能安全、体验不优雅</strong>；想连历史一起抹掉用 <code>router.replace('/login')</code>。</li><li>按钮的两种写法：讲义是顶部 <code>el-button</code>，仓库把它放在左侧菜单底部（<code>Manage.vue</code> 第 77~82 行），用 <code>el-menu</code> 的 <code>@select</code> 触发——<code>index="logout"</code> 不是真路由，只是给菜单项一个标识。</li><li>真正让"退出后进不去"的不是这个函数，而是 2.7 的守卫；函数只负责把凭证删干净。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>按钮在 <code>D:\my-project\xm-pro\vue\src\views\Manage.vue</code> 第 77~82 行，函数在第 112~116 行；守卫在 <code>...\src\router\index.js</code> 第 39~48 行（它才是"退出后进不去后台"的原因）；写入同一个键的地方在 <code>...\views\Login.vue</code> 第 39 行。<strong>如果只删了键却没有守卫，退出后照样能点回 <code>/manage</code></strong>——两处要一起改。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 退出后点浏览器"后退"又回到后台页面 → <code>push</code> 留下了历史，且组件可能还在缓存里 → 改用 <code>router.replace('/login')</code>，或在 <code>Manage.vue</code> 的 <code>onMounted</code> 里再校验一次。② 退出后个人信息还在 → 只跳转没删键，或删的键名写错 → 在 Application 面板确认 <code>loginUser</code> 真的没了。③ 图省事用了 <code>localStorage.clear()</code> → 把同域名下别的业务键一起清掉 → 只 <code>removeItem</code> 自己的键。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>为什么 <code>removeItem</code> 一定要在 <code>router.push('/login')</code> 之前执行？把顺序调换，页面会怎么表现？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p><code>router.push</code> 会立即触发守卫，守卫读的是<strong>执行到那一刻</strong>的 localStorage。顺序反了，守卫读到的还是旧的 <code>loginUser</code>，判定"已登录"，于是放行到 <code>/manage</code>；等 <code>removeItem</code> 执行完，人已经在后台页面里了，看起来就像"退出没反应"。更隐蔽的是：这时刷新一下才会被踢出去，学生会误以为是"缓存问题"。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-10-9" data-id="10:2.9">
+  <div class="kp-head">
+    <span class="kp-num">2.9</span>
+    <h3>登录态的本质：HTTP 没有记忆</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>功能说明第 5 条把这一讲的做法说得很直白："<strong>用 <code>localStorage</code> 存登录标识，未访问 <code>/manage</code> 后台路由自动跳登录页</strong>"。注意措辞是"登录<strong>标识</strong>"，不是"登录<strong>凭证</strong>"——这个区别就是本节要讲的。</p></div></section><section class="blk" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>HTTP 是<strong>没有记忆</strong>的协议：每个请求都是陌生人敲门，服务器处理完就忘。所谓"登录态"，本质是让服务器在下个请求里还能认出你的一件东西——传统做法是 cookie 带 <code>JSESSIONID</code>、服务器查 session；现代做法是 header 带 token、服务器验签。本讲两者都没有：<code>localStorage</code> 里的 <code>loginUser</code> <strong>只存在浏览器里</strong>，一个字节都不发给后端。所以现在的"登录"是前端自己记张便签、自己看一眼；后端完全不知道谁在调它。这叫<strong>前端自证</strong>，解决体验，不解决安全。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="bash" data-lines="5"><div class="code-bar"><span class="code-lang">bash</span><span class="code-count">5 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5</div><pre><code><span class="tk-c"># 不登录、不带任何凭证，直接调后台接口</span>
+<span class="tk-k">curl</span> http://localhost:<span class="tk-n">8080</span>/user/list
+
+<span class="tk-c"># 依然返回 {"code":"200","msg":"请求成功","data":[...]}</span>
+<span class="tk-c"># 后端根本没问过你是谁</span></code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li>这条命令证明：<strong>接口层没有鉴权</strong>。浏览器里"没登录进不去"只是路由守卫拦的，绕过前端就没有任何阻拦。</li><li>那 <code>localStorage</code> 到底解决了什么：<strong>刷新页面不丢登录人</strong>（内存变量会丢）、<strong>多个页面共享</strong>（顶栏、首页、个人中心都读它）、<strong>不用每次输密码</strong>。它解决的是"连续性"。</li><li>真正的登录态要四步：登录成功时后端签发 token（或写 session）→ 前端存起来 → <strong>每个请求都带上</strong>（在 <code>request.js</code> 的请求拦截器里加 <code>config.headers.Authorization = ...</code>）→ 后端用 Filter/Interceptor 校验，不合法直接 401。</li><li>本讲为什么不做：目标是"跑通登录这条链路"，token/JWT 涉及签名、过期、刷新，放到后面；但<strong>心里要有一张"还差什么"的清单</strong>。</li><li>一个三十秒的自检：F12 → Application → Local Storage，把 <code>loginUser</code> 的值改成随便一个字符串，刷新 <code>/manage</code>——你依然进得去。这就是"前端自证"的边界。</li><li>顺手看 <code>UserMapper.xml</code> 第 8~10 行的 <code>#{}</code>：它是预编译占位符，值不会被拼进 SQL，这挡住了 SQL 注入；但它挡不住"没登录也能调接口"，两件事别混为一谈。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p><code>D:\my-project\xm-pro\vue\src\utils\request.js</code> 第 10~15 行的请求拦截器只设了 <code>Content-Type</code>，<strong>没有 <code>Authorization</code></strong>；<code>...\controller\UserController.java</code> 第 22~29 行的登录方法只查了一次库，<strong>没有签发任何 token</strong>；<code>...\src\router\index.js</code> 第 41~47 行的守卫只读 <code>localStorage</code>，<strong>不问后端</strong>；<code>...\common\Result.java</code> 第 6~8 行的三个字段里也没有 token 的位置。四处一起看，就能看出这套登录"缺哪一块"。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 以为"菜单藏起来、按钮不显示"就是权限控制 → 前端只是不给入口，接口照样能被调 → 权限必须做在后端接口上。② 把 <code>password</code> 一起存进 <code>localStorage</code>（现在就是这么存的，因为 <code>res.data</code> 是整个 <code>User</code>）→ 任何 XSS 或共用电脑都能直接读到明文密码 → 存之前把 <code>password</code> 置空，或只存 <code>{id, username, name}</code>。③ 改完密码后旧标签页还能继续用 → 没有失效机制 → 真实系统改密后要让 token 失效并强制重登。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>如果后端完全不认登录态，那 <code>localStorage</code> + 路由守卫这套东西，到底解决了什么问题、没解决什么问题？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p><strong>解决了</strong>：刷新后还记得登录人、多页面共享登录信息、未登录者点后台入口会被温和地送回登录页、退出后能回到登录页——全是体验层面的问题。<strong>没解决</strong>：接口仍然对所有人开放，任何人用 curl、Postman 或在控制台改一下 localStorage 都能拿到数据，密码还以明文形式躺在浏览器里。所以它是"门帘"，不是"门锁"；真正的门锁要在后端每个接口上校验 token/session。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-10-10" data-id="10:2.10">
+  <div class="kp-head">
+    <span class="kp-num">2.10</span>
+    <h3>登录失败为什么不用抛异常</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>功能说明第 4 条："<strong>全局异常兼容：密码错误直接返回 <code>Result.error</code>，不需要抛自定义异常也能正常弹窗</strong>"。第 7 讲已经建了 <code>GlobalExceptionHandler</code> 和 <code>CustomException</code>，不少同学会以为"所有错误都要 throw"，讲义这句话正是在纠正这个误解。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>错误分两类，处理方式完全不同。<strong>一类是预料之中的业务结果</strong>：账号密码不匹配、账号已存在、旧密码错——不是程序坏了，是用户输入不对，属于正常分支，直接 <code>return Result.error("400", "...")</code>，前端拿到 code 弹提示就完事。<strong>另一类是预料之外的故障</strong>：空指针、除零、数据库连不上——不该由每个方法处理，<code>throw</code> 出去，让全局处理器统一兜底成 500 并打日志。打个比方：业务错误是"挂号时告诉你这科没号"，一句话解决；系统异常是"手术中途停电"，必须拉总闸、记录、上报。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="7"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">7 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7</div><pre><code><span class="tk-c">// 业务错误：直接返回，前端能预期，不打堆栈</span>
+<span class="tk-k">if</span> (loginUser == <span class="tk-k">null</span>) {
+    <span class="tk-k">return</span> Result.<span class="tk-f">error</span>(<span class="tk-s">"400"</span>, <span class="tk-s">"账号或密码错误"</span>);
+}
+
+<span class="tk-c">// 系统异常：不在这里处理，交给 GlobalExceptionHandler 兜底（log.error + 500）</span>
+<span class="tk-k">int</span> x = <span class="tk-n">1</span> / <span class="tk-n">0</span>;</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>Result.error("400", msg)</code>：<code>code</code> 用 <code>"400"</code> 是课程约定，表示"业务参数 / 校验错误"，<strong>不是 HTTP 400</strong>。</li><li>不抛异常最实际的好处：<strong>没有堆栈</strong>。业务错误一天几百次，每次都打一整屏堆栈，日志会被淹没，真故障反而找不到。</li><li>该抛的时候要抛：只有"这个方法没法继续、也不知道怎么告诉用户"时才 <code>throw</code>；<code>CustomException</code> 适合"规则复杂、在 Service 深处才发现"的场景（第 12 讲账号判重就是），Controller 里一眼能判断的，直接 return 更清楚。</li><li><code>GlobalExceptionHandler</code> 的 <code>@ExceptionHandler(Exception.class)</code> 兜住所有漏网异常，返回 <code>Result.error()</code>（<code>code="500"</code>），并 <code>log.error("系统异常", e)</code> 打出完整堆栈——<strong>堆栈该出现在这里</strong>。</li><li>两条路对前端是<strong>一样的</strong>：都是 <code>{code, msg, data}</code>，<code>Login.vue</code> 第 42 行 <code>ElMessage.error(res.msg)</code> 都能弹。这就是"全局异常兼容"的意思。</li><li>判断标准一句话：<strong>这段代码"知道该对用户说什么"就 return，不知道就 throw。</strong></li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>登录判空的返回在 <code>D:\my-project\xm-pro\springboot\src\main\java\com\example\controller\UserController.java</code> 第 25~27 行；全局兜底在 <code>...\exception\GlobalExceptionHandler.java</code> 第 16~21 行（<code>@ExceptionHandler(Exception.class)</code> + <code>log.error("系统异常", e)</code>），自定义异常分支在第 24~29 行；第 12 讲会用到的 <code>CustomException</code> 在 <code>...\exception\CustomException.java</code>。同一个文件里两种写法并排放着，最适合对照阅读。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 密码错误也在 Service 里 <code>throw new RuntimeException("密码错误")</code> → 被全局处理器接住，返回 <code>code="500"</code>、<code>msg="系统错误"</code>，前端弹的是"系统错误"而不是"密码错误" → 业务错误用 <code>Result.error</code> 返回具体 msg。② 反过来，空指针被就地 catch 后 <code>return Result.error("400", "参数错误")</code> → 真正的 bug 被掩盖，日志里没有堆栈，线上查不出来 → 预料之外的异常不要 catch，让它冒到全局处理器。③ <code>Result.error("400", ...)</code> 后面忘了 <code>return</code>，继续往下执行 <code>Result.success(...)</code> → 编译不过（有返回值）或逻辑错乱 → 每个分支都要有 return。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>同样是"登录失败"，什么情况下该 <code>return Result.error</code>，什么情况下该 <code>throw</code>？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p><strong>该 return 的</strong>：账号不存在、密码错误、参数缺失——这些是"用户能看懂、能自己改"的结果，前端只要把 msg 弹出来，流程就结束了。<strong>该 throw 的</strong>：数据库连不上、<code>user</code> 表不存在、某个字段突然为 <code>null</code> 导致空指针——这些"用户改不了、开发要看日志"的故障，统一冒到 <code>GlobalExceptionHandler</code>，由它打堆栈、回 500。一句话：<strong>面向用户的结论用 Result，面向开发者的故障用异常。</strong></p></div></details></div></section></div>
+</article><section class="lab-end rv" aria-label="本讲结束"><p class="end-line">本讲完 · 实训 10 · 会员登录　10 个知识点，11 段代码，10 道自测 —— 全部读完。</p><a class="end-next" href="实训11.html"><span class="en-k">下一讲 · 后端 · 新闻</span><span class="en-t">新闻系统</span><span class="en-n">11 个知识点</span><span class="en-arrow">→</span></a></section></main>
+</div>
+<div id="scrim"></div>
+<button class="icon-btn" id="top-btn" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="foot-banner" aria-hidden="true"><img src="assets/art/paintings/band-ink.jpg" alt="" loading="lazy" decoding="async"></div>
+<footer><img class="foot-lotus" src="assets/art/motifs/lotus.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  <div class="in">
+  <p><b>JavaWeb 知识点讲解</b> · 覆盖实训 1~12 共 {total} 个知识点。每讲按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，供课堂讲授与课后复习使用。</p>
+  <p>全部内容离线可用：不引用任何 CDN 与外部字体。学习进度保存在本机浏览器中，更换设备后不同步。</p>
+  <p>讲解内容依据课程讲义编写，建议配合 <code>实验过程_实训N.md</code>（实验操作步骤）与 <code>讲义勘误_实训N.md</code>（讲义勘误说明）对照学习。</p>
+  </div>
+  <div class="foot-sign" aria-hidden="true">
+    <span>依 讲 义 而 授 · 循 次 第 而 学</span>
+  </div>
+</footer>
+<script src="assets/ids.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

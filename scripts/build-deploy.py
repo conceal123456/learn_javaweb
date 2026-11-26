@@ -2,9 +2,9 @@
 """把 90_学习网站（知识点讲解）/ 打包成可直接部署的静态站点（deploy-site/）。
 
 为什么需要它：
-  * 源站的页面文件名是中文（实训1.html … 实训7.html），部署到静态托管后 URL 会变成
+  * 源站的页面文件名是中文（实训1.html … 实训12.html），部署到静态托管后 URL 会变成
     %E5%AE%9E%E8%AE%AD1.html 这种长串，分享/收藏都不体面，个别平台对中文路径也不友好。
-  * 这里把页面复制成 ASCII 名（lab1.html … lab7.html），并同步改写 HTML 与搜索索引里的引用。
+  * 这里把页面复制成 ASCII 名（lab1.html … lab12.html），并同步改写 HTML 与搜索索引里的引用。
   * 其余资源（assets/art 的图片、style.css、app.js）原样复制，站点仍然完全离线可用。
 
 用法：
@@ -23,7 +23,7 @@ SRC = ROOT / "90_学习网站（知识点讲解）"
 OUT = ROOT / "deploy-site"
 ZIP = ROOT / "deploy-site.zip"
 
-RENAME = {f"实训{i}.html": f"lab{i}.html" for i in range(1, 8)}
+RENAME = {f"实训{i}.html": f"lab{i}.html" for i in range(1, 13)}
 
 
 def rewrite(text: str) -> str:

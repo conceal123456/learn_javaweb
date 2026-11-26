@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>实训9 增删改查 CRUD · 知识点讲解</title>
+<meta name="description" content="JavaWeb 实训 1~12 知识点精讲：160 个知识点、286 段代码、160 道课堂自测，完全离线可用。">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#14110f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='11' fill='%23b23a2f'/%3E%3Ctext x='32' y='45' font-size='36' text-anchor='middle' fill='%23f8efdd' font-family='Songti SC,STSong,SimSun,serif'%3E%E8%AE%B2%3C/text%3E%3C/svg%3E">
+<!-- 分享卡片：微信/QQ/Twitter 抓取这三条 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JavaWeb 知识点讲解">
+<meta property="og:title" content="实训9 增删改查 CRUD · 知识点讲解">
+<meta property="og:description" content="JavaWeb 实训 1~12 知识点精讲：160 个知识点、286 段代码、160 道课堂自测，完全离线可用。">
+<meta property="og:image" content="https://conceal123456.github.io/learn_javaweb/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="assets/art/paintings/back-3.jpg" fetchpriority="high">
+<link rel="stylesheet" href="assets/style.css">
+<noscript><style>
+/* 禁 JS / app.js 加载失败时：正文必须可见，纯 JS 组件隐藏 */
+.rv{opacity:1 !important; translate:none !important; transform:none !important}
+.kp-nav,.read-bar,#top-btn,.toast,.cmdk{display:none !important}
+</style></noscript>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="page-in" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="scroll-rail" aria-hidden="true"><i></i></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#9d3a2e"/><stop offset="1" stop-color="#c9a227"/>
+</linearGradient></defs></svg>
+
+<header class="top">
+  <div class="top-in">
+    <button class="icon-btn menu-btn" id="menu-btn" title="目录" aria-label="目录">☰</button>
+    <a class="logo" href="index.html">
+      <span class="dot"></span><b>知识点讲解</b><span class="txt">· JavaWeb</span>
+    </a>
+    <div class="search"><input id="search" type="search" placeholder="搜知识点，如 v-model、跨域、Result　(Ctrl+K)" aria-label="搜索知识点"></div>
+    <div class="spacer"></div>
+    <div class="prog" title="学习进度">
+      <svg class="ring" viewBox="0 0 30 30" aria-hidden="true">
+        <circle class="bg" cx="15" cy="15" r="12"></circle>
+        <circle class="fg" cx="15" cy="15" r="12"></circle>
+      </svg>
+      <span id="prog-txt">0/0</span>
+    </div>
+    <button class="icon-btn" id="theme-btn" title="切换主题" aria-label="切换主题">☀</button>
+  </div>
+</header>
+<header class="lab-hero rv" id="top"><div class="lab-hero-bg"><img src="assets/art/paintings/back-3.jpg" alt="馆藏中国画"></div><div class="lab-hero-veil"></div><div class="lab-hero-no" aria-hidden="true">09</div><div class="lab-hero-inner"><p class="lab-kicker">实训 9 · 知识点讲解 · 后端 · CRUD</p><h1>数据的增删改查（CRUD）</h1><p class="lab-hero-sub">依讲义讲授 · 逐知识点过关</p><div class="meta"><span class="chip" title="成品工程：D:\my-project\xm-pro（IDEA 打开后运行 SpringbootApplication / npm run dev）">成品工程：<code>D:\my-project\xm-pro</code>（IDEA 打开后运行 SpringbootApplication / npm run dev）</span><span class="chip" title="相关文档：实验过程_实训9.md">相关文档：<code>实验过程_实训9.md</code></span><span class="chip"><b>10</b> 个知识点</span><span class="chip"><b>10</b> 段代码</span><span class="chip"><b>10</b> 道自测</span></div></div><img class="lab-hero-plum" src="assets/art/motifs/plum.png" alt="" aria-hidden="true"><div class="lab-poem" aria-hidden="true">依 讲 义 · 授 此 讲</div><p class="lab-hero-cap">馆藏中国画 · 克利夫兰艺术博物馆（公有领域）</p></header>
+<div class="shell">
+  <aside class="side" id="side">
+    <div class="side-top">
+      <span class="st-seal">玖</span>
+      <span class="st-txt"><b>实训 9 · 增删改查 CRUD</b><span>10 个知识点 · 10 段代码 · 约 53 分钟</span></span>
+    </div>
+    <h4>十二讲</h4>
+    <nav class="nav-lab"><a class="" href="实训1.html"><span class="k">1</span><span>创建 Vue 项目</span><span class="n">22</span></a><a class="" href="实训2.html"><span class="k">2</span><span>Vue 基本语法</span><span class="n">10</span></a><a class="" href="实训3.html"><span class="k">3</span><span>Element Plus</span><span class="n">6</span></a><a class="" href="实训4.html"><span class="k">4</span><span>Element Plus 组件</span><span class="n">11</span></a><a class="" href="实训5.html"><span class="k">5</span><span>Vue-Router 路由</span><span class="n">13</span></a><a class="" href="实训6.html"><span class="k">6</span><span>后台管理页面</span><span class="n">21</span></a><a class="" href="实训7.html"><span class="k">7</span><span>SpringBoot 后端</span><span class="n">26</span></a><a class="" href="实训8.html"><span class="k">8</span><span>MyBatis 集成</span><span class="n">12</span></a><a class="on" href="实训9.html"><span class="k">9</span><span>增删改查 CRUD</span><span class="n">10</span></a><a class="" href="实训10.html"><span class="k">10</span><span>会员登录</span><span class="n">10</span></a><a class="" href="实训11.html"><span class="k">11</span><span>新闻系统</span><span class="n">11</span></a><a class="" href="实训12.html"><span class="k">12</span><span>账号管理</span><span class="n">8</span></a></nav>
+<h4>本讲知识点</h4><nav class="toc"><a href="#kp-09-1"><span class="num">2.1</span>Axios 与 request.js 封装</a><a href="#kp-09-2"><span class="num">2.2</span>跨域与 CorsConfig</a><a href="#kp-09-3"><span class="num">2.3</span>查询全部与条件查询</a><a href="#kp-09-4"><span class="num">2.4</span>分页查询与 PageHelper</a><a href="#kp-09-5"><span class="num">2.5</span>动态 SQL：where 与 if</a><a href="#kp-09-6"><span class="num">2.6</span>新增记录</a><a href="#kp-09-7"><span class="num">2.7</span>修改记录</a><a href="#kp-09-8"><span class="num">2.8</span>删除记录</a><a href="#kp-09-9"><span class="num">2.9</span>前后端联调：一条请求的四层链路</a><a href="#kp-09-10"><span class="num">2.10</span>Employee.vue 的表格与弹窗</a></nav><div class="side-tools"><button class="tool-btn" id="qa-open" type="button">展开全部自测答案</button><button class="tool-btn" id="qa-close" type="button">收起全部答案</button></div>
+  </aside>
+  <main id="main"><div id="hits"></div><div class="lab-glance rv"><span class="gl-k">本讲</span><span class="gl-i"><b>10</b> 个知识点</span><span class="gl-i"><b>10</b> 段代码</span><span class="gl-i"><b>10</b> 道自测</span><span class="gl-i">约 <b>53</b> 分钟通读</span></div><div class="sec-title rv"><span class="bar"></span><h2>0. 这一讲在整门课里的位置</h2></div><div class="rv"><p>前八讲的进度是这样的：一到六讲全在前端，浏览器里画页面、配路由、搭后台布局；第七讲第一次建出后端空壳——8080 端口、统一返回 <code>Result</code>、全局异常处理；第八讲用 MyBatis 把"Java 方法 → Mapper 接口 → XML → MySQL"这条竖线打通了，但只做了查询，而且还得靠地址栏敲 URL 看 JSON。</p><p>这一讲把横线接上：前端页面第一次真正驱动数据库。查询、分页、条件筛选、新增、修改、删除这六个动作，全部走"页面 → axios → Controller → Service → Mapper → XML → 表"同一条路，回来再用 <code>Result</code> 包成 JSON 喂给表格。做完这一讲，大家手里就有了一个能反复套用的后台管理模板。</p><p>往后看，第十讲的会员登录本质上是"按账号密码做一次条件查询，注册时做一次新增"；第十二讲的账号管理就是把这套表格加弹窗换个字段再写一遍。所以这一讲练的不是"员工管理"这一个页面，而是<strong>所有管理页面的母版</strong>。</p></div><div class="sec-title rv"><span class="bar"></span><h2>1. 知识点清单</h2></div><div class="rv"><div class="tw"><table><thead><tr><th>#</th><th>知识点</th><th>讲义出处</th><th>重要度</th><th>一句话说明</th></tr></thead><tbody><tr><td>1</td><td>Axios 与 request.js 封装</td><td>一、1~2</td><td>★★★</td><td>一个实例管住 baseURL、请求头、响应拆壳和全局报错</td></tr><tr><td>2</td><td>跨域与 CorsConfig</td><td>一、4</td><td>★★★</td><td>前端 5173、后端 8080 不同源，靠响应头盖章放行</td></tr><tr><td>3</td><td>查询全部与条件查询</td><td>三、1~4</td><td>★★★</td><td>前端把条件放 URL，后端用实体对象自动接住</td></tr><tr><td>4</td><td>分页查询与 PageHelper</td><td>二、1~2</td><td>★★★</td><td>只取一页加返回总数，前端分页器才有得算</td></tr><tr><td>5</td><td>动态 SQL：where 与 if</td><td>三、2、4</td><td>★★★</td><td>有值才拼条件，一条 SQL 兼顾查全部与按名查</td></tr><tr><td>6</td><td>新增记录</td><td>四、1~5</td><td>★★★</td><td>POST 加 @RequestBody，自增主键靠回填拿回来</td></tr><tr><td>7</td><td>修改记录</td><td>五、1~5</td><td>★★★</td><td>同一个弹窗看 id 分流，UPDATE 必须带 WHERE</td></tr><tr><td>8</td><td>删除记录</td><td>六、1~4</td><td>★★</td><td>DELETE 加 @PathVariable，确认框挡住手滑</td></tr><tr><td>9</td><td>前后端联调：一条请求的四层链路</td><td>一、3、5</td><td>★★★</td><td>从点击到 SQL 的每一跳，以及按状态码定位</td></tr><tr><td>10</td><td>Employee.vue 的表格与弹窗</td><td>二、1、四、5、五、5</td><td>★★★</td><td>el-table 画数据、插槽取行、弹窗复用新增与编辑</td></tr></tbody></table></div><hr></div><div class="sec-title rv"><span class="bar"></span><h2>2. 知识点精讲</h2></div><article class="kp rv" id="kp-09-1" data-id="09:2.1">
+  <div class="kp-head">
+    <span class="kp-num">2.1</span>
+    <h3>Axios 与 request.js 封装</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"一、1 安装 axios 封装前后端对接数据工具"给的命令是 <strong><code>npm i axios -S</code></strong>；紧接着"2. 按下面进行一系列操作，粘贴代码"点明封装的作用：<strong>"统一创建实例、请求头配置、响应解析、全局错误提示，之后所有接口都导入这个 request 对象发请求。"</strong></p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>不封装的话，每个页面都要自己写 <code>axios.get('http://localhost:8080/...')</code>、自己判断状态码、自己弹错误框，十个页面就是十套写法，后端一换端口就得全项目搜一遍。<code>request.js</code> 相当于给全项目开了一个"收发室"：包裹统一从这里寄出，地址前缀统一贴（<code>baseURL</code>），外包装统一（<code>Content-Type</code>），回来的箱子统一拆（<code>response.data</code>），出了问题统一报警（<code>ElMessage</code>）。拦截器的本质，是 axios 在发请求前、收响应后各留的一个钩子：钩子拿到配置或响应，改完再往下传；不写钩子，这些活儿就只能散落在每一个页面里。以后换后端地址只动一行，加登录令牌也只在拦截器里加一次。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="js" data-lines="44"><div class="code-bar"><span class="code-lang">js</span><span class="code-count">44 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44</div><pre><code><span class="tk-k">import</span> axios <span class="tk-k">from</span> <span class="tk-s">"axios"</span>;
+<span class="tk-k">import</span> {ElMessage} <span class="tk-k">from</span> <span class="tk-s">"element-plus"</span>;
+
+<span class="tk-k">const</span> request = axios.<span class="tk-f">create</span>({
+    baseURL: <span class="tk-s">'http://localhost:8080'</span>,
+    timeout: <span class="tk-n">30000</span>  <span class="tk-c">// 后台接口超时时间</span>
+})
+<span class="tk-c">// request 拦截器</span>
+<span class="tk-c">// 可以自请求发送前对请求做一些处理</span>
+request.interceptors.request.<span class="tk-f">use</span>(config =&gt; {
+    config.headers[<span class="tk-s">'Content-Type'</span>] = <span class="tk-s">'application/json;charset=utf-8'</span>;
+    <span class="tk-k">return</span> config
+}, error =&gt; {
+    <span class="tk-k">return</span> Promise.<span class="tk-f">reject</span>(error)
+});
+
+<span class="tk-c">// response 拦截器</span>
+<span class="tk-c">// 可以在接口响应后统一处理结果</span>
+request.interceptors.response.<span class="tk-f">use</span>(
+    response =&gt; {
+        <span class="tk-k">let</span> res = response.data;
+        <span class="tk-c">// 兼容服务端返回的字符串数据</span>
+        <span class="tk-k">if</span> (<span class="tk-k">typeof</span> res === <span class="tk-s">'string'</span>) {
+            res = res ? JSON.<span class="tk-f">parse</span>(res) : res
+        }
+        <span class="tk-k">return</span> res;
+    },
+    error =&gt; {
+        <span class="tk-c">// 网络错误 / 跨域被拦截时 error.response 是 undefined，先做保护判断</span>
+        <span class="tk-k">const</span> status = error.response ? error.response.status : <span class="tk-k">null</span>
+        <span class="tk-k">if</span> (status === <span class="tk-n">404</span>) {
+            ElMessage.<span class="tk-f">error</span>(<span class="tk-s">'未找到请求接口'</span>)
+        } <span class="tk-k">else</span> <span class="tk-k">if</span> (status === <span class="tk-n">500</span>) {
+            ElMessage.<span class="tk-f">error</span>(<span class="tk-s">'系统异常，请查看后端控制台报错'</span>)
+        } <span class="tk-k">else</span> <span class="tk-k">if</span> (status === <span class="tk-k">null</span>) {
+            ElMessage.<span class="tk-f">error</span>(<span class="tk-s">'无法连接后端服务，请检查后端是否启动或跨域是否配置成功'</span>)
+            console.<span class="tk-f">error</span>(error.message)
+        } <span class="tk-k">else</span> {
+            console.<span class="tk-f">error</span>(error.message)
+        }
+        <span class="tk-k">return</span> Promise.<span class="tk-f">reject</span>(error)
+    }
+)
+<span class="tk-k">export</span> <span class="tk-k">default</span> request</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>axios.create({...})</code> 不是发请求，而是造一个"预设好配置的实例"。之后 <code>request.get('/employee/selectPage')</code> 的真实地址是 <code>baseURL + url</code>，页面里只写半截路径。</li><li><code>timeout: 30000</code> 单位是毫秒，超时走的是 <code>error</code> 分支，不会返回 <code>code:500</code>，别把"超时"和"后端报错"混为一谈。</li><li>请求拦截器里设 <code>Content-Type: application/json;charset=utf-8</code>：POST/PUT 的 JSON 体能不能被 <code>@RequestBody</code> 认出来，全靠这个头；GET 没有请求体，这个头对它没有影响。</li><li>响应拦截器的成功分支只 <code>return response.data</code>：axios 原本返回的是 <code>{data, status, headers, config}</code> 这层壳，拆掉壳以后页面里的 <code>res</code> 直接就是后端 <code>Result</code> 对象，所以取列表写 <code>res.data.list</code>，不是 <code>res.data.data.list</code>。</li><li><code>typeof res === 'string'</code> 这层判断兼容"后端直接返回字符串"的老接口，能解析就解析，解析不了原样返回。</li><li><code>error.response ? ... : null</code> 是仓库比讲义多出来的一层保护：跨域被浏览器拦下、后端没启动、断网时，<code>error.response</code> 根本不存在，照讲义原样写 <code>error.response.status</code> 会先抛一个 <code>TypeError</code>，把真正的错误盖住。</li><li><code>export default request</code> 配合 <code>import request from '@/utils/request.js'</code>，全项目共用同一个实例。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>封装本体在 <code>D:\my-project\xm-pro\vue\src\utils\request.js</code>：第 4~7 行是实例与 <code>baseURL</code>，第 10~15 行是请求拦截器，第 19~43 行是响应拦截器（第 30 行就是那层判空保护）。调用方看 <code>D:\my-project\xm-pro\vue\src\views\Employee.vue</code> 第 92 行引入、第 104~115 行的 <code>load()</code>；讲义里那个测试实例在 <code>D:\my-project\xm-pro\vue\src\views\Home.vue</code> 第 17 行、第 24~28 行。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 页面拿到 <code>res</code> 却是 <code>undefined</code> → 拦截器里写成了 <code>return response</code>，或者自己又包了一层 → 先 <code>console.log(res)</code> 看结构，再决定写 <code>res.data</code> 还是 <code>res.data.data</code>。② 后端明明启动了，控制台却报 <code>Cannot read properties of undefined (reading 'status')</code> → 讲义版拦截器没有判空，跨域时 <code>error.response</code> 不存在 → 换成仓库第 30 行的写法。③ 改了 <code>baseURL</code> 请求还打旧地址 → 页面里绕过封装直接 <code>import axios</code> 了 → 全局搜 <code>axios.</code>，只保留 <code>request.js</code> 里那一处。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>页面里 <code>then(res =&gt; ...)</code> 拿到的 <code>res</code>，为什么取后端数据写 <code>res.data.list</code>，而不是 <code>res.data.data.list</code>？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>因为响应拦截器已经 <code>return response.data</code>，把 axios 的响应壳（<code>status</code> / <code>headers</code> / <code>config</code> / <code>data</code>）拆掉了，<code>res</code> 直接就是后端返回的 <code>Result</code> 对象：<code>{code, msg, data}</code>。所以 <code>res.data</code> 是 <code>Result.data</code>，列表就在里面。如果拦截器返回的是整个 <code>response</code>，那才需要 <code>res.data.data.list</code>——<strong>先看拦截器，再决定拆几层</strong>。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-09-2" data-id="09:2.2">
+  <div class="kp-head">
+    <span class="kp-num">2.2</span>
+    <h3>跨域与 CorsConfig</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"一、4 解决跨域问题：在 Springboot 里面设置统一的跨域处理"，做法是"在指定位置新建类：<strong>CorsConfig</strong>"，并给了整段 <code>@Configuration</code> + <code>CorsFilter</code> 的代码，四个 <code>addAllowed...</code> 后面分别标着 1、2、3、4。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>浏览器的同源策略像小区门禁：前端住在 5173 号楼，后端在 8080 号楼，虽然都叫 localhost，端口不同就算两个小区。浏览器允许大家把信送过去，但不许把回信带回来，于是控制台报 CORS，而后端日志显示接口其实执行了。解法是后端在响应头里盖一个章 <code>Access-Control-Allow-Origin</code>，浏览器看见章才放行。<code>CorsFilter</code> 就是站在所有 Controller 前面的门卫，统一盖章；对 PUT、DELETE、JSON 这种"非简单请求"，浏览器还会先派一个 OPTIONS 探路，门卫也得答得上来。预检先问"我能不能用 PUT 发 JSON"，后端答"可以"，真正的请求才会发出——所以跨域出问题时，常常是请求根本没到 Controller。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="25"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">25 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</div><pre><code><span class="tk-k">package</span> com.example.common;
+
+<span class="tk-k">import</span> org.springframework.context.annotation.Bean;
+<span class="tk-k">import</span> org.springframework.context.annotation.Configuration;
+<span class="tk-k">import</span> org.springframework.web.cors.CorsConfiguration;
+<span class="tk-k">import</span> org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+<span class="tk-k">import</span> org.springframework.web.filter.CorsFilter;
+
+<span class="tk-c">/**
+ * 跨域配置
+ */</span>
+@Configuration
+<span class="tk-k">public</span> <span class="tk-k">class</span> CorsConfig {
+
+    @Bean
+    <span class="tk-k">public</span> CorsFilter <span class="tk-f">corsFilter</span>() {
+        UrlBasedCorsConfigurationSource source = <span class="tk-k">new</span> <span class="tk-f">UrlBasedCorsConfigurationSource</span>();
+        CorsConfiguration corsConfiguration = <span class="tk-k">new</span> <span class="tk-f">CorsConfiguration</span>();
+        corsConfiguration.<span class="tk-f">addAllowedOrigin</span>(<span class="tk-s">"*"</span>); <span class="tk-c">// 1 设置访问源地址</span>
+        corsConfiguration.<span class="tk-f">addAllowedHeader</span>(<span class="tk-s">"*"</span>); <span class="tk-c">// 2 设置访问源请求头</span>
+        corsConfiguration.<span class="tk-f">addAllowedMethod</span>(<span class="tk-s">"*"</span>); <span class="tk-c">// 3 设置访问源请求方法</span>
+        source.<span class="tk-f">registerCorsConfiguration</span>(<span class="tk-s">"/**"</span>, corsConfiguration); <span class="tk-c">// 4 对接口配置跨域设置</span>
+        <span class="tk-k">return</span> <span class="tk-k">new</span> <span class="tk-f">CorsFilter</span>(source);
+    }
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>@Configuration</code> 告诉 Spring 这是一个配置类，启动时扫描并执行里面的 <code>@Bean</code> 方法；类必须放在启动类同包或子包下，否则扫描不到。</li><li><code>@Bean</code> 把 <code>CorsFilter</code> 注册成容器里的 Bean，Spring Boot 会把它挂进 Servlet 过滤器链，位置在 <code>DispatcherServlet</code> <strong>之前</strong>。</li><li><code>UrlBasedCorsConfigurationSource</code> 是"按路径配规则"的注册表，第 4 步 <code>registerCorsConfiguration("/**", ...)</code> 表示所有接口都套这份规则。</li><li><code>addAllowedOrigin("*")</code> 允许任何来源发起请求。教学项目够用；将来如果要在请求里带 Cookie，<code>*</code> 就不合法了，必须写具体域名。</li><li><code>addAllowedHeader("*")</code> 放行任意请求头。少了这一条，带 <code>Content-Type: application/json</code> 的预检会被拒。</li><li><code>addAllowedMethod("*")</code> 放行 GET/POST/PUT/DELETE/OPTIONS。只配 GET/POST 的话，编辑保存的 PUT 会在预检阶段就失败。</li><li>返回 <code>new CorsFilter(source)</code> 而不是在 Controller 上贴 <code>@CrossOrigin</code>：过滤器在进入 Spring MVC 之前就处理 OPTIONS 并直接返回，连"接口不存在"的 404 响应也能带上跨域头。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>配置类在 <code>D:\my-project\xm-pro\springboot\src\main\java\com\example\common\CorsConfig.java</code> 第 13~24 行，四个 <code>addAllowed</code> 正好对应讲义标注的 1~4。它保护的前端在 <code>D:\my-project\xm-pro\vue\src\utils\request.js</code> 第 5 行，<code>baseURL</code> 指向 8080；前端 dev server 默认起在 5173（<code>D:\my-project\xm-pro\vue\vite.config.js</code> 第 18~23 行只配了 watch，没改端口，用的就是默认值）。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 浏览器红字报 CORS，可后端控制台显示 SQL 已经执行、数据也查到了 → 响应头没盖章，浏览器把回信扔了 → 加 <code>CorsConfig</code> 并<strong>重启后端</strong>。② GET 正常，一保存（PUT）或一删除（DELETE）就跨域 → 预检 OPTIONS 没被允许 → <code>addAllowedMethod("*")</code>，至少要把 PUT/DELETE/OPTIONS 补上。③ 配置类写了还是不生效 → 包放在 <code>com.example</code> 之外，启动类根本扫不到 → 确认路径是 <code>com/example/common/CorsConfig.java</code>，改完重启一次。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>浏览器地址栏直接敲 <code>http://localhost:8080/employee/selectAll</code> 能返回 JSON，页面里 axios 调同一个地址却报 CORS，为什么？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>地址栏输入是"导航请求"，不受同源策略约束；axios 是脚本发起的跨域请求，浏览器必须检查响应头里有没有 <code>Access-Control-Allow-Origin</code>。<strong>能返回 JSON 说明接口本身是通的</strong>，问题只在跨域配置或没重启。所以看到 CORS 别去改 SQL，先看响应头。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-09-3" data-id="09:2.3">
+  <div class="kp-head">
+    <span class="kp-num">2.3</span>
+    <h3>查询全部与条件查询</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"三、条件查询"第 1 条是<strong>"实现按姓名这个条件进行查询"</strong>；第 3 条写：<strong>"在查询框中输入要查询的姓名，点'查询'，系统就会把姓名放到 Http 请求中"</strong>；第 4 条紧接着问：<strong>"此时，前端已经发送了请求，那问题是：后端如何拿到这个请求，接下来进行如下处理"</strong>。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>查询像点菜：前端把"我要姓名含 thc 的"写在 URL 的 <code>?name=thc</code> 上，相当于在菜单边上贴张便签；后端不用逐字去抠 URL，Spring MVC 看到方法参数是个 <code>Employee</code> 对象，就按"参数名等于属性名"自动调用 <code>setName("thc")</code>，把便签内容填进对象。于是 Controller 拿到的是一个"只有 name 有值、其他字段全是 null"的 Employee——它既是查询条件，也是动态 SQL 的开关：有值就拼这段条件，没值就跳过。查询全部和条件查询因此共用一个接口，后面分页也复用同一个实体。记住一句话：URL 上每一个键值对，都是给实体属性准备的一格抽屉，名字对上就自动放进去。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="16"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">16 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16</div><pre><code>@RestController
+@<span class="tk-f">RequestMapping</span>(<span class="tk-s">"/employee"</span>)
+<span class="tk-k">public</span> <span class="tk-k">class</span> EmployeeController {
+
+    @Resource
+    <span class="tk-k">private</span> EmployeeService employeeService;
+
+    <span class="tk-c">/**
+     * 查询所有的数据
+     */</span>
+    @<span class="tk-f">GetMapping</span>(<span class="tk-s">"/selectAll"</span>)
+    <span class="tk-k">public</span> Result <span class="tk-f">selectAll</span>(Employee employee) {
+        List&lt;Employee&gt; list = employeeService.<span class="tk-f">selectAll</span>(employee);
+        <span class="tk-k">return</span> Result.<span class="tk-f">success</span>(list);
+    }
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>@RestController</code> 等于 <code>@Controller</code> 加 <code>@ResponseBody</code>，方法返回的 <code>Result</code> 会被 Jackson 直接转成 JSON，不会去找页面。</li><li>类上的 <code>@RequestMapping("/employee")</code> 只是前缀，和方法上的 <code>@GetMapping("/selectAll")</code> 拼起来才是 <code>GET /employee/selectAll</code>。</li><li><code>selectAll(Employee employee)</code> 没写任何注解：Spring 对"自定义对象"类型的参数走模型属性绑定，URL 上 <code>?name=thc&amp;sex=男</code> 会依次调用 <code>setName</code>、<code>setSex</code>；没传的字段保持 null。</li><li>如果参数是 <code>String</code>、<code>Integer</code> 这类简单类型，就必须写 <code>@RequestParam</code>，否则拿不到值——这是"对象参数不用注解"的边界。</li><li><code>employeeService.selectAll(employee)</code> 把条件对象原样往下传，Controller 里一个 if 都不写；分层的意思就是"收发的只管收发"。</li><li><code>Result.success(list)</code> 把 List 装进 <code>data</code>；查不到数据不是错误，返回的是 <code>data: []</code>，前端表格显示"暂无数据"，不要写成 <code>Result.error()</code>。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>接口在 <code>D:\my-project\xm-pro\springboot\src\main\java\com\example\controller\EmployeeController.java</code> 第 22~26 行；Service 在 <code>...\service\EmployeeService.java</code> 第 18~20 行；真正带条件的 SQL 在 <code>...\resources\mapper\EmployeeMapper.xml</code> 第 8~16 行。前端输入框和请求参数在 <code>D:\my-project\xm-pro\vue\src\views\Employee.vue</code> 第 5~14 行、第 104~115 行（<code>params</code> 里的 <code>name</code> 就是那个便签）。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 输入姓名点查询没反应 → 前端 <code>params</code> 里的 key 写成了 <code>username</code> 或 <code>employeeName</code>，实体没有这个属性 → 必须和实体属性名一致，打开 Network 看 Query String 里到底是什么。② 在第 3 页输入姓名点"查询"，表格直接空了 → <code>pageNum</code> 还停在第 3 页，过滤后只剩 1 页 → 查询前把 <code>data.pageNum</code> 置 1（仓库的 <code>reset()</code> 做了，直接点"查询"时没做，自己补一句）。③ 后端返回空数组但数据库有数据 → 参数根本没绑上（比如前端传的是 JSON body 而接口是 GET）→ 看后端日志的 <code>Parameters:</code>，为空就是没收到。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>前端发 <code>GET /employee/selectAll?name=thc</code>，后端方法签名是 <code>selectAll(Employee employee)</code>，<code>employee.getName()</code> 是谁赋的值？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>是 Spring MVC 的参数解析器（<code>ServletModelAttributeMethodProcessor</code>）按"请求参数名 = 属性名"反射调用 <code>setName("thc")</code> 赋的。自定义对象默认走模型属性绑定，所以不用 <code>@RequestParam</code>；简单类型（String、Integer）没有属性可绑，才必须显式加注解。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-09-4" data-id="09:2.4">
+  <div class="kp-head">
+    <span class="kp-num">2.4</span>
+    <h3>分页查询与 PageHelper</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"二、分页查询"第 1 条要求<strong>"新建员工管理页面，显示的内容与数据库中 Employee 表的字段一致"</strong>，代码参见"参考代码：分页查询 Employee.vue 代码.txt"；第 2 条是<strong>"修改 Manage.vue，增加'员工管理'栏目，并配置路由"</strong>。分页插件本身在实训8 的"五、分页查询"里已经装过。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>分页不是"前端把一万条切成十条"，而是"后端只给这一页的十条"。像去图书馆借书：你说"第 2 页、每页 10 本"，管理员不会把整个书库推给你再让你自己数，而是直接取第 11~20 本，同时告诉你"库里一共 137 本"。PageHelper 就是这个管理员：<code>startPage(2, 10)</code> 先在 ThreadLocal 里放一张便条，下一次 MyBatis 查询时它偷偷把 SQL 改成带 <code>LIMIT</code> 的形式，再补一条 <code>COUNT(*)</code> 算出总数，一起塞进 <code>Page</code> 对象；<code>PageInfo.of(list)</code> 把"这一页的数据 + 总数 + 页码"打包成前端认识的结构。所以分页是"数据库少给"，不是"前端少显示"——数据量再大，网络和浏览器都不会被拖垮。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="5"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">5 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5</div><pre><code><span class="tk-k">public</span> PageInfo&lt;Employee&gt; <span class="tk-f">selectPage</span>(Employee employee, Integer pageNum, Integer pageSize) {
+    PageHelper.<span class="tk-f">startPage</span>(pageNum, pageSize);
+    List&lt;Employee&gt; list = employeeMapper.<span class="tk-f">selectAll</span>(employee);
+    <span class="tk-k">return</span> PageInfo.<span class="tk-f">of</span>(list);
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>PageHelper.startPage(pageNum, pageSize)</code> 只对<strong>紧挨着的下一条</strong> MyBatis 查询生效，中间插一句别的查询，分页就跑到别人身上了。</li><li><code>employeeMapper.selectAll(employee)</code> 的静态类型是 <code>List</code>，运行时其实是 <code>Page</code>（ArrayList 的子类），总数就藏在这个对象里，所以 <code>PageInfo.of(list)</code> 拿得到 <code>total</code>。</li><li><code>PageInfo</code> 常用字段：<code>total</code> 总条数、<code>list</code> 当前页数据、<code>pageNum</code>、<code>pageSize</code>、<code>pages</code> 总页数。前端只取前两个。</li><li>SQL 里千万不要自己再写 <code>LIMIT</code>：PageHelper 会再拼一次，变成 <code>LIMIT ? LIMIT ?</code>，直接语法错。</li><li>Controller 的 <code>@RequestParam(defaultValue = "1")</code> 保证前端不传时也有默认值，避免 <code>null</code> 拆箱成 <code>int</code> 时抛 NPE。</li><li>配套的 <code>ORDER BY employee.id DESC</code> 决定"谁在第一页"：新插入的记录 id 最大，倒序才排在最前面，新增后一眼能看到。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>分页逻辑在 <code>D:\my-project\xm-pro\springboot\src\main\java\com\example\service\EmployeeService.java</code> 第 30~34 行，接口在 <code>...\controller\EmployeeController.java</code> 第 43~49 行，插件坐标在 <code>D:\my-project\xm-pro\springboot\pom.xml</code> 第 43~54 行。前端分页器在 <code>D:\my-project\xm-pro\vue\src\views\Employee.vue</code> 第 39~50 行，取数在 <code>load()</code> 第 112~113 行。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 一查就把全表返回，SQL 日志里没有 <code>LIMIT</code> → <code>startPage</code> 后面没紧跟查询，或插件依赖没加 → 看控制台 <code>Preparing:</code> 那条到底长什么样。② 表格有数据，分页器却显示共 0 条 → 前端取的是 <code>res.data.records</code>（那是 MyBatis-Plus 的字段名），PageInfo 里叫 <code>list</code> → 改成 <code>res.data.list</code>、<code>res.data.total</code>。③ 启动报 <code>NoSuchMethodError</code> 或 MyBatis 版本冲突 → PageHelper 自带的旧版 mybatis 覆盖了 starter 的 → 在 pom 里排除 <code>org.mybatis:mybatis</code>（仓库第 48~53 行就是这么做的）。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p><code>PageHelper.startPage(2, 10)</code> 之后先查了一次员工，又查了一次部门，分页会作用在哪次查询上？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>只作用在<strong>紧挨着的员工查询</strong>上，第二次部门查询不再分页。便条用完即清；但如果第一次查询压根没执行（比如前面抛了异常），便条会留在 ThreadLocal 里，传染给后面的查询。所以 <code>startPage</code> 必须紧贴目标查询，中间别塞别的数据库操作。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-09-5" data-id="09:2.5">
+  <div class="kp-head">
+    <span class="kp-num">2.5</span>
+    <h3>动态 SQL：where 与 if</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>讲义在"三、条件查询"只给了两步：<strong>"2. 在 Employee 中添加相应代码"</strong>、<strong>"4. 此时，前端已经发送了请求……接下来进行如下处理"</strong>，具体的 SQL 拼写在配图里，文字部分没有展开。这一块正好是本讲要补的：条件到底怎么"按需"拼进去。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>动态 SQL 像按需拼装的家具：条件有几个就装几块板，没选的板不装。<code>&lt;if test="name != null and name != ''"&gt;</code> 就是"姓名过滤板"的开关；<code>&lt;where&gt;</code> 是聪明的底板，它会自动补上 <code>WHERE</code>，还会把开头多出来的那个 <code>AND</code> 削掉。好处是既不用在 Java 里拿字符串拼 SQL（容易漏空格、招注入），又能让"查全部"和"按姓名查"共用同一条语句：条件为空时 <code>&lt;where&gt;</code> 整块消失，SQL 退化成一条普通的全表查询。这两个标签都在生成 SQL 之前被解析，最终发给数据库的仍是一条完整、合法的 SQL 字符串。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="xml" data-lines="9"><div class="code-bar"><span class="code-lang">xml</span><span class="code-count">9 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9</div><pre><code><span class="tk-p">&lt;</span><span class="tk-t">select</span> <span class="tk-a">id</span>=<span class="tk-s">"selectAll"</span> <span class="tk-a">resultType</span>=<span class="tk-s">"com.example.entity.Employee"</span><span class="tk-p">&gt;</span>
+    SELECT * FROM employee
+    <span class="tk-p">&lt;</span><span class="tk-t">where</span><span class="tk-p">&gt;</span>
+        <span class="tk-p">&lt;</span><span class="tk-t">if</span> <span class="tk-a">test</span>=<span class="tk-s">"name != null and name != ''"</span><span class="tk-p">&gt;</span>
+            employee.name LIKE CONCAT('%', #{name}, '%')
+        <span class="tk-p">&lt;/</span><span class="tk-t">if</span><span class="tk-p">&gt;</span>
+    <span class="tk-p">&lt;/</span><span class="tk-t">where</span><span class="tk-p">&gt;</span>
+    ORDER BY employee.id DESC
+<span class="tk-p">&lt;/</span><span class="tk-t">select</span><span class="tk-p">&gt;</span></code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>&lt;select id="selectAll"&gt;</code> 的 <code>id</code> 必须和 <code>EmployeeMapper</code> 里的方法名一字不差，MyBatis 靠它把接口调用和 SQL 对上号。</li><li><code>resultType="com.example.entity.Employee"</code> 指定每一行映射成什么对象；字段名和下划线列名的对应靠 <code>map-underscore-to-camel-case: true</code>。</li><li><code>&lt;where&gt;</code> 只有在内部至少一个 <code>&lt;if&gt;</code> 成立时才输出 <code>WHERE</code>；全不成立就整块消失，不会留下一个孤零零的 <code>WHERE</code>。</li><li><code>test="name != null and name != ''"</code>：判 null 防"没传这个参数"，判空串防"传了但输入框是空的"（清空输入框后 axios 会带一个 <code>name=</code>）。</li><li><code>LIKE CONCAT('%', #{name}, '%')</code>：<code>#{}</code> 会被编译成 <code>?</code> 走预编译，值里的单引号破坏不了 SQL；百分号在数据库端用 <code>CONCAT</code> 拼，别写成 <code>'%#{name}%'</code>，那样占位符根本不生效。</li><li>现在只有一个条件，<code>&lt;where&gt;</code> 看着有点多余，但它是给后面加 <code>sex</code>、<code>age</code> 留的插槽：加条件时只需再写一个 <code>&lt;if&gt;</code>，前面的结构一个字都不用动。</li><li><code>ORDER BY</code> 放在 <code>&lt;where&gt;</code> 外面：排序不是过滤条件，塞进 <code>&lt;if&gt;</code> 里会导致"有姓名时排序、没姓名时不排序"。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>这段 SQL 在 <code>D:\my-project\xm-pro\springboot\src\main\resources\mapper\EmployeeMapper.xml</code> 第 8~16 行；接口声明在 <code>...\mapper\EmployeeMapper.java</code> 第 13 行；<code>mapper-locations</code> 和 SQL 日志开关在 <code>D:\my-project\xm-pro\springboot\src\main\resources\application.yml</code> 第 12~18 行（第 17 行 <code>StdOutImpl</code> 就是看最终 SQL 的窗口）。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 不传 name 反而一条都查不到 → <code>test</code> 只写了 <code>name != ''</code>，null 也能通过这个判断，最后拼出 <code>LIKE NULL</code> → 必须写成 <code>name != null and name != ''</code>。② 报 <code>You have an error in your SQL syntax ... near 'AND'</code> → 多个 <code>&lt;if&gt;</code> 直接拼在 <code>WHERE</code> 后面，第一个条件前多了一个 <code>AND</code>，或者干脆漏了 <code>&lt;where&gt;</code> → 用 <code>&lt;where&gt;</code> 包住所有 <code>&lt;if&gt;</code>。③ 图省事写成 <code>${name}</code> → 字符串拼接，带引号就报错，还有注入风险 → 一律 <code>#{}</code>，模糊查询用 <code>CONCAT</code> 拼百分号。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>把 <code>&lt;where&gt;</code> 去掉、只留 <code>&lt;if&gt;</code>，当 name 有值时最终 SQL 会变成什么样？错在哪？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>会变成 <code>SELECT * FROM employee name LIKE ... ORDER BY ...</code>——<strong>少了 WHERE</strong>，直接语法错。如果有两个 <code>&lt;if&gt;</code> 都成立，第一个条件前面还会多一个 <code>AND</code>。<code>&lt;where&gt;</code> 的职责就两条：有条件时补 <code>WHERE</code>，并削掉开头多余的 <code>AND</code>/<code>OR</code>。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-09-6" data-id="09:2.6">
+  <div class="kp-head">
+    <span class="kp-num">2.6</span>
+    <h3>新增记录</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"四、增加记录"先列了四个动词：<strong>"get：查询操作、post：新增操作、put：修改操作、delete：删除操作"</strong>，然后四步：<strong>"1. 在 EmployeeController 中，写上 add() 方法"</strong>一直到<strong>"4. 在 EmployeeMapper.xml 中，写上插入语句"</strong>；中间专门警告：<strong>"注意：数据库的表名要用反引号括起来：<code>employee</code>"</strong>；前端 <code>save()</code> 里还写着<strong>"新增后一定要重新加载最新的数据"</strong>。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>新增像填表投递：前端把整个表单对象序列化成 JSON，POST 到 <code>/employee/add</code>；<code>@RequestBody</code> 让 Spring 用 Jackson 把 JSON 反序列化成 Employee 对象，而不是一个个 <code>@RequestParam</code> 去接。真正落库靠 <code>&lt;insert&gt;</code>：列名里故意不写 id，因为 id 是自增主键，由 MySQL 发号；<code>useGeneratedKeys="true" keyProperty="id"</code> 是把刚发的号抄回 Java 对象的 id 字段——没有它，插完的记录在内存里还是"没有身份证的人"。最后前端必须 <code>load()</code> 重新查一次，因为页面上的表格只是上一次查询的快照，数据库变了它不会自己变。反过来，新增永远不该由前端指定主键：前端传了 id，反而会和自增机制打架。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="xml" data-lines="4"><div class="code-bar"><span class="code-lang">xml</span><span class="code-count">4 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4</div><pre><code><span class="tk-p">&lt;</span><span class="tk-t">insert</span> <span class="tk-a">id</span>=<span class="tk-s">"insert"</span> <span class="tk-a">useGeneratedKeys</span>=<span class="tk-s">"true"</span> <span class="tk-a">keyProperty</span>=<span class="tk-s">"id"</span><span class="tk-p">&gt;</span>
+    INSERT INTO employee (name, sex, no, age, description)
+    VALUES (#{name}, #{sex}, #{no}, #{age}, #{description})
+<span class="tk-p">&lt;/</span><span class="tk-t">insert</span><span class="tk-p">&gt;</span></code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>id="insert"</code> 对应 <code>EmployeeMapper.insert(Employee employee)</code>，方法名改了这里必须跟着改。</li><li>显式写出列名 <code>(name, sex, no, age, description)</code>：顺序和 <code>VALUES</code> 一一对应；不写列名就得按表结构给全部字段赋值，以后加一列就崩。</li><li>列名里没有 <code>id</code>：它是 <code>AUTO_INCREMENT</code>，交给数据库生成，前端传不传都不影响。</li><li><code>#{name}</code> 编译成 <code>?</code> 并调用对应的 <code>setString</code>；<code>age</code> 是 <code>Integer</code>，没填时写进去的是 <code>NULL</code> 而不是 0。</li><li><code>useGeneratedKeys="true"</code> 告诉 JDBC"我要回填自增主键"，<code>keyProperty="id"</code> 指定填回对象的哪个属性。</li><li><code>parameterType</code> 可以省略：MyBatis 能从接口方法参数推断出类型；讲义写了全限定类名，跟省略是等价的。</li><li>表名 <code>employee</code> 建议加反引号：MySQL 里有些词是关键字，加引号最稳，讲义那句警告就是为这个。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>SQL 在 <code>D:\my-project\xm-pro\springboot\src\main\resources\mapper\EmployeeMapper.xml</code> 第 18~21 行；Controller 在 <code>...\controller\EmployeeController.java</code> 第 54~58 行（<code>@PostMapping({"/add", "/insert"})</code> 两个路径都收）；Service 在 <code>...\service\EmployeeService.java</code> 第 36~38 行；前端提交在 <code>D:\my-project\xm-pro\vue\src\views\Employee.vue</code> 第 128~131 行（<code>handleAdd</code> 清空表单）与第 143~153 行（<code>add()</code>）。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 后端 400，日志写 <code>Required request body is missing</code> → 前端写成了 <code>request.post(url, { params: form })</code>，或者请求头不是 json → 直接把表单对象当第二个参数传（仓库第 144 行），别包 <code>params</code>。② 提示"操作成功"但表格里没有新记录 → 没调 <code>load()</code>，或者排序是 id 正序、新记录落在最后一页 → 补 <code>load()</code>，并把 SQL 改成 <code>ORDER BY id DESC</code>。③ 插入成功但 <code>employee.getId()</code> 是 null，紧接着的编辑或返回新对象出问题 → <code>&lt;insert&gt;</code> 少写了 <code>useGeneratedKeys</code> → 补上（仓库第 18 行）。④ 中文变问号 → 库或表不是 <code>utf8mb4</code> → 建库时就指定字符集。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>把 <code>useGeneratedKeys="true" keyProperty="id"</code> 删掉，新增还能成功吗？会留下什么隐患？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>数据照样能插进去，接口也返回成功——<strong>所以这类配置最容易被忽略</strong>。区别是插入后 <code>employee.id</code> 仍是 null：如果接口要把新对象回给前端、或者插入后紧接着用 id 做关联操作，就拿不到主键。当前页面每次新增后都重新 <code>load()</code>，看起来毫无异常，但换个场景就会露馅。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-09-7" data-id="09:2.7">
+  <div class="kp-head">
+    <span class="kp-num">2.7</span>
+    <h3>修改记录</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"五、修改记录或更新记录"第 5 条讲得很直白：<strong>"当我们选择'编辑'时，打开了编辑的对话框，其实这个对话框跟'新增'的对话框是一样的，我们点击'保存'按钮，其实是新增，所以，我们要对'保存'按钮的事件重新进行编写"</strong>，并给出判断依据：<strong>"根据数据是否有 id 来判断是新增还是编辑"</strong>。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>修改和新增在页面上是"同一个弹窗、同一个保存按钮"，差别只在对象有没有 id：有 id 说明这条记录已经在库里躺着，走 <code>PUT /employee/update</code>，SQL 是 <code>UPDATE ... WHERE id = ?</code>；没 id 就是新面孔，走 POST。像给病人建档：新病人发新病历号，老病人拿旧号改内容，绝不会给老病人再发一个号。而后端的 update 必须带 WHERE id——否则一条 UPDATE 会把全表所有人都改成同一个名字，这是 SQL 里最危险的一类手误。为什么用 id 判断？因为姓名可以重名、工号也可能填错，只有主键能唯一确定"这一行是谁"。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="xml" data-lines="9"><div class="code-bar"><span class="code-lang">xml</span><span class="code-count">9 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9</div><pre><code><span class="tk-p">&lt;</span><span class="tk-t">update</span> <span class="tk-a">id</span>=<span class="tk-s">"updateById"</span><span class="tk-p">&gt;</span>
+    UPDATE employee
+    SET name = #{name},
+        sex = #{sex},
+        no = #{no},
+        age = #{age},
+        description = #{description}
+    WHERE id = #{id}
+<span class="tk-p">&lt;/</span><span class="tk-t">update</span><span class="tk-p">&gt;</span></code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>id="updateById"</code> 对应 <code>EmployeeMapper.updateById(Employee employee)</code>，名字对不上就是 <code>BindingException</code>。</li><li><code>SET</code> 里列出所有可编辑字段，等于"整行覆盖"：前端必须把完整对象传回来，所以编辑前一定要先回显整行数据。</li><li>每个赋值后面的逗号只在中间几个字段有，最后一个 <code>description</code> 后面<strong>不能有逗号</strong>，多一个就语法错。</li><li><code>WHERE id = #{id}</code> 是安全阀：id 为 null 时条件恒不成立，影响 0 行——不会误伤全表，但会出现"提示成功却没变化"。</li><li>Controller 上是 <code>@PutMapping("/update")</code> 配 <code>@RequestBody</code>，与前端的 <code>request.put</code> 必须成对，写成 <code>@PostMapping</code> 就是 405。</li><li>前端 <code>handleUpdate(row)</code> 用 <code>JSON.parse(JSON.stringify(row))</code> 深拷贝：如果直接 <code>data.form = row</code>，弹窗里一改，表格那一行立刻跟着变（同一个对象引用），点"取消"也回不去。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>SQL 在 <code>D:\my-project\xm-pro\springboot\src\main\resources\mapper\EmployeeMapper.xml</code> 第 23~31 行；Controller 在 <code>...\controller\EmployeeController.java</code> 第 63~67 行；Service 在 <code>...\service\EmployeeService.java</code> 第 40~42 行；前端回显与分流在 <code>D:\my-project\xm-pro\vue\src\views\Employee.vue</code> 第 133~137 行（<code>handleUpdate</code>）、第 139~141 行（<code>save</code> 三元判断）、第 155~165 行（<code>update()</code>）。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 点保存报 405 Method Not Allowed → 前端 <code>put</code>，后端写成了 <code>@PostMapping</code>（或反过来）→ 动词与注解一一对应。② 改 A 行时 B 行也跟着变，或者点了取消表格却被改脏 → 直接把 row 赋给 form，引用共享 → 深拷贝（仓库第 135 行）。③ 提示成功但数据没变 → 表单里没有 id（回显漏了，或被 <code>data.form = {}</code> 覆盖）→ Network 里看 Payload 有没有 id，后端看日志 <code>Updates: 0</code>。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>编辑弹窗打开后什么都不改直接点"取消"，表格里的数据为什么不会变？仓库靠什么保证的？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>因为 <code>handleUpdate</code> 做了深拷贝，<code>data.form</code> 是一个新对象，弹窗里的 <code>v-model</code> 改的是副本；取消只是把 <code>formVisible</code> 设成 false，原 <code>row</code> 一动没动。若浅拷贝或直接赋值，改副本就等于改原行，取消也回滚不了——<strong>这就是那一行 <code>JSON.parse(JSON.stringify(row))</code> 的全部意义</strong>。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-09-8" data-id="09:2.8">
+  <div class="kp-head">
+    <span class="kp-num">2.8</span>
+    <h3>删除记录</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"六、删除记录"四步：<strong>"1. 在 EmployeeController 中，写上 deleteById() 方法"</strong>、Service、Mapper、<strong>"4. 在 Employee.vue 中"</strong>；前面"四、增加记录"的动词表里也写明 <strong>"delete：删除操作"</strong>。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>删除像按号销户：id 是唯一钥匙，前端把 id 拼在 URL 路径上（<code>/employee/deleteById/3</code>），后端用 <code>@PathVariable</code> 从路径里抠出来，Mapper 用注解写一条 <code>DELETE FROM employee WHERE id = ?</code>。为什么点删除要先弹确认框？因为 HTTP 的 DELETE 没有回收站，点错就是永久消失。<code>ElMessageBox.confirm</code> 返回 Promise，点"确定"才进 <code>then</code> 发请求，点"取消"走 <code>catch</code>——catch 里必须写个空函数把这次拒绝吞掉，否则控制台会多一条红色的未处理异常。删除是四个动词里步骤最少的，也是最不可逆的。删除用路径参数而不是请求体，是因为 DELETE 带 body 在很多服务器和代理上会被直接丢掉，放在 URL 里最稳。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="java" data-lines="5"><div class="code-bar"><span class="code-lang">java</span><span class="code-count">5 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5</div><pre><code>@<span class="tk-f">DeleteMapping</span>({<span class="tk-s">"/deleteById/{id}"</span>, <span class="tk-s">"/delete/{id}"</span>})
+<span class="tk-k">public</span> Result <span class="tk-f">deleteById</span>(@PathVariable Integer id) {
+    employeeService.<span class="tk-f">deleteById</span>(id);
+    <span class="tk-k">return</span> Result.<span class="tk-f">success</span>();
+}</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>@DeleteMapping</code> 只接受 DELETE 请求；前端必须用 <code>request.delete</code>，用浏览器地址栏敲是 GET，直接 405。</li><li><code>{"/deleteById/{id}", "/delete/{id}"}</code> 一个方法映射两个路径，讲义叫 <code>deleteById</code>、仓库另有 <code>delete</code> 的写法，两个都收，前端改哪个都不会 404。</li><li><code>@PathVariable Integer id</code> 从 URL 模板 <code>{id}</code> 里取值并转成 Integer；路径里传了 <code>abc</code> 会返回 400（类型转换失败），不是 500。</li><li><code>employeeService.deleteById(id)</code> 一路传到 Mapper 的 <code>@Delete</code> 注解：SQL 是 <code>DELETE FROM employee WHERE id = #{id}</code>（表名两侧要加反引号）。注解里写了 SQL，XML 里就不要再写 <code>&lt;delete&gt;</code>，两边都写会报重复映射。</li><li><code>Result.success()</code> 不带 data：前端只需要一个 <code>code</code> 判断成败，删完自己重新查。</li><li>返回 void 的方法删 0 行也不报错（id 不存在时），所以"删成功"只代表 SQL 执行了，不代表真的删掉了记录。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>Controller 在 <code>D:\my-project\xm-pro\springboot\src\main\java\com\example\controller\EmployeeController.java</code> 第 72~76 行；Mapper 注解在 <code>...\mapper\EmployeeMapper.java</code> 第 25~26 行；Service 在 <code>...\service\EmployeeService.java</code> 第 44~46 行；前端确认与请求在 <code>D:\my-project\xm-pro\vue\src\views\Employee.vue</code> 第 167~179 行。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 点删除没反应，控制台一条 <code>Uncaught (in promise) cancel</code> → <code>confirm</code> 的 <code>.catch</code> 没写 → 补 <code>.catch(() =&gt; {})</code>。② 报 404 → 前端拼的是 <code>/employee/deleteById/5</code>，后端只写了 <code>@DeleteMapping("/delete")</code> → 对齐路径，以 Network 里的 Request URL 为准。③ 提示删除成功但那一行还在 → 忘了 <code>load()</code>，或者 <code>del(scope.row)</code> 传了整个对象、拼出来是 <code>[object Object]</code> → 传 <code>scope.row.id</code>。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>后端删除一个不存在的 id（比如 999），接口返回什么？前端会怎么显示？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p><code>DELETE ... WHERE id = 999</code> 影响 0 行，MyBatis 不抛异常，接口照样返回 <code>{"code":"200","msg":"请求成功"}</code>；前端提示"操作成功"，刷新后数据没有任何变化。想区分"删了 0 行"，可以把 Mapper 的返回值从 <code>void</code> 改成 <code>int</code>（影响行数），在 Service 里判断后抛 <code>CustomException</code>——这是可以自己加的改进。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-09-9" data-id="09:2.9">
+  <div class="kp-head">
+    <span class="kp-num">2.9</span>
+    <h3>前后端联调：一条请求的四层链路</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"一、3 运行前、后端的方式，后面开发都需要运行前、后端"；"一、5 测试一下，写一个简单的请求实例，在 Home.vue 中编写如下代码"；代码后面写：<strong>"在浏览器中（在空白处右键，选择'检查'）能看见这些信息"</strong>，配图就是控制台里的返回结果。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>联调就是把前端页面和后端接口这两根水管接起来：先确认两边都通水（服务都起着），再顺着管道找漏点。一条请求要过五道门：Vue 组件的事件 → axios（拼 baseURL、过拦截器）→ 浏览器（跨域预检）→ Tomcat 的 DispatcherServlet（按 URL 找 Controller 方法）→ Service → Mapper 代理 → XML 里的 SQL → MySQL；回来时 <code>Result</code> 被 Jackson 序列化成 JSON，拦截器拆壳，页面 <code>then</code> 里才拿到 <code>res</code>。任何一道门写错，现象都不一样：404 是门牌号错，405 是敲门方式错，400 是材料不对，500 是屋里着火了。排错的顺序也照这个来：先看请求有没有发出去，再看后端有没有收到，最后才看数据对不对。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="js" data-lines="13"><div class="code-bar"><span class="code-lang">js</span><span class="code-count">13 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13</div><pre><code><span class="tk-k">import</span> router <span class="tk-k">from</span> <span class="tk-s">"@/router/index.js"</span>;
+<span class="tk-k">import</span> request <span class="tk-k">from</span> <span class="tk-s">"@/utils/request.js"</span>;
+<span class="tk-k">import</span> { reactive } <span class="tk-k">from</span> <span class="tk-s">"vue"</span>;
+
+<span class="tk-k">const</span> data = <span class="tk-f">reactive</span>({
+  employeeList: []
+})
+
+request.<span class="tk-k">get</span>(<span class="tk-s">'/employee/selectAll'</span>).<span class="tk-f">then</span>(res =&gt; {
+  console.<span class="tk-f">log</span>(res)
+  data.employeeList = res.data
+  console.<span class="tk-f">log</span>(data.employeeList)
+})</code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>import request from "@/utils/request.js"</code>：<code>@</code> 是 Vite 配的 src 别名（<code>vite.config.js</code> 第 13~17 行），等价于 <code>../utils/request.js</code>。</li><li><code>reactive({ employeeList: [] })</code>：把数组变成响应式，赋值后模板才会重画；写成普通 <code>let employeeList = []</code>，数据到了页面也不动。</li><li><code>request.get('/employee/selectAll')</code> 的真实地址是 <code>http://localhost:8080/employee/selectAll</code>，前缀由 <code>baseURL</code> 提供，页面里永远只写半截。</li><li><code>.then(res =&gt; ...)</code>：<code>res</code> 已经被响应拦截器拆成 <code>Result</code> 对象，<code>res.data</code> 就是后端 <code>Result.data</code>，这里正好是 <code>List&lt;Employee&gt;</code>。</li><li><code>console.log(res)</code> 是联调第一步：先看清楚结构再写赋值，别照着记忆猜字段名。</li><li>打开 F12 的 Network 面板，一条请求要看四处：Headers（URL、Method、Status）、Payload 或 Query String、Response 的原始 JSON、Console 里的报错。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>这个测试实例在 <code>D:\my-project\xm-pro\vue\src\views\Home.vue</code> 第 15~28 行；请求封装在 <code>D:\my-project\xm-pro\vue\src\utils\request.js</code> 第 4~7 行与第 19~43 行；它打到的后端链路是 <code>...\controller\EmployeeController.java</code> 第 22~26 行 → <code>...\service\EmployeeService.java</code> 第 18~20 行 → <code>...\mapper\EmployeeMapper.java</code> 第 13 行 → <code>...\resources\mapper\EmployeeMapper.xml</code> 第 8~16 行。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① Network 里请求是红色 <code>(failed)</code>，Console 报 CORS → 后端没起或 <code>CorsConfig</code> 没生效 → 先在地址栏直接访问接口确认后端，再看响应头有没有 <code>Access-Control-Allow-Origin</code>。② 地址拼成 <code>http://localhost:8080http://localhost:8080/...</code> → 页面里写了完整地址又走 <code>baseURL</code> → 只写 <code>/employee/...</code>。③ 后端返回 200，页面却空白 → 取数层级不对（Result 里装的是 <code>PageInfo</code> 还是 <code>List</code>）→ Console 打印 <code>res</code> 对照结构。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p>点"查询"按钮毫无反应，Network 里一条请求也没有，Console 也没报错，先查哪一侧？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p>先查前端这一侧：Network 没请求，说明请求根本没发出去，与后端无关。顺序是：① Console 有没有红色运行时错误（setup 里 import 失败会让整个组件不渲染）；② 按钮的 <code>@click</code> 有没有绑到函数；③ 在函数第一行加 <code>console.log</code> 看有没有进去。三步都过了，再回头看 Network。</p></div></details><hr></div></section></div>
+</article><article class="kp rv" id="kp-09-10" data-id="09:2.10">
+  <div class="kp-head">
+    <span class="kp-num">2.10</span>
+    <h3>Employee.vue 的表格与弹窗</h3>
+    <label class="kp-done"><input type="checkbox"><span>学会了</span></label>
+  </div>
+  <div class="kp-body"><section class="blk" data-k="①"><div class="blk-tag"><i>①</i>讲义要点</div><div class="blk-body"><p>"二、1 新建员工管理页面，显示的内容与数据库中 Employee 表的字段一致"；"五、5①"解释操作列：<strong>"el-table-column：表格操作列；#default='scope' 插槽，可以通过 scope.row 获取当前行的数据，就是该行员工完整数据"</strong>；"四、5"则给出"参考代码：Employee.vue 的弹窗代码.txt"。</p></div></section><section class="blk dc" data-k="②"><div class="blk-tag"><i>②</i>核心讲解</div><div class="blk-body"><p>这个页面是后台系统的"标准件"：一张表加一个弹窗。<code>el-table</code> 负责把数组画成行，<code>:data</code> 给它什么数组它就画什么，<code>prop</code> 决定每列取对象里的哪个字段；操作列用 <code>#default="scope"</code> 插槽，<code>scope.row</code> 就是当前这一行的完整对象，所以编辑和删除能把 id 带出去。弹窗 <code>el-dialog</code> 由 <code>v-model</code> 控制显隐，里面的 <code>el-form</code> 绑的是 <code>data.form</code>：新增时清空、编辑时深拷贝，保存时看 id 分流。整页数据是单向流动的——<code>load()</code> 拉数据填 <code>data.tableData</code>，表格重画；用户改 <code>data.form</code>，保存完再 <code>load()</code>，形成闭环。表格只管展示、弹窗只管收集，两者都通过 <code>data</code> 这个响应式对象交换数据，谁也不用去碰对方的内部状态。</p></div></section><section class="blk" data-k="③"><div class="blk-tag"><i>③</i>示例演示</div><div class="blk-body"><div class="code" data-lang="vue" data-lines="26"><div class="code-bar"><span class="code-lang">vue</span><span class="code-count">26 行</span><button class="copy" type="button">复制</button></div><div class="code-body"><div class="code-ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</div><pre><code><span class="tk-p">&lt;</span><span class="tk-t">el-table</span> <span class="tk-a">:data</span>=<span class="tk-s">"data.tableData"</span> <span class="tk-a">stripe</span><span class="tk-p">&gt;</span>
+  <span class="tk-p">&lt;</span><span class="tk-t">el-table-column</span> <span class="tk-a">label</span>=<span class="tk-s">"姓名"</span> <span class="tk-a">prop</span>=<span class="tk-s">"name"</span> <span class="tk-p">/</span><span class="tk-p">&gt;</span>
+  <span class="tk-p">&lt;</span><span class="tk-t">el-table-column</span> <span class="tk-a">label</span>=<span class="tk-s">"性别"</span> <span class="tk-a">prop</span>=<span class="tk-s">"sex"</span> <span class="tk-p">/</span><span class="tk-p">&gt;</span>
+  <span class="tk-p">&lt;</span><span class="tk-t">el-table-column</span> <span class="tk-a">label</span>=<span class="tk-s">"工号"</span> <span class="tk-a">prop</span>=<span class="tk-s">"no"</span> <span class="tk-p">/</span><span class="tk-p">&gt;</span>
+  <span class="tk-p">&lt;</span><span class="tk-t">el-table-column</span> <span class="tk-a">label</span>=<span class="tk-s">"年龄"</span> <span class="tk-a">prop</span>=<span class="tk-s">"age"</span> <span class="tk-p">/</span><span class="tk-p">&gt;</span>
+  <span class="tk-p">&lt;</span><span class="tk-t">el-table-column</span> <span class="tk-a">label</span>=<span class="tk-s">"个人介绍"</span> <span class="tk-a">prop</span>=<span class="tk-s">"description"</span> <span class="tk-a">show-overflow-tooltip</span> <span class="tk-p">/</span><span class="tk-p">&gt;</span>
+  <span class="tk-p">&lt;</span><span class="tk-t">el-table-column</span> <span class="tk-a">label</span>=<span class="tk-s">"操作"</span> <span class="tk-a">width</span>=<span class="tk-s">"160"</span><span class="tk-p">&gt;</span>
+    <span class="tk-p">&lt;</span><span class="tk-t">template</span> <span class="tk-a">#default</span>=<span class="tk-s">"scope"</span><span class="tk-p">&gt;</span>
+      <span class="tk-p">&lt;</span><span class="tk-t">el-button</span> <span class="tk-a">type</span>=<span class="tk-s">"primary"</span> <span class="tk-a">@click</span>=<span class="tk-s">"handleUpdate(scope.row)"</span><span class="tk-p">&gt;</span>编辑<span class="tk-p">&lt;/</span><span class="tk-t">el-button</span><span class="tk-p">&gt;</span>
+      <span class="tk-p">&lt;</span><span class="tk-t">el-button</span> <span class="tk-a">type</span>=<span class="tk-s">"danger"</span> <span class="tk-a">@click</span>=<span class="tk-s">"del(scope.row.id)"</span><span class="tk-p">&gt;</span>删除<span class="tk-p">&lt;/</span><span class="tk-t">el-button</span><span class="tk-p">&gt;</span>
+    <span class="tk-p">&lt;/</span><span class="tk-t">template</span><span class="tk-p">&gt;</span>
+  <span class="tk-p">&lt;/</span><span class="tk-t">el-table-column</span><span class="tk-p">&gt;</span>
+<span class="tk-p">&lt;/</span><span class="tk-t">el-table</span><span class="tk-p">&gt;</span>
+
+<span class="tk-p">&lt;</span><span class="tk-t">div</span> <span class="tk-a">style</span>=<span class="tk-s">"margin-top: 15px"</span><span class="tk-p">&gt;</span>
+  <span class="tk-p">&lt;</span><span class="tk-t">el-pagination</span>
+      <span class="tk-a">v-model:current-page</span>=<span class="tk-s">"data.pageNum"</span>
+      <span class="tk-a">v-model:page-size</span>=<span class="tk-s">"data.pageSize"</span>
+      <span class="tk-a">:page-sizes</span>=<span class="tk-s">"[5, 10, 15, 20]"</span>
+      <span class="tk-a">background</span>
+      <span class="tk-a">layout</span>=<span class="tk-s">"total, sizes, prev, pager, next, jumper"</span>
+      <span class="tk-a">:total</span>=<span class="tk-s">"data.total"</span>
+      <span class="tk-a">@size-change</span>=<span class="tk-s">"handleSizeChange"</span>
+      <span class="tk-a">@current-change</span>=<span class="tk-s">"load"</span>
+  <span class="tk-p">/</span><span class="tk-p">&gt;</span>
+<span class="tk-p">&lt;/</span><span class="tk-t">div</span><span class="tk-p">&gt;</span></code></pre></div></div></div></section><section class="blk" data-k="④"><div class="blk-tag"><i>④</i>代码解读</div><div class="blk-body"><ul><li><code>&lt;el-table :data="data.tableData" stripe&gt;</code>：<code>:data</code> 是单向绑定，数组换了表格就重画；<code>stripe</code> 只是斑马纹，不影响数据。</li><li><code>&lt;el-table-column label="姓名" prop="name" /&gt;</code>：<code>prop</code> 必须和对象属性名完全一致，写错这一列就是空白，<strong>而且不报错</strong>。</li><li><code>show-overflow-tooltip</code>：内容过长时省略，鼠标悬停显示全文，"个人介绍"这种长文本必加。</li><li><code>&lt;template #default="scope"&gt;</code>：插槽的作用域写法，<code>scope.row</code> 是当前行对象，<code>scope.$index</code> 是当前页内的行号（不是数据库 id）。</li><li><code>handleUpdate(scope.row)</code> 传整行，是为了回显；<code>del(scope.row.id)</code> 只传主键，因为后端要的是路径参数。</li><li><code>v-model:current-page</code> / <code>v-model:page-size</code>：双向绑定，用户点页码或改每页条数会直接改 <code>data</code> 里的值，<code>load()</code> 读的就是这两个值。</li><li><code>:page-sizes</code> 与 <code>layout</code> 决定"每页几条"的选项和分页器长什么样；<code>:total</code> 必须用后端返回的总数，否则页数算错。</li><li><code>@size-change="handleSizeChange"</code> 里会把 <code>pageNum</code> 拉回 1；<code>@current-change="load"</code> 则是翻页直接重查。</li></ul></div></section><section class="blk" data-k="⑤"><div class="blk-tag"><i>⑤</i>工程对照</div><div class="blk-body"><p>页面在 <code>D:\my-project\xm-pro\vue\src\views\Employee.vue</code>：表格第 25~37 行、分页第 39~50 行、弹窗第 54~84 行、<code>handleAdd</code>/<code>save</code> 第 128~141 行。路由在 <code>D:\my-project\xm-pro\vue\src\router\index.js</code> 第 28 行（<code>/manage/employee</code>），左侧菜单项在 <code>D:\my-project\xm-pro\vue\src\views\Manage.vue</code> 第 60~68 行（第 67 行"员工信息"）。</p></div></section><section class="blk" data-k="⑥"><div class="blk-tag"><i>⑥</i>易错提醒</div><div class="blk-body"><p>① 表格全空但接口明明返回了数据 → <code>prop</code> 和实体字段对不上，或 <code>:data</code> 绑成了整个 <code>res.data</code>（PageInfo）→ <code>prop</code> 对齐实体，<code>data.tableData = res.data.list</code>。② 点"新增"，弹窗里还留着上一条的内容 → <code>handleAdd</code> 没清空表单 → <code>data.form = {}</code>（仓库第 129 行）。③ 改成每页 20 条后表格变空 → 当前页码超出了新的总页数 → <code>handleSizeChange</code> 里先把 <code>pageNum</code> 置 1 再查（仓库第 123~126 行）。</p></div></section><section class="blk" data-k="⑦"><div class="blk-tag"><i>⑦</i>课堂思考</div><div class="blk-body"><p><code>#default="scope"</code> 里的 <code>scope.row</code> 和 <code>scope.$index</code> 分别是什么？删除按钮为什么传 <code>scope.row.id</code> 而不是 <code>scope.row</code>？</p><details class="qa"><summary>展开解析</summary><div class="qa-body"><p><code>scope.row</code> 是当前行的完整数据对象（含 id、name、sex 等），<code>scope.$index</code> 是这一行在当前页里的下标，从 0 开始、随翻页变化，<strong>不能当数据库主键</strong>。删除只需要主键，传 <code>scope.row.id</code> 才能拼成 <code>/employee/deleteById/5</code>；传整个对象会变成 <code>[object Object]</code>，或者被当成请求体，与 <code>@PathVariable</code> 的接口对不上。</p></div></details></div></section></div>
+</article><section class="lab-end rv" aria-label="本讲结束"><p class="end-line">本讲完 · 实训 9 · 增删改查 CRUD　10 个知识点，10 段代码，10 道自测 —— 全部读完。</p><a class="end-next" href="实训10.html"><span class="en-k">下一讲 · 后端 · 登录</span><span class="en-t">会员登录</span><span class="en-n">10 个知识点</span><span class="en-arrow">→</span></a></section></main>
+</div>
+<div id="scrim"></div>
+<button class="icon-btn" id="top-btn" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="foot-banner" aria-hidden="true"><img src="assets/art/paintings/band-ink.jpg" alt="" loading="lazy" decoding="async"></div>
+<footer><img class="foot-lotus" src="assets/art/motifs/lotus.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  <div class="in">
+  <p><b>JavaWeb 知识点讲解</b> · 覆盖实训 1~12 共 {total} 个知识点。每讲按「讲义要点 / 核心讲解 / 示例演示 / 代码解读 / 工程对照 / 易错提醒 / 课堂思考」七个环节展开，供课堂讲授与课后复习使用。</p>
+  <p>全部内容离线可用：不引用任何 CDN 与外部字体。学习进度保存在本机浏览器中，更换设备后不同步。</p>
+  <p>讲解内容依据课程讲义编写，建议配合 <code>实验过程_实训N.md</code>（实验操作步骤）与 <code>讲义勘误_实训N.md</code>（讲义勘误说明）对照学习。</p>
+  </div>
+  <div class="foot-sign" aria-hidden="true">
+    <span>依 讲 义 而 授 · 循 次 第 而 学</span>
+  </div>
+</footer>
+<script src="assets/ids.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
